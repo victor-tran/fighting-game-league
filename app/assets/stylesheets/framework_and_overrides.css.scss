@@ -5,11 +5,7 @@
 img {
   @extend .img-responsive;
   margin: 0 auto;
-  }
-// override for the 'Home' navigation link
-.navbar-brand {
-  font-size: inherit;
-  }
+}
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
 // create your own classes
@@ -17,29 +13,48 @@ img {
 .column {
   @extend .col-md-6;
   @extend .text-center;
-  }
+}
 .form {
   @extend .col-md-6;
-  }
+}
 .form-centered {
   @extend .col-md-6;
   @extend .text-center;
-  }
+}
 .submit {
   @extend .btn;
   @extend .btn-primary;
   @extend .btn-lg;
+}
+
+// index page (current bg image is sf banner)
+.jumbotron {
+  background: url(/assets/main_banner.jpg) no-repeat;
+  background-position: center;
+  text-align: center;
+
+  h1, p {
+    color: #ffffff;
+    text-shadow: 0 2px 2px rgba(0,0,0,.9);
   }
+}
+
+/* Navbar */ 
+#logo {
+  @extend .navbar-brand;
+  //font-size: inherit;
+}
+
+ 
 // apply styles to HTML elements
 // to make views framework-neutral
 main {
   @extend .container;
-  background-color: #eee;
   padding-bottom: 80px;
   width: 100%;
   margin-top: 51px; // accommodate the navbar
-  }
+}
 section {
   @extend .row;
   margin-top: 20px;
-  }
+}
