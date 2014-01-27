@@ -1,33 +1,68 @@
-
-<!-- Main jumbotron for a primary marketing message -->
-<div class="jumbotron">
-  <div class="container">
-    <h1>Join the HYPE!</h1>
-    <p>Gather your friends and create your own fight league!</p>
-    <a class="btn btn-primary btn-lg" role="button">Sign up now!</a>
-  </div>
-</div>
-
+<% if signed_in? %>
+<!-- Main -->
 <div class="container">
-  <!-- Marketing messaging and featurettes -->
   <div class="row">
-    <div class="col-lg-4">
-      <h2>Personal Fight Leagues</h2>
-      <p>Choose your game. Pick the players. Make the rules. Schedule the matches. Start fighting.</p>
-    </div>
-    <div class="col-lg-4">
-      <h2>Simple Match Recording</h2>
-      <p>Keep track of the all blow ups and nail biters. Results of all matches are automatically recorded through every match, every season. Follow in-depth player's statistics within your league and let the taunting begin.</p>
-    </div>
-    <div class="col-lg-4">
-      <h2>Fighter Profiles</h2>
-      <p>Compare fight history with friends and foe alike, throughout all leagues and show the world who's best!</p>
-    </div>
-  </div>
 
-  <hr>
+    <!-- Side bar -->
+    <div class="col-md-3">
+        
+      <hr>
+      
+      <ul class="list-unstyled">
+        <ul class="list-unstyled collapse in" id="userMenu">
+          <li><%= link_to " Home", root_path, class: "glyphicon glyphicon-home" %></li>
+          <li><%= link_to " Messages", '#', class: "glyphicon glyphicon-envelope" %></li>
+          <li><%= link_to " My Leagues", '#', class: "glyphicon glyphicon-tower" %></li>
+          <li><%= link_to " Find a League", '#', class: "glyphicon glyphicon-search" %></li>
+        </ul>
+      </ul>
+           
+    <hr>
 
-  <footer>
-    <p>&copy; FGL 2013</p>
-  </footer>
-</div> <!-- /container -->
+    </div> <!-- /Side bar -->
+
+    <!-- Main content -->
+    <div class="col-md-9">
+      
+
+      
+
+    </div> <!-- /Main content -->
+
+
+  </div> <!-- /Container -->
+</div> <!-- /Main -->
+<% else %>
+  <!-- Jumbotron -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Join the HYPE!</h1>
+      <p>Gather your friends and create your own fight league!</p>
+      <%= link_to "Sign up now!", register_path, class: "btn btn-lg btn-primary" %>
+    </div>
+  </div> <!-- /Jumbotron -->
+
+  <div class="container">
+    <!-- Marketing messaging -->
+    <div class="row">
+      <div class="col-lg-4">
+        <h2>Personal Fight Leagues</h2>
+        <p>Choose your game. Pick the players. Make the rules. Schedule the matches. Start fighting.</p>
+      </div>
+      <div class="col-lg-4">
+        <h2>Simple Match Recording</h2>
+        <p>Keep track of the all blow ups and nail biters. Results of all matches are automatically recorded through every match, every season. Follow in-depth player's statistics within your league and let the taunting begin.</p>
+      </div>
+      <div class="col-lg-4">
+        <h2>Fighter Profiles</h2>
+        <p>Compare fight history with friends and foe alike, throughout all leagues and show the world who's best!</p>
+      </div>
+    </div> <!-- /Marketing messaging -->
+
+    <hr>
+
+    <footer>
+      <p>&copy; FGL 2013</p>
+    </footer>
+  </div> <!-- /container -->
+<% end %>

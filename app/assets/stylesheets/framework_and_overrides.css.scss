@@ -7,26 +7,6 @@ img {
   margin: 0 auto;
 }
 
-// THESE ARE EXAMPLES YOU CAN MODIFY
-// create your own classes
-// to make views framework-neutral
-.column {
-  @extend .col-md-6;
-  @extend .text-center;
-}
-.form {
-  @extend .col-md-6;
-}
-.form-centered {
-  @extend .col-md-6;
-  @extend .text-center;
-}
-.submit {
-  @extend .btn;
-  @extend .btn-primary;
-  @extend .btn-lg;
-}
-
 // index page (current bg image is sf banner)
 .jumbotron {
   background: url(/assets/main_banner.jpg) no-repeat;
@@ -45,6 +25,10 @@ img {
   //font-size: inherit;
 }
 
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
  
 // apply styles to HTML elements
 // to make views framework-neutral
@@ -57,4 +41,58 @@ main {
 section {
   @extend .row;
   margin-top: 20px;
+}
+
+/* Forms */
+.form-horizontal {
+  h1 {
+    text-align: center;
+  }
+  div.input {
+    margin-bottom: 10px;
+  }
+
+  label {
+    text-align: center;
+  }
+
+  .btn {
+    margin-top: 10px;
+
+    @extend .btn-lg;
+    @extend .btn-success;
+    @extend .col-xs-8;
+    @extend .col-xs-offset-2;
+    @extend .col-lg-4;
+    @extend .col-lg-offset-4;
+  }
+}
+
+// Includes label and input field
+.control-group {
+  text-align: center;
+  @extend .row;
+
+  // Form input fields
+  .form-control {
+    @extend .col-xs-8;
+    @extend .col-xs-offset-2;
+
+    @extend .col-lg-4;
+    @extend .col-lg-offset-4;
+  }
+}
+
+/* sidebar */
+
+aside{
+
+  background: red; 
+
+}
+
+
+.gravatar {
+  float: left;
+  margin-right: 10px;
 }
