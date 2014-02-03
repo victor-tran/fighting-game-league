@@ -38,53 +38,48 @@ main {
   width: 100%;
   margin-top: 51px; // accommodate the navbar
 }
-section {
-  @extend .row;
-  margin-top: 20px;
+
+/* Flash messages */
+.alert {
+  margin-top: 10px; // Space it from the navbar
 }
 
-/* Forms */
-.form-horizontal {
-  h1 {
-    text-align: center;
-  }
-  div.input {
-    margin-bottom: 10px;
-  }
-
-  label {
-    text-align: center;
-  }
-
-  .btn {
-    margin-top: 10px;
-
-    @extend .btn-lg;
-    @extend .btn-success;
-    @extend .col-xs-8;
-    @extend .col-xs-offset-2;
-    @extend .col-lg-4;
-    @extend .col-lg-offset-4;
-  }
+.btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-// Includes label and input field
-.control-group {
-  text-align: center;
-  @extend .row;
+.help-inline {
+  color: red;
+}
 
-  // Form input fields
-  .form-control {
-    @extend .col-xs-8;
-    @extend .col-xs-offset-2;
-
-    @extend .col-lg-4;
-    @extend .col-lg-offset-4;
+/* List of fighters in League show */
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid #eaeaea;
+    &:last-child {
+      border-bottom: 1px solid #eaeaea;
+    }
   }
 }
 
-/* Home */
+/* Home page */
 .gravatar {
   float: left;
   margin-right: 10px;
+}
+
+/* Horizontal Rules */
+hr {
+  //margin-top: 10px;
+  //margin-bottom: 10px;
+}
+
+section {
+  @extend .row;
+  margin-bottom: 5px;
 }

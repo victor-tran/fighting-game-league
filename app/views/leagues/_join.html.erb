@@ -1,0 +1,5 @@
+<%= form_for(current_user.memberships.build(league_id: @league.id),
+             remote: true) do |f| %>
+  <div><%= f.hidden_field :league_id %></div>
+  <%= f.submit "Join league", class: "btn btn-large btn-primary" %>
+<% end %>

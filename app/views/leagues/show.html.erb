@@ -1,0 +1,41 @@
+<%= provide(:title, @league.name) %>
+
+<!-- League Info -->
+<% commissioner = User.find(@league.commissioner_id) %>
+
+<% if current_user.id == commissioner.id %>
+	<h1>
+		<%= @league.name %>
+		<%= link_to '', edit_league_path(@league), class: "glyphicon glyphicon-cog" %>
+	</h1>
+<% else %>
+	<h1><%= @league.name %></h1>
+<% end %>
+<p>Commissioner: <%= link_to full_name(commissioner), commissioner %></p>
+<p>Game: <%= Game.find(@league.game_id).name %></p>
+<p>Match Count: First-to-<%= @league.match_count %></p>
+<p>About: <%= @league.info %></p>
+
+<% if signed_in? %>
+	<% if !@league.started %>
+		<% if current_user.id == commissioner.id %>
+			<% if @league.users.count % 2 == 0 %>
+				<h1>Have everyone ready for the season?</h1>
+				<%= render 'start' %>
+			<% else %>	
+				<h1>You need to have an even number of fighters in the league to begin!</h1>
+			<% end %>
+		<% else %>
+			<%= render 'join_form' %>
+		<% end %>		
+	<% end %>
+<% end %>
+
+<% if @league.started %>
+	<%= render 'match_table' %>
+<% end %>
+
+<h3>Fighters</h3>
+<ul class="list-unstyled users">
+  <%= render @users %>
+</ul>

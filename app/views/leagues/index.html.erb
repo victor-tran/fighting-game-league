@@ -1,0 +1,12 @@
+<% provide(:title, 'All leagues') %>
+<h1>All leagues</h1>
+
+<%= will_paginate %>
+
+<ul class="leagues">
+  <% if @leagues.any? %>
+    <%= render @leagues %>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

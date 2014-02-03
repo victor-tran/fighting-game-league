@@ -11,10 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140124213626) do
+ActiveRecord::Schema.define(version: 20140130211648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "games", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "leagues", force: true do |t|
+    t.string   "name"
+    t.integer  "commissioner_id"
+    t.integer  "game_id"
+    t.integer  "current_season_number"
+    t.integer  "current_round"
+    t.boolean  "started"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "match_count"
+    t.string   "info"
+  end
+
+  add_index "leagues", ["commissioner_id"], name: "index_leagues_on_commissioner_id", using: :btree
+
+  create_table "matches", force: true do |t|
+    t.datetime "match_date"
+    t.integer  "round_number"
+    t.integer  "p1_id"
+    t.integer  "p2_id"
+    t.integer  "p1_score"
+    t.integer  "p2_score"
+    t.integer  "season_number"
+    t.integer  "league_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "memberships", force: true do |t|
+    t.integer  "league_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email"

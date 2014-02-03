@@ -1,0 +1,16 @@
+<% provide(:title, 'League Settings') %>
+<h1>League settings</h1>
+<%= simple_form_for(@league) do |f| %>
+  <%= f.error_notification %>
+  <%= f.input :name %>
+  <%= f.input :game_id, :collection => [
+        ["Street Fighter IV: Arcade Edition 2012", 1], 
+        ["Ultimate Marvel vs. Capcom 3", 2]],
+        :selected => 1 %>
+  <%= f.input :match_count, :collection => [1, 2, 3, 4, 5, 7, 10, 15, 20],
+        :selected => 5, label: "Number of Games for Win", hint: "Ex. First-to-5" %>
+  <%= f.input :info, label: "League Info", as: :text, 
+        hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
+
+  <%= f.button :submit, class: "btn-lg btn-primary" %>
+<% end %>

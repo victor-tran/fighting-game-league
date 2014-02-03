@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@match) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+	  
+      <%= f.label User.find(@match.p1_id).alias + "score" %>
+      <%= f.text_field :p1_score %>
+
+      <%= f.label User.find(@match.p2_id).alias + "score" %>
+      <%= f.text_field :p2_score %>
+      
+      <%= f.submit "Submit scores", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

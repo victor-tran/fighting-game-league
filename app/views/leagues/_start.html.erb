@@ -1,0 +1,6 @@
+<%= form_for(@league) do |f| %>
+  <%= f.hidden_field :started, :value => true %>
+  <%= f.hidden_field :current_season_number, :value => (@league.current_season_number + 1) %>
+  <%= f.hidden_field :current_round, :value => 1 %>
+  <%= f.submit "Start league", class: "btn btn-large btn-primary" %>
+<% end %>

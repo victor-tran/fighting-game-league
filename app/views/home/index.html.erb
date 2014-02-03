@@ -3,30 +3,74 @@
 <div class="container">
   <div class="row">
 
-    <!-- Side bar -->
+    <!-- User Sidebar -->
     <div class="col-md-3">
-        
-      <hr>
-      
-      <ul class="list-unstyled">
-        <li><%= link_to " Home", root_path, class: "glyphicon glyphicon-home" %></li>
-        <li><%= link_to " Messages", '#', class: "glyphicon glyphicon-envelope" %></li>
-        <li><%= link_to " My Leagues", '#', class: "glyphicon glyphicon-tower" %></li>
-        <li><%= link_to " Find a League", '#', class: "glyphicon glyphicon-search" %></li>
-      </ul>
-           
-    <hr>
+    
+      <!-- User Avatar and Profile Link -->
+      <section>
+        <hr>
+        <%= gravatar_for(current_user) %>
+        <h2><%= link_to current_user.alias, current_user %><h2>
+      </section>
 
-    </div> <!-- /Side bar -->
+      <!-- Useful Links -->
+      <section>
+        <ul class="list-unstyled">
+          <li><%= link_to " Home", root_path, class: "glyphicon glyphicon-home" %></li>
+          <li><%= link_to " Messages", '#', class: "glyphicon glyphicon-envelope" %></li>
+          <li><%= link_to " Find a League", leagues_path, class: "glyphicon glyphicon-search" %></li>
+          <li><%= link_to " Create New league", new_league_path, class: "glyphicon glyphicon-plus" %></li>
+        </ul>
+        <hr>
+      </section>
+
+      <!-- User Statistics -->
+      <section>
+        <ul class="list-unstyled">
+          <%= link_to "My Fight Stats", '#' %>
+          <li>W-L Record: 0-0</li>
+          <li>Current Streak: 5W</li>
+          <li>Longest Win Streak: 7W</li>
+        </ul>
+
+        <hr>
+      </section>
+    </div>
 
     <!-- Main content -->
-    <div class="col-md-9">
+    <div class="col-md-6">
+
+      <% if !current_user.leagues.empty? %>
+        <h1 align="center">League Activity</h1>
+
+
+      <% else %>
+        <h1 align="center">Start fighting now!</h1>
+        <%= link_to "Create a league", new_league_path, class: "btn btn-lg btn-primary" %>
+        <%= link_to "Join a league", leagues_path, class: "btn btn-lg btn-primary" %>
+      <% end %>
+    </div> 
+
+    <!-- My Leagues Sidebar -->
+    <div class="col-md-3">
       
+      <hr>
 
-      
+      <ul class="list-unstyled"><%= link_to " My Leagues", '#' %>
+        <% if !current_user.leagues.empty? %>
+          
+          <% current_user.leagues.each do |league| %>
+            <li><%=link_to league.name, league %></li>
+          <% end %>
 
-    </div> <!-- /Main content -->
+        <% else %>
+          <li>No leagues yet.</li>
+        <% end %>
+      </ul>
 
+      <hr> 
+
+    </div>
 
   </div> <!-- /Container -->
 </div> <!-- /Main -->
@@ -49,11 +93,11 @@
       </div>
       <div class="col-lg-4">
         <h2>Simple Match Recording</h2>
-        <p>Keep track of the all blow ups and nail biters. Results of all matches are automatically recorded through every match, every season. Follow in-depth player's statistics within your league and let the taunting begin.</p>
+        <p>Keep track of the all blow ups and nail biters. Results are saved for every match, every season. Follow in-depth player's statistics within your league and let the taunting begin.</p>
       </div>
       <div class="col-lg-4">
         <h2>Fighter Profiles</h2>
-        <p>Compare fight history with friends and foe alike, throughout all leagues and show the world who's best!</p>
+        <p>Compare fight history throughout all leagues with friends and foe alike and show the world who's best!</p>
       </div>
     </div> <!-- /Marketing messaging -->
 
