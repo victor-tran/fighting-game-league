@@ -1,7 +1,11 @@
 FightingGameLeague::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :leagues
+  resources :leagues do
+    member do
+      patch :start
+    end
+  end
   resources :memberships, only: [:create, :destroy]
   resources :matches, only: [:edit]
   root :to => "home#index"

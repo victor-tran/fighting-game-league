@@ -32,28 +32,27 @@ class LeaguesController < ApplicationController
   
   def update
     @league = League.find(params[:id])
-    if @league.update_attributes(start_league_params)
-      @league.generate_matches
-      flash[:notice] = "League successfully started!"
-      redirect_to @league
-    elsif @league.update_attributes(edit_league_params)
+    if @league.update_attributes(league_params)
       flash[:notice] = "League successfully updated."
-      redirect_to @league
+      redirect_to @league   
     else
       render 'edit'
     end
   end
 
+  def start
+    @league = League.find(params[:id])
+    if @league.update_attributes(league_params)
+      @league.generate_matches
+      flash[:notice] = "League successfully started!"
+    end
+    redirect_to @league
+  end
+
   private
+  
     def league_params
-      params.require(:league).permit(:name, :game_id, :commissioner_id, :started, :current_season_number, :current_round, :match_count, :info)
-    end
-
-    def start_league_params
-      params.require(:league).permit(:started, :current_season_number, :current_round)
-    end
-
-    def edit_league_params
-      params.require(:league).permit(:name, :game_id, :match_count, :info)
+      params.require(:league).permit(:name, :game_id, :commissioner_id, :started, 
+        :current_season_number, :current_round, :match_count, :info)
     end
 end

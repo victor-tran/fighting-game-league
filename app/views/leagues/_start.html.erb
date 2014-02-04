@@ -1,6 +1,7 @@
-<%= form_for(@league) do |f| %>
+<%= form_for(@league, html: { method: :patch }, :url => start_league_path) do |f| %>
   <%= f.hidden_field :started, :value => true %>
   <%= f.hidden_field :current_season_number, :value => (@league.current_season_number + 1) %>
   <%= f.hidden_field :current_round, :value => 1 %>
-  <%= f.submit "Start league", class: "btn btn-large btn-primary" %>
+  <%= f.submit "Start league", class: "btn btn-large btn-primary", 
+                              :confirm => "Are you sure? You cannot stop once you've started..." %>
 <% end %>
