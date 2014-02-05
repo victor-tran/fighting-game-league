@@ -10,8 +10,16 @@ module ApplicationHelper
     end
   end
 
-  # Returns "first_name 'alias' last_name" of given User
+  # Returns "first_name 'alias' last_name" of given User.
   def full_name(user)
   	user.first_name + " '" + user.alias + "' " + user.last_name
   end
+
+  # Returns overall W-L fighter history.
+
+  # Returns current match streak.
+
+  # Returns longest win streak ever.
+
+  # Returns league W-L history.
 end

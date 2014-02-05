@@ -1,0 +1,47 @@
+<% p1 = User.find(@match.p1_id) %>
+<% p2 = User.find(@match.p2_id) %>
+
+<div class="container">
+
+  <!-- Player Portraits -->
+  <div class="row">
+
+    <!-- Player 1 -->
+    <div class="col-md-4 col-xs-4">
+      <h1><%= placeholdit "500" %></h1>
+      <p><%= link_to full_name(p1), p1 %><p>
+      <p>W-L: 12-0</p>
+      <p>League Rank: 1</p>
+    </div>
+
+    <!-- Match Info & VS -->
+    <div class="col-md-4 col-xs-4">
+      <h1><%= @league.name %></h1>
+      <p>Round <%= @match.round_number %></p> 
+      <% if @match.match_date == nil %>
+        <p>Match Date: TBD</p>
+        <p>Time: TBD</p>
+      <% else %>
+        <p><%= @match.match_date %></p>
+      <% end %>
+      <h1>VS</h1>
+
+      <h5>Match Score</h5>
+      <% if @match.p1_score == 0 && @match.p2_score == 0 %>
+        <p>TBD</p>
+      <% else %>
+        <p><%= @match.p1_score %> - <%= @match.p2_score %></p>
+      <% end %>
+    </div>
+
+    <!-- Player 2 -->
+    <div class="col-md-4 col-xs-4">
+      <h1><%= placeholdit "500" %></h1>
+      <p><%= link_to full_name(p2), p2 %><p>
+      <p>W-L: 10-2</p>
+      <p>League Rank: T-2</p>
+    </div>
+    
+  </div>
+
+</div>

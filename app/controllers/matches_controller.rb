@@ -1,5 +1,11 @@
 class MatchesController < ApplicationController
-	def edit
+	
+  def show
+    @match = Match.find(params[:id])
+    @league = League.find(@match.league_id)
+  end
+
+  def edit
 		@match = Match.find(params[:id])
 	end
 

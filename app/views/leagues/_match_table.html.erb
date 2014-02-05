@@ -8,6 +8,7 @@
   <div class="table-responsive">
   	<table class="table table-bordered table-hover">
       <tr>
+        <th>Match</th>
     		<th>Player 1</th>
     		<th>Score</th>
     		<th>Player 2</th>
@@ -16,6 +17,7 @@
     	<% @league.matches.each do |match| %>
         <% if match.round_number == @league.current_round %>
       		<tr>
+            <td><%= link_to "View Matchup", match %></td>
       			<td><%= User.find(match.p1_id).alias %></td>
       			<td><%= match.p1_score %></td>
       			<td><%= User.find(match.p2_id).alias %></td>
