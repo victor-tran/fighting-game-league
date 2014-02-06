@@ -1,3 +1,70 @@
-<h1>
-  <%= @user.first_name + " '" + @user.alias + "' " + @user.last_name %>
-</h1>
+<div class="container">
+  
+  <div class="row">
+    
+    <!-- User Portrait and Current League List-->
+    <div class="col-md-4">
+      <%= placeholdit_image_tag "300" %>
+      
+      <ul class="list-unstyled">
+        <p>Current Leagues</p>
+        <% if !@user.leagues.empty? %>
+          <% current_user.leagues.each do |league| %>
+            <li><%=link_to league.name, league %></li>
+          <% end %>
+
+        <% else %>
+          <li>None.</li>
+        <% end %>
+      </ul>
+
+    </div>
+
+    <!-- User Info and Achievements -->
+    <div class="col-md-8">
+      <h1>
+        <%= @user.alias %>
+        <%= link_to "Send Message", '#', class: "btn btn-primary" %>
+      </h1>
+      
+      <hr>
+
+      <!-- User Info -->
+      <p>Full name: <%= @user.first_name + " " + @user.last_name %></p>      
+      <p>Tagline: [Insert tagline here.]</p>
+      <p>Bio: [Insert bio here.]</p>
+
+      <hr>
+
+      <!-- Acheivements -->
+      <div class="panel panel-default">
+        <div class="panel-heading">Achievements</div>
+        
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <tr>
+              <th>Type</th>
+              <th>Event</th>
+              <th>Game</th>
+              <th>Placement</th>
+              <th>Year</th>
+            </tr>
+            
+            <tr>
+              <td>League</td>
+              <td>FGL Invite</td>
+              <td>SSF4:AE</td>
+              <td>1st</td>
+              <td>2014</td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
