@@ -8,6 +8,8 @@
   <%= f.input :last_name %>
   <%= f.input :alias %>
   <%= f.input :email %>
+  <%= f.input :tagline, hint: "Short punchline or motto. 60 chars max." %>
+  <%= f.input :bio, as: :text %>
   <%= f.input :password %>
   <%= f.input :password_confirmation %>
   <%= f.button :submit, class: "btn-lg btn-primary" %>
