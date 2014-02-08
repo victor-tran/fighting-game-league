@@ -62,7 +62,9 @@ class League < ActiveRecord::Base
                         p1_score: 0,
                         p2_score: 0,
                         season_number: current_season_number,
-                        league_id: id)
+                        league_id: id,
+                        p1_accepted: false,
+                        p2_accepted: false)
 
         # Mark the users in the hashmap as TRUE so they won't be scheduled
         # more than once per round.

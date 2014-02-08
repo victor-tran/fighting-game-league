@@ -5,7 +5,7 @@ class MembershipsController < ApplicationController
     @league = League.find(params[:membership][:league_id])
     current_user.join!(@league)
     respond_to do |format|
-      format.html { redirect_to leagues_path }
+      format.html { redirect_to @league }
       format.js
     end
   end
@@ -14,7 +14,7 @@ class MembershipsController < ApplicationController
     @league = Membership.find(params[:id]).league
     current_user.leave!(@league)
     respond_to do |format|
-      format.html { redirect_to leagues_path }
+      format.html { redirect_to @league }
       format.js
     end
   end

@@ -1,0 +1,40 @@
+<h1>My matches</h1>
+<ul class="list-unstyled">
+  <% pending_matches = pending_matches(current_user.matches, current_user) %>
+  <% if !pending_matches.empty? %>
+    <hr>
+    <% pending_matches.each do |match| %>
+      <% if current_user.id == match.p1_id %>
+        <% opponent = User.find(match.p2_id) %>
+      <% else %>
+        <% opponent = User.find(match.p1_id) %>
+      <% end %>
+      <li>
+        <p>League: <%= League.find(match.league_id).name %></p>
+        <p>[<%= User.find(match.p1_id).alias %> -- <%= match.p1_score %>:<%= match.p2_score %> -- <%= User.find(match.p2_id).alias %>]</p>
+
+        <!-- Score hasn't been changed yet -->
+        <% if match.p1_score == 0 && match.p2_score == 0 %>
+          <%= link_to "Set Date/Score", edit_match_path(match), class: "btn btn-primary" %>
+        
+        <!-- Score has been changed -->
+        <% else %>
+
+          <!-- Display correct accept button-->
+          <% if current_user.id == match.p1_id %>
+            <%= render partial: 'p1_accept', locals: { match: match } %>
+          <% else %>
+            <%= render partial: 'p2_accept', locals: { match: match } %>
+          <% end %>
+
+          <!-- Decline button -->
+          <%= render partial: 'decline_match_score', locals: { match: match } %>
+        <% end %>
+      </li>
+      <hr>
+    <% end %>
+
+  <% else %>
+    <li>No pending matches.</li>
+  <% end %>
+</ul>

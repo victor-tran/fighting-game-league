@@ -17,9 +17,13 @@
         <section>
           <ul class="list-unstyled">
             <li><%= link_to " Home", root_path, class: "glyphicon glyphicon-home" %></li>
-            <li><%= link_to " Messages", '#', class: "glyphicon glyphicon-envelope" %><span class="badge pull-right">0</span></li>
+            <li><%= link_to " Messages", '#', class: "glyphicon glyphicon-envelope" %></li>
             <li><%= link_to " Find a League", leagues_path, class: "glyphicon glyphicon-search" %></li>
             <li><%= link_to " Create New league", new_league_path, class: "glyphicon glyphicon-plus" %></li>
+            <li>
+              <%= link_to " Pending Matches", matches_path, class: "glyphicon glyphicon-tower" %>
+              <span class="badge pull-right"><%= pending_matches(current_user.matches, current_user).count%></span>
+            </li>
           </ul>
           <hr>
         </section>

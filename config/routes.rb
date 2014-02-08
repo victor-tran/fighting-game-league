@@ -7,7 +7,11 @@ FightingGameLeague::Application.routes.draw do
     end
   end
   resources :memberships, only: [:create, :destroy]
-  resources :matches, only: [:edit, :show]
+  resources :matches do
+    member do
+      patch :set_score
+    end
+  end
   root :to => "home#index"
 
   match '/register', to: 'users#new', via: 'get'
