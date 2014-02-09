@@ -3,7 +3,7 @@
 <%= simple_form_for(@match) do |f| %>
 
   <h1>Update match settings</h1>
-  <%= f.error_notification %>
+  <%= render 'shared/error_messages', object: f.object %>
   <%= f.input :match_date, label: "Match Date and Time" %>
   <%= f.input :p1_score, label: User.find(@match.p1_id).alias + " score" %>
   <%= f.input :p2_score, label: User.find(@match.p2_id).alias + " score" %>

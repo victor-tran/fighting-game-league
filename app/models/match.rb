@@ -28,17 +28,17 @@ class Match < ActiveRecord::Base
 
           # Make sure that BOTH aren't at match count
           if p1_score == match_count && p2_score == match_count
-            errors.add(:match_score_at_match_count, "Only one fighter's score can be at " + match_count.to_s)
+            errors.add(:only_one_match_score, " can be at " + match_count.to_s)
           end
 
         # Neither of the scores are at the match count
         else
-          errors.add(:match_score_at_match_count, "One fighter's score must be at " + match_count.to_s)
+          errors.add(:at_least_one_match_score, "must be at " + match_count.to_s)
         end
 
       # One of the player's score is HIGHER than match count 
       else
-        errors.add(:match_score_at_match_count, "One fighter's score cannot be higher than " + match_count.to_s)
+        errors.add(:match_score, " cannot be higher than " + match_count.to_s)
       end
     end
   end
