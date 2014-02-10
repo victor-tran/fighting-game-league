@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   MIN_LENGTH_PASSWORD = 6
   MAX_LENGTH_TAGLINE = 60
+  MAX_LENGTH_BIO = 2500
   
   # Validations
   validates :first_name, presence: true, length: { maximum: MAX_LENGTH_FIRST_NAME }
@@ -19,6 +20,8 @@ class User < ActiveRecord::Base
           format: { with: VALID_EMAIL_REGEX },
           uniqueness: { case_sensitive: false }
   validates :tagline, length: { maximum: MAX_LENGTH_TAGLINE }
+  validates :bio, length: { maximum: MAX_LENGTH_BIO }
+  validates :fight_bucks, presence: true
   has_secure_password
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
 
