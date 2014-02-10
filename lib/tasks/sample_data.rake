@@ -25,5 +25,6 @@ def make_users
   						 alias: "BurlyChalice",
                email: "dfaced@gmail.com",
                password: "foobar",
-               password_confirmation: "foobar")
+               password_confirmation: "foobar",
+               fight_bucks: "50")
 end

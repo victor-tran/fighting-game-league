@@ -3,12 +3,9 @@
   <% pending_matches = pending_matches(current_user.matches, current_user) %>
   <% if !pending_matches.empty? %>
     <hr>
+
+    <!-- Loop to list current pending matches -->
     <% pending_matches.each do |match| %>
-      <% if current_user.id == match.p1_id %>
-        <% opponent = User.find(match.p2_id) %>
-      <% else %>
-        <% opponent = User.find(match.p1_id) %>
-      <% end %>
       <li>
         <p>League: <%= link_to League.find(match.league_id).name, League.find(match.league_id) %></p>
         <p>[<%= link_to User.find(match.p1_id).alias + " -- " + match.p1_score.to_s + ":" + match.p2_score.to_s + " -- " + User.find(match.p2_id).alias, match %>]</p>
