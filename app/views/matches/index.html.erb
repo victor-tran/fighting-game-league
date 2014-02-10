@@ -10,8 +10,8 @@
         <% opponent = User.find(match.p1_id) %>
       <% end %>
       <li>
-        <p>League: <%= League.find(match.league_id).name %></p>
-        <p>[<%= User.find(match.p1_id).alias %> -- <%= match.p1_score %>:<%= match.p2_score %> -- <%= User.find(match.p2_id).alias %>]</p>
+        <p>League: <%= link_to League.find(match.league_id).name, League.find(match.league_id) %></p>
+        <p>[<%= link_to User.find(match.p1_id).alias + " -- " + match.p1_score.to_s + ":" + match.p2_score.to_s + " -- " + User.find(match.p2_id).alias, match %>]</p>
 
         <!-- Score hasn't been changed yet -->
         <% if match.p1_score == 0 && match.p2_score == 0 %>
