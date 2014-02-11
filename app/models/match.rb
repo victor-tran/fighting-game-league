@@ -9,8 +9,8 @@ class Match < ActiveRecord::Base
   validates :p2_id, presence: true
   validates :season_number, presence: true
   validates :league_id, presence: true
-  validates :p1_score, :numericality => { :greater_than_or_equal_to => 0 }
-  validates :p2_score, :numericality => { :greater_than_or_equal_to => 0 }
+  validates_numericality_of :p1_score, :only_integer => true
+  validates_numericality_of :p1_score, :only_integer => true
   validate :match_scores_are_at_match_count
  
   # Match score count validation

@@ -74,7 +74,7 @@
       <!-- If match score hasn't been changed and current user is one of the fighters -->
       <% if @match.p1_accepted == false && @match.p2_accepted == false %>
         <% if current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
-          <%= link_to "Edit Match Date/Score", edit_match_path(@match), 
+          <%= link_to "Edit Match Date", edit_match_path(@match), 
               class: "btn btn-primary btn-lg" %>
         <% end %>
       <% end %>

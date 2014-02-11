@@ -9,7 +9,8 @@ FightingGameLeague::Application.routes.draw do
   resources :memberships, only: [:create, :destroy]
   resources :matches do
     member do
-      patch :set_score
+      get :edit_score
+      patch :set_score, :confirm_score
     end
   end
   root :to => "home#index"

@@ -1,4 +1,4 @@
-<%= form_for(match, html: { method: :patch }, :url => set_score_match_path(match.id)) do |f| %>
+<%= form_for(match, html: { method: :patch }, :url => confirm_score_match_path(match.id)) do |f| %>
   <%= f.hidden_field :p1_score, :value => 0 %>
   <%= f.hidden_field :p2_score, :value => 0 %>
   <%= f.hidden_field :p1_accepted, :value => false %>
