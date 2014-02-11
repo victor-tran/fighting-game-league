@@ -65,7 +65,11 @@
           <% if !current_user.leagues.empty? %>
             
             <% current_user.leagues.each do |league| %>
-              <li><%=link_to league.name, league %></li>
+              <% if current_user.id == league.commissioner_id %>
+                <li><%=link_to league.name, league, class: "glyphicon glyphicon-euro" %></li>
+              <% else %>
+                <li><%=link_to league.name, league %></li>
+              <% end %>
             <% end %>
 
           <% else %>
