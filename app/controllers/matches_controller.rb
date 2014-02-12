@@ -23,19 +23,41 @@ class MatchesController < ApplicationController
     end
   end
 
-  def edit_score
+  def p1_edit_score
     @match = Match.find(params[:id])
   end
 
-  def set_score
+  def p1_set_score
     @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
-      unless @match.p1_score == 0 && @match.p2_score == 0
+      if @match.p1_score == 0 && @match.p2_score == 0
+        @match.update_attribute(:p1_accepted, false)
+        render 'p1_edit_score'
+      else
         flash[:notice] = "Match score set."
+        redirect_to @match
       end
-      redirect_to @match
     else
-      render 'edit_score'
+      render 'p1_edit_score'
+    end
+  end
+
+  def p2_edit_score
+    @match = Match.find(params[:id])
+  end
+
+  def p2_set_score
+    @match = Match.find(params[:id])
+    if @match.update_attributes(match_params)
+      if @match.p1_score == 0 && @match.p2_score == 0
+        @match.update_attribute(:p2_accepted, false)
+        render 'p2_edit_score'
+      else
+        flash[:notice] = "Match score set."
+        redirect_to @match
+      end
+    else
+      render 'p2_edit_score'
     end
   end
 

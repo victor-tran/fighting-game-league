@@ -20,7 +20,13 @@
 
         <!-- Score hasn't been changed yet -->
         <% if match.p1_score == 0 && match.p2_score == 0 %>
-          <%= link_to "Set Score", edit_score_match_path(match), class: "btn btn-primary" %>
+
+          <!-- Display correct accept button-->
+          <% if current_user.id == match.p1_id %>
+            <%= link_to "Set Score", p1_edit_score_match_path(match), class: "btn btn-primary" %>
+          <% else %>
+            <%= link_to "Set Score", p2_edit_score_match_path(match), class: "btn btn-primary" %>
+          <% end %>
         
         <!-- Score has been changed -->
         <% else %>

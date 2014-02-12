@@ -1,0 +1,11 @@
+<% provide(:title, "Set match score") %>
+
+<%= simple_form_for(@match, method: :patch , :url => p2_set_score_match_path(@match)) do |f| %>
+
+  <h1>Set match score</h1>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.input :p1_score, label: User.find(@match.p1_id).alias + " score" %>
+  <%= f.input :p2_score, label: User.find(@match.p2_id).alias + " score" %>
+  <%= f.hidden_field :p2_accepted, :value => true %>
+  <%= f.button :submit, "Set Score", class: "btn-lg btn-primary" %>
+<% end %>
