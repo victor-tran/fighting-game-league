@@ -1,0 +1,4 @@
+<%= form_for(@league, html: { method: :patch }, :url => next_round_league_path) do |f| %>
+  <%= f.hidden_field :current_round, :value => @league.current_round + 1 %>
+  <%= f.submit "Go to Round " + (@league.current_round + 1).to_s, class: "btn btn-large btn-success" %>
+<% end %>

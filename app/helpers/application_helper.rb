@@ -41,6 +41,20 @@ module ApplicationHelper
     pending_matches
   end
 
+  # Returns true if matches are all accepted for the current round.
+  def all_matches_accepted?(matches, current_round)
+    matches_accepted = true
+
+    matches.each do |match|
+      if match.p1_accepted == false || match.p2_accepted == false
+        matches_accepted = false
+        break
+      end
+    end
+
+    matches_accepted
+  end
+
   # Returns overall W-L fighter history.
 
   # Returns current match streak.

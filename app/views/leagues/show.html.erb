@@ -32,6 +32,14 @@
 
 <% if @league.started %>
 	<%= render 'match_table' %>
+
+	<% if all_matches_accepted?(@league.matches, @league.current_round) && current_user.id == commissioner.id %>
+		<% if more_rounds_left_in_season?(@league, @league.current_round) %>
+			<%= render 'next_round' %>
+		<% else %>
+			<%= render 'end_season' %>
+		<% end %>
+	<% end %>
 <% end %>
 
 <%= render 'fighter_list' %>

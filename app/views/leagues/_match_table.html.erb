@@ -1,7 +1,9 @@
+<% matches = matches_for_current_season(@league) %>
+
 <!-- Panel -->
 <div class="panel panel-default">
   <div class="panel-heading">
-    Season <%= @league.current_season_number %>: Round <%= @league.current_round %>
+    Season <%= @league.current_season_number %>: Round <%= @league.current_round %> of <%= total_rounds(@league) %>
   </div>
   
   <!-- Table -->
@@ -14,7 +16,7 @@
     		<th>Player 2</th>
     		<th>Score</th>
     	</tr>
-    	<% @league.matches.each do |match| %>
+    	<% matches.each do |match| %>
         <% if match.round_number == @league.current_round %>
       		<tr>
             <td><%= link_to "View Matchup", match %></td>

@@ -49,6 +49,23 @@ class LeaguesController < ApplicationController
     redirect_to @league
   end
 
+  def next_round
+    @league = League.find(params[:id])
+    if @league.update_attributes(league_params)
+      @league.generate_matches
+      flash[:notice] = "Round " + @league.current_round.to_s + " started."
+    end
+    redirect_to @league
+  end
+
+  def end_season
+    @league = League.find(params[:id])
+    if @league.update_attributes(league_params)
+      flash[:notice] = "Season " + @league.current_season_number.to_s + " complete!"
+    end
+    redirect_to @league
+  end
+
   private
   
     def league_params
