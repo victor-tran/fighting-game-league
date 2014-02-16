@@ -1,7 +1,7 @@
 class LeaguesController < ApplicationController
   
   def index
-    @leagues = League.paginate(page: params[:page])
+    @leagues = League.text_search(params[:query]).page(params[:page]).per_page(20)
   end
 
   def new

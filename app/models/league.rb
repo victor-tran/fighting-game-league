@@ -18,6 +18,14 @@ class League < ActiveRecord::Base
   validates :match_count, presence: true
   validates :info, presence: true
 
+  def self.text_search(query)
+    if query.present?
+      where("name @@ :q", q: query)
+    else
+      scoped
+    end
+  end
+
   # Generates and schedules matches for a single round-robin schedule.
   def generate_matches
 
