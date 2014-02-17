@@ -3,6 +3,8 @@ class League < ActiveRecord::Base
   has_many :users, through: :memberships
   has_many :matches, dependent: :destroy
 
+  belongs_to :game
+
   # Constants
   MAX_LENGTH_LEAGUE_NAME = 50
 
