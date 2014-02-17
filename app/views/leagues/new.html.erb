@@ -7,7 +7,7 @@
         
   <%= f.input :match_count, :collection => [1, 2, 3, 4, 5, 7, 10, 15, 20],
         :selected => 5, label: "Number of Games for Win", hint: "Ex. First-to-5" %>
-  <%= f.input :info, label: "League Info", as: :text, 
+  <%= f.input :info, label: "League Info", as: :text, :input_html => { :rows => 5 },
         hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
 
   <%= f.hidden_field :commissioner_id, :value => current_user.id %>
