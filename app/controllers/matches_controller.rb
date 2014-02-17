@@ -17,7 +17,7 @@ class MatchesController < ApplicationController
 
     if @match.update_attributes(match_params)
       flash[:notice] = "Match date/time updated."
-      redirect_to @match
+      redirect_to matches_path
     else
       render 'edit'
     end
@@ -35,7 +35,7 @@ class MatchesController < ApplicationController
         render 'p1_edit_score'
       else
         flash[:notice] = "Match score set."
-        redirect_to @match
+        redirect_to matches_path
       end
     else
       render 'p1_edit_score'
@@ -54,7 +54,7 @@ class MatchesController < ApplicationController
         render 'p2_edit_score'
       else
         flash[:notice] = "Match score set."
-        redirect_to @match
+        redirect_to matches_path
       end
     else
       render 'p2_edit_score'

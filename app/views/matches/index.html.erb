@@ -13,19 +13,24 @@
         <% end %>
         <p>[<%= link_to User.find(match.p1_id).alias + " -- " + match.p1_score.to_s + ":" + match.p2_score.to_s + " -- " + User.find(match.p2_id).alias, match %>]</p>
 
-        <!-- Date hasn't been changed yet -->
+        <!-- Select Character -->
+
+
+        <!-- Set Date -->
         <% if match.match_date == nil %>
-          <%= link_to "Set Date", edit_match_path(match), class: "btn btn-primary" %>
+          <p><%= link_to "Set Date", edit_match_path(match), class: "btn btn-primary" %></p>
+        <% else %>
+          <p><%= link_to "Date Set", edit_match_path(match), class: "btn btn-primary", :disabled => true %></p>
         <% end %>
 
-        <!-- Score hasn't been changed yet -->
+        <!-- Set Scores -->
         <% if match.p1_score == 0 && match.p2_score == 0 %>
 
           <!-- Display correct accept button-->
           <% if current_user.id == match.p1_id %>
-            <%= link_to "Set Score", p1_edit_score_match_path(match), class: "btn btn-primary" %>
+            <p><%= link_to "Set Score", p1_edit_score_match_path(match), class: "btn btn-primary" %></p>
           <% else %>
-            <%= link_to "Set Score", p2_edit_score_match_path(match), class: "btn btn-primary" %>
+            <p><%= link_to "Set Score", p2_edit_score_match_path(match), class: "btn btn-primary" %></p>
           <% end %>
         
         <!-- Score has been changed -->
@@ -33,13 +38,20 @@
 
           <!-- Display correct accept button-->
           <% if current_user.id == match.p1_id %>
-            <%= render partial: 'p1_accept', locals: { match: match } %>
+            <% if match.p1_accepted == false %>
+              <p><%= render partial: 'p1_accept', locals: { match: match } %><p>
+              <p><%= render partial: 'decline_match_score', locals: { match: match } %></p>
+            <% else %>
+              <p><%= link_to "Score Accepted", p1_edit_score_match_path(match), class: "btn btn-success", :disabled => true %><p>
+            <% end %>
           <% else %>
-            <%= render partial: 'p2_accept', locals: { match: match } %>
+            <% if match.p2_accepted == false %>
+              <p><%= render partial: 'p2_accept', locals: { match: match } %></p>
+              <p><%= render partial: 'decline_match_score', locals: { match: match } %></p>
+            <% else %>
+              <p><%= link_to "Score Accepted", p2_edit_score_match_path(match), class: "btn btn-success", :disabled => true %><p>
+            <% end %>
           <% end %>
-
-          <!-- Decline button -->
-          <%= render partial: 'decline_match_score', locals: { match: match } %>
         <% end %>
       </li>
       <hr>

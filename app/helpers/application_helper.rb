@@ -27,8 +27,18 @@ module ApplicationHelper
       if user.id == match.p1_id || user.id == match.p2_id
         if match.round_number == League.find(match.league_id).current_round
 
+          # Add to pending matches if character hasn't been set yet.
+          #if user.id == match.p1_id && match.p1_character == nil
+          #  pending_matches.add(match)
+          #elsif user.id == match.p2_id && match.p2_character == nil
+          #  pending_matches.add(match)
+
+          # Add to pending matches if date has not been set yet.
+          if match.match_date == nil
+            pending_matches.add(match)
+
           # Add to pending matches if matches have NOT been accepted by user yet.
-          if user.id == match.p1_id && match.p1_accepted == false
+          elsif user.id == match.p1_id && match.p1_accepted == false
             pending_matches.add(match)
           elsif user.id == match.p2_id && match.p2_accepted == false
             pending_matches.add(match)
