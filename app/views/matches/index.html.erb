@@ -14,13 +14,25 @@
         <p>[<%= link_to User.find(match.p1_id).alias + " -- " + match.p1_score.to_s + ":" + match.p2_score.to_s + " -- " + User.find(match.p2_id).alias, match %>]</p>
 
         <!-- Select Character -->
-
+        <% if current_user.id == match.p1_id %>
+          <% if match.p1_character == nil %>
+            <p><%= link_to "Set P1 Character", p1_edit_character_match_path(match), class: "btn btn-primary" %></p>
+          <% else %>
+            <p><%= link_to "Character Set", p1_edit_character_match_path(match), class: "btn btn-success", :disabled => true %><p>
+          <% end %>
+        <% else %>
+          <% if match.p2_character == nil %>
+            <p><%= link_to "Set P2 Character", p2_edit_character_match_path(match), class: "btn btn-primary" %></p>
+          <% else %>
+            <p><%= link_to "Character Set", p2_edit_character_match_path(match), class: "btn btn-success", :disabled => true %><p>
+          <% end %>
+        <% end %>
 
         <!-- Set Date -->
         <% if match.match_date == nil %>
           <p><%= link_to "Set Date", edit_match_path(match), class: "btn btn-primary" %></p>
         <% else %>
-          <p><%= link_to "Date Set", edit_match_path(match), class: "btn btn-primary", :disabled => true %></p>
+          <p><%= link_to "Date Set", edit_match_path(match), class: "btn btn-success", :disabled => true %></p>
         <% end %>
 
         <!-- Set Scores -->

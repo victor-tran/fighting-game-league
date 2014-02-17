@@ -76,8 +76,38 @@ class MatchesController < ApplicationController
     redirect_to matches_path
   end
 
+  def p1_edit_character
+    @match = Match.find(params[:id])
+    @characters = Game.find(@match.game_id).characters
+  end
+
+  def p1_set_character
+    @match = Match.find(params[:id])
+    if @match.update_attributes(match_params)
+      if @match.p1_character != nil
+        flash[:notice] = "P1 character set."
+      end
+      redirect_to matches_path
+    end
+  end
+
+  def p2_edit_character
+    @match = Match.find(params[:id])
+    @characters = Game.find(@match.game_id).characters
+  end
+
+  def p2_set_character
+    @match = Match.find(params[:id])
+    if @match.update_attributes(match_params)
+      if @match.p2_character != nil
+        flash[:notice] = "P2 character set."
+      end
+      redirect_to matches_path
+    end
+  end
+
   private
     def match_params
-      params.require(:match).permit(:p1_score, :p2_score, :match_date, :p1_accepted, :p2_accepted)
+      params.require(:match).permit(:p1_score, :p2_score, :match_date, :p1_accepted, :p2_accepted, :p1_character, :p2_character)
     end
 end

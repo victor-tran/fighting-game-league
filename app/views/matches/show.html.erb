@@ -31,6 +31,9 @@
       <p><%= link_to full_name(p1), p1 %><p>
       <p>W-L: 12-0</p>
       <p>League Rank: 1</p>
+      <% if @match.p1_character != nil %>
+        <p>Character: <%= Character.find(@match.p1_character).name %></p>
+      <% end %>
     </div>
 
     <!-- Match Info -->
@@ -54,6 +57,9 @@
       <p><%= link_to full_name(p2), p2 %><p>
       <p>W-L: 10-2</p>
       <p>League Rank: T-2</p>
+      <% if @match.p2_character != nil %>
+        <p>Character: <%= Character.find(@match.p2_character).name %></p>
+      <% end %>
     </div>
     
   </div>

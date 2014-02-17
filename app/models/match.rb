@@ -2,6 +2,7 @@ class Match < ActiveRecord::Base
   belongs_to :league
   belongs_to :p1, class_name: "User"
   belongs_to :p2, class_name: "User"
+  belongs_to :game
 
   # Validations
   validates :round_number, presence: true
@@ -11,6 +12,7 @@ class Match < ActiveRecord::Base
   validates :league_id, presence: true
   validates_numericality_of :p1_score, :only_integer => true
   validates_numericality_of :p1_score, :only_integer => true
+  validates :game_id, presence: true
   validate :match_scores_are_at_match_count
  
   # Match score count validation
