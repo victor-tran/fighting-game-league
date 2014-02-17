@@ -44,11 +44,6 @@ main {
   margin-top: 10px; // Space it from the navbar
 }
 
-.btn {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
 .help-inline {
   color: red;
 }
@@ -73,13 +68,18 @@ main {
   margin-right: 10px;
 }
 
-/* Horizontal Rules */
-hr {
-  //margin-top: 10px;
-  //margin-bottom: 10px;
-}
-
 section {
   @extend .row;
   margin-bottom: 5px;
+}
+
+/* Form */
+// Group (Label and input field)
+.control-group {
+  
+}
+
+// Input fields
+.form-control {
+  margin-bottom: 10px;
 }
