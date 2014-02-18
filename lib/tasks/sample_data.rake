@@ -130,4 +130,12 @@ def make_users
                password: "foobar",
                password_confirmation: "foobar",
                fight_bucks: "50")
+
+  User.create!(first_name: "Foo",
+               last_name: "Bar",
+               alias: "blat",
+               email: "foo@bar.com",
+               password: "foobar",
+               password_confirmation: "foobar",
+               fight_bucks: "50")
 end
