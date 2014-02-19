@@ -56,6 +56,13 @@ class User < ActiveRecord::Base
   # Adds bet to current_user.bets
   def bet!(match, favorite)
     bets.create!(match_id: match.id, favorite_id: favorite.id)
+    fb = self.fight_bucks - 1
+    self.update_attribute(:fight_bucks, fb)
+  end
+
+  # Returns true if current user is fighting in match.
+  def fighting_in?(match)
+    self.id == match.p1_id || self.id == match.p2_id
   end
 
   def User.new_remember_token

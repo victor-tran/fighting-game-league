@@ -72,7 +72,7 @@
     <!-- Player 1 Bet -->
     <div class="col-md-4 col-xs-4">
       <% if current_user.fight_bucks > 0 %>
-        <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
+        <% unless current_user.fighting_in?(@match) %>
           <% unless current_user.betting_on?(@match) %>
             <%= render 'p1_bet' %>
           <% end %>
@@ -85,7 +85,7 @@
 
       <!-- If match score hasn't been changed and current user is one of the fighters -->
       <% if @match.p1_accepted == false && @match.p2_accepted == false %>
-        <% if current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
+        <% if current_user.fighting_in?(@match) %>
           <%= link_to "Edit Match Date", edit_match_path(@match), 
               class: "btn btn-primary btn-lg" %>
         <% end %>
@@ -95,7 +95,7 @@
     <!-- Player 2 Bet -->
     <div class="col-md-4 col-xs-4">
       <% if current_user.fight_bucks > 0 %>
-        <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
+        <% unless current_user.fighting_in?(@match) %>
           <% unless current_user.betting_on?(@match) %>
             <%= render 'p2_bet' %>
           <% end %>
