@@ -65,6 +65,20 @@ module ApplicationHelper
     matches_accepted
   end
 
+  # Returns p1 alias -- p1 score:p2 score -- p2 alias
+  def display_match_score(match)
+    User.find(match.p1_id).alias + " -- " + match.p1_score.to_s + ":" + match.p2_score.to_s + " -- " + User.find(match.p2_id).alias
+  end
+
+  # Returns user id of the winner of the match.
+  def winner_of_match(match)
+    if match.p1_score > match.p2_score
+      match.p1_id
+    else
+      match.p2_id
+    end
+  end
+
   # Returns overall W-L fighter history.
 
   # Returns current match streak.

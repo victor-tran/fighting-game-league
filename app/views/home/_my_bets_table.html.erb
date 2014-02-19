@@ -1,0 +1,45 @@
+<ul class="list-unstyled">
+  <% if !current_user.bets.empty? %>
+    
+    <!-- Panel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        My Current Bets
+      </div>
+      
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <tr>
+            <th>My Bet</th>
+            <th>Match</th>
+            <th>My Pick</th>
+          </tr>
+          <% current_user.bets.each do |bet| %>
+            <% match = Match.find(bet.match_id) %>
+            <tr>
+              <td>
+                <% unless match.p1_score == 0 && match.p2_score == 0 %>
+                  <% if bet.favorite_id == winner_of_match(match) %>
+                    <%= link_to '', '#', class: "glyphicon glyphicon-thumbs-up" %>
+                  <% else %>
+                    <%= link_to '', '#', class: "glyphicon glyphicon-remove" %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <%= display_match_score(match) %>
+              </td>
+              <td>
+                <%= User.find(bet.favorite_id).alias %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+  <% else %>
+    <li>No bets yet.</li>
+  <% end %>
+</ul>

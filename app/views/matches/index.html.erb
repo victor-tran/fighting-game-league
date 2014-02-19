@@ -11,7 +11,7 @@
         <% if match.match_date != nil %>
           <p>Date: <%= match.match_date %></p>
         <% end %>
-        <p>[<%= link_to User.find(match.p1_id).alias + " -- " + match.p1_score.to_s + ":" + match.p2_score.to_s + " -- " + User.find(match.p2_id).alias, match %>]</p>
+        <p><%= link_to display_match_score(match), match %></p>
 
         <!-- Select Character -->
         <% if current_user.id == match.p1_id %>

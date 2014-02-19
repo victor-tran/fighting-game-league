@@ -57,11 +57,12 @@
         <% end %>
       </div> 
 
-      <!-- My Leagues Sidebar -->
+      <!-- Right Sidebar -->
       <div class="col-md-3">
         
         <hr>
 
+        <!-- My Leagues -->
         <ul class="list-unstyled"><%= link_to " My Leagues", '#' %>
           <% if !current_user.leagues.empty? %>
             
@@ -77,6 +78,11 @@
             <li>No leagues yet.</li>
           <% end %>
         </ul>
+
+        <hr> 
+
+        <!-- My Bets -->
+        <%= render 'my_bets_table' %>
 
         <hr> 
 
