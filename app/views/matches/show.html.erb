@@ -71,9 +71,11 @@
     
     <!-- Player 1 Bet -->
     <div class="col-md-4 col-xs-4">
-      <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
-        <% unless current_user.betting_on?(@match) %>
-          <%= render 'p1_bet' %>
+      <% if current_user.fight_bucks > 0 %>
+        <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
+          <% unless current_user.betting_on?(@match) %>
+            <%= render 'p1_bet' %>
+          <% end %>
         <% end %>
       <% end %>
     </div>
@@ -92,11 +94,13 @@
 
     <!-- Player 2 Bet -->
     <div class="col-md-4 col-xs-4">
-    <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
-      <% unless current_user.betting_on?(@match) %>
-        <%= render 'p2_bet' %>
+      <% if current_user.fight_bucks > 0 %>
+        <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
+          <% unless current_user.betting_on?(@match) %>
+            <%= render 'p2_bet' %>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
     </div>
 
   </div>
