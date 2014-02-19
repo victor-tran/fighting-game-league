@@ -13,6 +13,7 @@ FightingGameLeague::Application.routes.draw do
       patch :p1_set_score, :p2_set_score, :confirm_score, :p1_set_character, :p2_set_character
     end
   end
+  resources :bets, only: [:create]
   root :to => "home#index"
 
   match '/register', to: 'users#new', via: 'get'

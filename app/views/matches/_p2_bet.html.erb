@@ -1,0 +1,6 @@
+<%= form_for(current_user.bets.build(favorite_id: @match.p2_id),
+             remote: true) do |f| %>
+  <%= f.hidden_field :match_id, value: @match.id %>
+  <%= f.hidden_field :favorite_id, value: @match.p2_id %>
+  <%= f.submit "Bet!", class: "btn btn-lg btn-primary" %>
+<% end %>

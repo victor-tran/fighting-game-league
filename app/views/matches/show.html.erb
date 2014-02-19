@@ -71,7 +71,11 @@
     
     <!-- Player 1 Bet -->
     <div class="col-md-4 col-xs-4">
-      <%= link_to "Bet!", '#', class: "btn btn-primary btn-lg" %>
+      <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
+        <% unless current_user.betting_on?(@match) %>
+          <%= render 'p1_bet' %>
+        <% end %>
+      <% end %>
     </div>
 
     <!-- Edit Match Score -->
@@ -88,7 +92,11 @@
 
     <!-- Player 2 Bet -->
     <div class="col-md-4 col-xs-4">
-      <%= link_to "Bet!", '#', class: "btn btn-primary btn-lg" %>
+    <% unless current_user.id == @match.p1_id || current_user.id == @match.p2_id %>
+      <% unless current_user.betting_on?(@match) %>
+        <%= render 'p2_bet' %>
+      <% end %>
+    <% end %>
     </div>
 
   </div>

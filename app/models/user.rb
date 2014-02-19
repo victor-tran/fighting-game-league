@@ -3,6 +3,14 @@ class User < ActiveRecord::Base
   has_many :leagues, :through => :memberships
   has_many :matches, :through => :leagues
 
+  # Betting associations
+  has_many :bets, foreign_key: 'better_id'
+  has_many :favorites, through: :bets
+  has_many :reverse_bets, foreign_key: 'favorite_id',
+                          class_name:  'Bet',
+                          dependent: :destroy
+  has_many :betters, through: :reverse_bets, source: :better
+
   before_save { self.email = email.downcase }
   
   MAX_LENGTH_FIRST_NAME = 20
@@ -38,6 +46,16 @@ class User < ActiveRecord::Base
   # Removes league from current user's list of leagues.
   def leave!(league)
     memberships.find_by(league_id: league.id).destroy!
+  end
+
+  # Returns true if current user bet on match.
+  def betting_on?(match)
+    bets.find_by(match_id: match.id, better_id: id)
+  end
+
+  # Adds bet to current_user.bets
+  def bet!(match, favorite)
+    bets.create!(match_id: match.id, favorite_id: favorite.id)
   end
 
   def User.new_remember_token
