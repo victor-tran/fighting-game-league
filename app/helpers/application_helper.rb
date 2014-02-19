@@ -79,6 +79,15 @@ module ApplicationHelper
     end
   end
 
+  # Returns true if match score = 0:0
+  def match_scores_not_set?(match)
+    if match.p1_score == 0 && match.p2_score == 0
+      true
+    else
+      false
+    end
+  end
+
   # Returns overall W-L fighter history.
 
   # Returns current match streak.
