@@ -64,6 +64,27 @@ class User < ActiveRecord::Base
     self.id == match.p1_id || self.id == match.p2_id
   end
 
+
+  # Return set of matches that the user has to play in the
+  # current rounds of each league.
+  def current_matches
+    my_current_matches = Set.new
+
+    leagues.each do |league|
+      
+      # In each league's set of matches, find the match where the 
+      # current_user is either player 1 or 2 and where the current
+      # round is equal to the league's current round and the current
+      # season is equals to the league's current season.
+      my_current_matches.add(league.matches.where(
+        "round_number = ? AND season_number = ? AND p1_id = ? OR p2_id = ?", 
+        league.current_round, league.current_season_number, 1, 1).first)
+
+    end
+
+    my_current_matches
+  end
+
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

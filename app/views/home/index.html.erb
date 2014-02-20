@@ -46,8 +46,17 @@
       <!-- Main content -->
       <div class="col-md-6">
 
-        <% if !current_user.leagues.empty? %>
-          <h1 align="center">League Activity</h1>
+      <ul class="list-unstyled">
+        Current Matches
+        <% if !current_user.matches.empty? %>
+          
+          <% current_user.current_matches.each do |match| %>
+            
+            <li>
+              <%= link_to match.display_score, match %>
+            </li>
+
+          <% end %>
 
 
         <% else %>
