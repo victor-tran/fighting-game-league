@@ -3,6 +3,7 @@ class Match < ActiveRecord::Base
   belongs_to :p1, class_name: "User"
   belongs_to :p2, class_name: "User"
   belongs_to :game
+  has_many :bets, dependent: :destroy
 
   # Validations
   validates :round_number, presence: true
