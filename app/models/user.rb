@@ -5,11 +5,6 @@ class User < ActiveRecord::Base
 
   # Betting associations
   has_many :bets, foreign_key: 'better_id'
-  has_many :favorites, through: :bets
-  has_many :reverse_bets, foreign_key: 'favorite_id',
-                          class_name:  'Bet',
-                          dependent: :destroy
-  has_many :betters, through: :reverse_bets, source: :better
 
   before_save { self.email = email.downcase }
   
