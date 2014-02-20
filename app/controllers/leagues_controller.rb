@@ -52,7 +52,6 @@ class LeaguesController < ApplicationController
   def next_round
     @league = League.find(params[:id])
     if @league.update_attributes(league_params)
-      @league.generate_matches
       flash[:notice] = "Round " + @league.current_round.to_s + " started."
     end
     redirect_to @league

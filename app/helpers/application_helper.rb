@@ -52,7 +52,7 @@ module ApplicationHelper
   end
 
   # Returns true if matches are all accepted for the current round.
-  def all_matches_accepted?(matches, current_round)
+  def all_matches_accepted?(matches)
     matches_accepted = true
 
     matches.each do |match|

@@ -67,6 +67,7 @@ class MatchesController < ApplicationController
       
       # Match score accepted. 
       if @match.p1_accepted == true || @match.p2_accepted == true
+        @match.pay_winning_betters
         flash[:notice] = "Match score accepted."
       # Match score declined.
       else

@@ -44,4 +44,24 @@ class Match < ActiveRecord::Base
       end
     end
   end
+
+  # Pay the users who bet on winning player
+  def pay_winning_betters
+    
+    # Figure out winning user
+    if p1_score > p2_score
+      winner_id = p1_id
+    else
+      winner_id = p2_id
+    end
+
+    # Pay all users who's favorite pick equals winner_id
+    self.bets.each do |bet|
+      if bet.favorite_id == winner_id
+        user = User.find(bet.better_id)
+        user.update_attribute(:fight_bucks, user.fight_bucks + 2)
+      end
+    end
+    
+  end
 end

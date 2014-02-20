@@ -14,7 +14,7 @@ module LeaguesHelper
   def more_rounds_left_in_season?(league, next_round)
     total_rounds = total_rounds(league)
 
-    next_round > total_rounds
+    next_round <= total_rounds
   end
 
   def matches_for_current_season(league)
