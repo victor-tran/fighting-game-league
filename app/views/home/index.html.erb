@@ -46,24 +46,24 @@
       <!-- Main content -->
       <div class="col-md-6">
 
-      <ul class="list-unstyled">
-        Current Matches
-        <% if !current_user.matches.empty? %>
-          
-          <% current_user.current_matches.each do |match| %>
+        <h1>Current Matches</h1>
+
+        <ul class="list-unstyled">
+          <% if !current_user.matches.empty? %>
             
-            <li>
-              <%= link_to match.display_score, match %>
-            </li>
+            <% current_user.current_matches.each do |match| %>
+              
+              <li>
+                <%= link_to match.display_score, match %>
+              </li>
 
+            <% end %>
+          <% else %>
+            <h1 align="center">Start fighting now!</h1>
+            <%= link_to "Create a league", new_league_path, class: "btn btn-lg btn-primary" %>
+            <%= link_to "Join a league", leagues_path, class: "btn btn-lg btn-primary" %>
           <% end %>
-
-
-        <% else %>
-          <h1 align="center">Start fighting now!</h1>
-          <%= link_to "Create a league", new_league_path, class: "btn btn-lg btn-primary" %>
-          <%= link_to "Join a league", leagues_path, class: "btn btn-lg btn-primary" %>
-        <% end %>
+        </ul>
       </div> 
 
       <!-- Right Sidebar -->
