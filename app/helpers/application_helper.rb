@@ -10,11 +10,6 @@ module ApplicationHelper
     end
   end
 
-  # Returns "first_name 'alias' last_name" of given User.
-  def full_name(user)
-  	user.first_name + " '" + user.alias + "' " + user.last_name
-  end
-
   # Returns a list of all pending matches for user.
   def pending_matches(matches, user)
 
@@ -63,45 +58,6 @@ module ApplicationHelper
     end
 
     matches_accepted
-  end
-
-  # Returns p1 alias -- p1 score:p2 score -- p2 alias
-  def display_match_score(match)
-    User.find(match.p1_id).alias + " -- " + match.p1_score.to_s + ":" + match.p2_score.to_s + " -- " + User.find(match.p2_id).alias
-  end
-
-  # Returns user id of the winner of the match.
-  def winner_of_match(match)
-    if match.p1_score > match.p2_score
-      match.p1_id
-    else
-      match.p2_id
-    end
-  end
-
-  # Returns true if match score = 0:0
-  def match_scores_not_set?(match)
-    if match.p1_score == 0 && match.p2_score == 0
-      true
-    else
-      false
-    end
-  end
-
-  # Returns bet info for match.
-  def match_bet_info(match)
-    p1_bet_count = Bet.where("match_id = ? AND favorite_id = ?", match.id, match.p1_id).count
-    p2_bet_count = Bet.where("match_id = ? AND favorite_id = ?", match.id, match.p2_id).count
-
-    p1_percent  = (p1_bet_count.to_f / (p1_bet_count + p2_bet_count)) * 100
-    p2_percent = (p2_bet_count.to_f / (p1_bet_count + p2_bet_count)) * 100
-
-    # e.g. ( 0 ) 0% | 100% ( 1 )
-    "( " + p1_bet_count.to_s + " ) " + 
-    number_to_percentage(p1_percent, precision: 0) + 
-    " | " + 
-    number_to_percentage(p2_percent, precision: 0) + 
-    "( " + p2_bet_count.to_s + " )"
   end
 
   # Returns overall W-L fighter history.

@@ -28,13 +28,37 @@ class League < ActiveRecord::Base
     end
   end
 
-  # Generates and schedules matches for a single round-robin schedule.
-  def generate_matches
-
-    # Season data
+  # Returns the total rounds for current league.
+  def total_rounds
     matches_per_round = users.count / 2
     total_matches = (users.count - 1) * matches_per_round
     total_rounds = total_matches / matches_per_round
+
+    total_rounds
+  end
+
+  # Returns true if there are more rounds left in the season
+  def more_rounds_left_in_season?
+    next_round = current_round + 1
+    next_round <= total_rounds
+  end
+
+  # Returns matches for this league's current season.
+  def matches_for_current_season
+
+    current_matches = Set.new
+
+    matches.each do |match|
+      if match.season_number == current_season_number
+        current_matches.add(match)
+      end
+    end
+
+    current_matches
+  end
+
+  # Generates and schedules matches for a single round-robin schedule.
+  def generate_matches
 
     # Generate all possible combinations of head-to-head matches.
     match_array = users.combination(2).to_a

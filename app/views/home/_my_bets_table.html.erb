@@ -19,9 +19,9 @@
             <% match = Match.find(bet.match_id) %>
             <tr>
               <td>
-                <% unless match_scores_not_set?(match) %>
+                <% unless match.scores_not_set? %>
                   <% if match.p1_accepted == true && match.p2_accepted == true %>
-                    <% if bet.favorite_id == winner_of_match(match) %>
+                    <% if bet.favorite_id == match.winner_id %>
                       <%= link_to '', '#', class: "glyphicon glyphicon-thumbs-up" %>
                     <% else %>
                       <%= link_to '', '#', class: "glyphicon glyphicon-remove" %>
@@ -32,7 +32,7 @@
                 <% end %>
               </td>
               <td>
-                <%= link_to display_match_score(match), match_path(match) %>
+                <%= link_to match.display_score, match_path(match) %>
               </td>
               <td>
                 <%= User.find(bet.favorite_id).alias %>

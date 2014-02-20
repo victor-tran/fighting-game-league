@@ -28,7 +28,7 @@
 
     <!-- Player 1 -->
     <div class="col-md-4 col-xs-4">
-      <p><%= link_to full_name(p1), p1 %><p>
+      <p><%= link_to p1.alias, p1 %><p>
       <p>W-L: 12-0</p>
       <p>League Rank: 1</p>
       <% if @match.p1_character != nil %>
@@ -55,7 +55,7 @@
 
     <!-- Player 2 -->
     <div class="col-md-4 col-xs-4">
-      <p><%= link_to full_name(p2), p2 %><p>
+      <p><%= link_to p2.alias, p2 %><p>
       <p>W-L: 10-2</p>
       <p>League Rank: T-2</p>
       <% if @match.p2_character != nil %>
@@ -72,7 +72,7 @@
     
     <!-- Player 1 Bet -->
     <div class="col-md-4 col-xs-4">
-      <% if match_scores_not_set?(@match) %>
+      <% if @match.scores_not_set? %>
         <% if current_user.fight_bucks > 0 %>
           <% unless current_user.fighting_in?(@match) %>
             <% unless current_user.betting_on?(@match) %>
@@ -97,7 +97,7 @@
 
     <!-- Player 2 Bet -->
     <div class="col-md-4 col-xs-4">
-      <% if match_scores_not_set?(@match) %>
+      <% if @match.scores_not_set? %>
         <% if current_user.fight_bucks > 0 %>
           <% unless current_user.fighting_in?(@match) %>
             <% unless current_user.betting_on?(@match) %>

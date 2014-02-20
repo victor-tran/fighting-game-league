@@ -45,23 +45,38 @@ class Match < ActiveRecord::Base
     end
   end
 
+
+  # Returns user id of the winner of the match.
+  def winner_id
+    if p1_score > p2_score
+      p1_id
+    else
+      p2_id
+    end
+  end
+
   # Pay the users who bet on winning player
   def pay_winning_betters
-    
-    # Figure out winning user
-    if p1_score > p2_score
-      winner_id = p1_id
-    else
-      winner_id = p2_id
-    end
+
+    winning_id = winner_id
 
     # Pay all users who's favorite pick equals winner_id
     self.bets.each do |bet|
-      if bet.favorite_id == winner_id
+      if bet.favorite_id == winning_id
         user = User.find(bet.better_id)
         user.update_attribute(:fight_bucks, user.fight_bucks + 2)
       end
     end
     
+  end
+
+  # Returns p1 alias -- p1 score:p2 score -- p2 alias
+  def display_score
+    User.find(p1_id).alias + " -- " + p1_score.to_s + ":" + p2_score.to_s + " -- " + User.find(p2_id).alias
+  end
+
+  # Returns true if match score = 0:0
+  def scores_not_set?
+    p1_score == 0 && p2_score == 0
   end
 end

@@ -33,6 +33,11 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
 
+  # Returns "first_name 'alias' last_name" of given User.
+  def full_name
+    first_name + " '" + self.alias + "' " + last_name
+  end
+
   # Returns true if current user is a member of given league.
   def memberOf?(league)
     memberships.find_by(league_id: league.id)
