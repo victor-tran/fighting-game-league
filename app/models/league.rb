@@ -38,7 +38,7 @@ class League < ActiveRecord::Base
   end
 
   # Returns true if there are more rounds left in the season
-  def more_rounds_left_in_season?
+  def has_more_rounds_left_in_season?
     next_round = current_round + 1
     next_round <= total_rounds
   end
