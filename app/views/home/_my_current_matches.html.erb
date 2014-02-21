@@ -1,0 +1,44 @@
+<% if !current_user.matches.empty? %>
+  <!-- Panel -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      My Current Matches
+    </div>
+    
+    <!-- Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <tr>
+          <th>Game</th>
+          <th>League</th>
+          <th>Against</th>
+        </tr>
+        
+        <% current_user.current_matches.each do |match| %>
+          <tr>
+
+            <td>
+              <%= image_tag Game.find(League.find(match.league_id).game_id).logo, size: "50" %>
+            </td>     
+            <td>
+              <%= link_to League.find(match.league_id).name, League.find(match.league_id) %>
+            </td>
+            <td>
+              <% if current_user.id == match.p1_id %>
+                <%= link_to User.find(match.p2_id).alias, user_path(match.p2_id) %>
+              <% else %>
+                <%= link_to User.find(match.p1_id).alias, user_path(match.p1_id) %>
+              <% end %>
+            </td>
+
+          </tr>
+        <% end %>
+
+      </table>
+    </div>
+  </div>
+<% else %>
+  <h1 align="center">Start fighting now!</h1>
+  <%= link_to "Create a league", new_league_path, class: "btn btn-lg btn-primary" %>
+  <%= link_to "Join a league", leagues_path, class: "btn btn-lg btn-primary" %>
+<% end %>
