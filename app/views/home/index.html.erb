@@ -46,11 +46,9 @@
       <!-- Main content -->
       <div class="col-md-6">
 
-        <h1>Current Matches</h1>
-
         <ul class="list-unstyled">
           <% if !current_user.matches.empty? %>
-            
+            <h1>Current Matches</h1>
             <% current_user.current_matches.each do |match| %>
               
               <li>
