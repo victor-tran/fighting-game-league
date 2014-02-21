@@ -72,13 +72,16 @@ class User < ActiveRecord::Base
 
     leagues.each do |league|
       
-      # In each league's set of matches, find the match where the 
-      # current_user is either player 1 or 2 and where the current
-      # round is equal to the league's current round and the current
-      # season is equals to the league's current season.
-      my_current_matches.add(league.matches.where(
-        "round_number = ? AND season_number = ? AND p1_id = ? OR p2_id = ?", 
-        league.current_round, league.current_season_number, 1, 1).first)
+      if league.matches != []
+
+        # In each league's set of matches, find the match where the 
+        # current_user is either player 1 or 2 and where the current
+        # round is equal to the league's current round and the current
+        # season is equals to the league's current season.
+        my_current_matches.add(league.matches.where(
+          "round_number = ? AND season_number = ? AND p1_id = ? OR p2_id = ?", 
+          league.current_round, league.current_season_number, 1, 1).first)
+      end
 
     end
 

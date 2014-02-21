@@ -43,7 +43,7 @@
         </section>
       </div>
 
-      <!-- Main content -->
+      <!-- My Matches -->
       <div class="col-md-6">
 
         <ul class="list-unstyled">
@@ -52,6 +52,7 @@
             <% current_user.current_matches.each do |match| %>
               
               <li>
+                <%= image_tag Game.find(League.find(match.league_id).game_id).logo, size: "50" %>
                 <%= link_to match.display_score, match %>
               </li>
 

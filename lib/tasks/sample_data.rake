@@ -8,18 +8,30 @@ namespace :db do
 end
 
 def make_games
-  Game.create!(name: "Ultra Street Fighter IV")
-  Game.create!(name: "Ultimate Marvel vs. Capcom 3") 
-  Game.create!(name: "Injustice: Gods Among Us")
-  Game.create!(name: "Super Smash Bros. Melee")
-  Game.create!(name: "Killer Instinct")
-  Game.create!(name: "King of Fighters XIII")
-  Game.create!(name: "Street Fighter x Tekken")
-  Game.create!(name: "Persona 4 Arena")
-  Game.create!(name: "Tekken Tag Tournament 2")
-  Game.create!(name: "Mortal Kombat 9")
-  Game.create!(name: "Skullgirls")
-  Game.create!(name: "Divekick")
+  Game.create!(name: "Ultra Street Fighter IV",
+               logo: "usf4_logo.jpg")
+  Game.create!(name: "Ultimate Marvel vs. Capcom 3",
+               logo: "umvc3_logo.png")
+  Game.create!(name: "Injustice: Gods Among Us",
+               logo: "injustice_logo.png")
+  Game.create!(name: "Super Smash Bros. Melee",
+               logo: "melee_logo.png")
+  Game.create!(name: "Killer Instinct",
+               logo: "ki_logo.png")
+  Game.create!(name: "King of Fighters XIII",
+               logo: "kof_13_logo.jpg")
+  Game.create!(name: "Street Fighter x Tekken",
+               logo: "sfxt_logo.jpg")
+  Game.create!(name: "Persona 4 Arena",
+               logo: "p4a_logo.png")
+  Game.create!(name: "Tekken Tag Tournament 2",
+               logo: "ttt2_logo.jpg")
+  Game.create!(name: "Mortal Kombat 9",
+               logo: "mk_logo.png")
+  Game.create!(name: "Skullgirls",
+               logo: "skullgirls_logo.png")
+  Game.create!(name: "Divekick",
+               logo: "divekick_logo.png")
 end
 
 def make_characters
