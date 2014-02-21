@@ -30,7 +30,6 @@ class League < ActiveRecord::Base
 
   # Returns the total rounds for current league.
   def total_rounds
-    matches_per_round = 0
     matches_per_round = users.count / 2
     total_matches = (users.count - 1) * matches_per_round
     total_rounds = total_matches / matches_per_round
@@ -60,6 +59,8 @@ class League < ActiveRecord::Base
 
   # Generates and schedules matches for a single round-robin schedule.
   def generate_matches
+    
+    matches_per_round = users.count / 2
 
     # Generate all possible combinations of head-to-head matches.
     match_array = users.combination(2).to_a
