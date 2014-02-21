@@ -8,7 +8,7 @@ namespace :db do
 end
 
 def make_games
-  Game.create!(name: "Super Street Fighter IV: Arcade Edition")
+  Game.create!(name: "Ultra Street Fighter IV")
   Game.create!(name: "Ultimate Marvel vs. Capcom 3") 
   Game.create!(name: "Injustice: Gods Among Us")
   Game.create!(name: "Super Smash Bros. Melee")
@@ -18,14 +18,16 @@ def make_games
   Game.create!(name: "Persona 4 Arena")
   Game.create!(name: "Tekken Tag Tournament 2")
   Game.create!(name: "Mortal Kombat 9")
+  Game.create!(name: "Skullgirls")
+  Game.create!(name: "Divekick")
 end
 
 def make_characters
 
-  ###########################################
-  # Super Street Fighter IV: Arcade Edition #
-  ###########################################
-  game = Game.find_by_name("Super Street Fighter IV: Arcade Edition")
+  ###########################
+  # Ultra Street Fighter IV #
+  ###########################
+  game = Game.find_by_name("Ultra Street Fighter IV")
   game.characters.create!(name: "Ryu")
   game.characters.create!(name: "Ken")
   game.characters.create!(name: "E. Honda")
@@ -65,6 +67,10 @@ def make_characters
   game.characters.create!(name: "T. Hawk")
   game.characters.create!(name: "Adon")
   game.characters.create!(name: "Rose")
+  game.characters.create!(name: "Poison")
+  game.characters.create!(name: "Hugo")
+  game.characters.create!(name: "Rolento")
+  game.characters.create!(name: "Elena")
 
   ###############################
   # Ulimate Marvel vs. Capcom 3 #
@@ -437,6 +443,38 @@ def make_characters
   game.characters.create!(name: "Sonya")
   game.characters.create!(name: "Stryker")
   game.characters.create!(name: "Sub-Zero")
+
+  ##############
+  # Skullgirls #
+  ##############
+  game = Game.find_by_name("Skullgirls")
+  game.characters.create!(name: "Filia")
+  game.characters.create!(name: "Cerebella")
+  game.characters.create!(name: "Peacock")
+  game.characters.create!(name: "Parasoul")
+  game.characters.create!(name: "Ms. Fortune")
+  game.characters.create!(name: "Painwheel")
+  game.characters.create!(name: "Valentine")
+  game.characters.create!(name: "Double")
+  game.characters.create!(name: "Squigly")
+
+  ############
+  # DiveKick #
+  ############
+  game = Game.find_by_name("Divekick")
+  game.characters.create!(name: "Dive")
+  game.characters.create!(name: "Kick")
+  game.characters.create!(name: "Dr. Shoals")
+  game.characters.create!(name: "Jefailey")
+  game.characters.create!(name: "Kenny")
+  game.characters.create!(name: "Kung Pao")
+  game.characters.create!(name: "MarkMan")
+  game.characters.create!(name: "Mr. N")
+  game.characters.create!(name: "Redacted")
+  game.characters.create!(name: "S-Kill")
+  game.characters.create!(name: "Stream")
+  game.characters.create!(name: "The Baz")
+  game.characters.create!(name: "Uncle Sensei")
 end
 
 def make_users
