@@ -30,6 +30,7 @@ class League < ActiveRecord::Base
 
   # Returns the total rounds for current league.
   def total_rounds
+    matches_per_round = 0
     matches_per_round = users.count / 2
     total_matches = (users.count - 1) * matches_per_round
     total_rounds = total_matches / matches_per_round
