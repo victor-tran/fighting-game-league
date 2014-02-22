@@ -57,6 +57,7 @@ class League < ActiveRecord::Base
     current_matches
   end
 
+  # Generates a user hashmap that contains user => W-L-MP
   def generate_user_season_standings
     user_hashmap = {}
     match_set = matches_for_current_season
