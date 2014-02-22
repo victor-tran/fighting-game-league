@@ -4,6 +4,8 @@ namespace :db do
     make_games
     make_users
     make_characters
+    make_leagues
+    make_memberships
   end
 end
 
@@ -584,4 +586,33 @@ def make_users
                password: "foobar",
                password_confirmation: "foobar",
                fight_bucks: "50")
+end
+
+def make_leagues
+
+  games = Game.all
+  g_id = 1
+
+  games.each do |game|
+    League.create!(name: Game.find(g_id).name + " League",
+                 game_id: g_id,
+                 match_count: 5,
+                 info: "Example text.",
+                 commissioner_id: 1,
+                 started: false,
+                 current_season_number: 0,
+                 current_round: 0)
+    g_id += 1
+  end
+end
+
+def make_memberships
+  users = User.all
+  leagues = League.all
+
+  leagues.each do |league|
+    users.each do |user|
+      user.join!(league)
+    end
+  end
 end
