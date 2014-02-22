@@ -31,6 +31,7 @@
 <% end %>
 
 <% if @league.started %>
+	<%= render 'standings_table' %>
 	<%= render 'match_table' %>
 
 	<% if all_matches_accepted?(@league.matches.where("round_number = ?", @league.current_round)) && current_user.id == commissioner.id %>

@@ -57,6 +57,39 @@ class League < ActiveRecord::Base
     current_matches
   end
 
+  def generate_user_season_standings
+    user_hashmap = {}
+    match_set = matches_for_current_season
+
+    # Set all user's W-L values to 0-0 and set matches played to 0.
+    users.each do |user|
+      user_hashmap[user] = [0,0,0]
+    end
+
+    match_set.each do |match|
+      if match.p1_accepted == true && match.p2_accepted == true
+        if match.p1_id = match.winner_id
+          user_hashmap[User.find(match.p1_id)][0] += 1
+          user_hashmap[User.find(match.p1_id)][2] += 1
+
+          user_hashmap[User.find(match.p2_id)][1] += 1
+          user_hashmap[User.find(match.p2_id)][2] += 1
+        else
+          user_hashmap[User.find(match.p2_id)][0] += 1
+          user_hashmap[User.find(match.p2_id)][2] += 1
+
+          user_hashmap[User.find(match.p1_id)][1] += 1
+          user_hashmap[User.find(match.p1_id)][2] += 1
+        end
+
+        # Remove the match from match_set
+        match_set.delete(match)
+      end
+    end
+
+    user_hashmap
+  end
+
   # Generates and schedules matches for a single round-robin schedule.
   def generate_matches
     

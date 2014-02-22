@@ -1,0 +1,39 @@
+<% user_map = @league.generate_user_season_standings %>
+<!-- Panel -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Season <%= @league.current_season_number %> Standings
+  </div>
+  
+  <!-- Table -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Fighter</th>
+        <th>MP</th>
+        <th>W</th>
+        <th>L</th>
+        <th>Streak</th>
+      </tr>
+      <% @league.users.each do |user| %>
+        <tr>
+          <td>
+            <%= link_to user.alias, user_path(user) %>
+          </td>
+          <td>
+            <%= user_map[user][2] %>
+          </td>
+          <td>
+            <%= user_map[user][0] %>
+          </td>
+          <td>
+            <%= user_map[user][1] %>
+          </td>
+          <td>
+            
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
