@@ -88,6 +88,84 @@ class User < ActiveRecord::Base
     my_current_matches
   end
 
+  # Returns overall W-L fighter history.
+  def overall_WL
+    wins = 0
+    losses = 0
+
+    matches.each do |match|
+      if match.p1_accepted == true && match.p2_accepted == true
+        if match.winner_id == id
+          wins += 1
+        else
+          losses += 1
+        end
+      end
+    end
+
+    wins.to_s + "-" + losses.to_s
+  end
+
+=begin
+  # Returns current match streak.
+  def current_streak
+
+    streak = 0
+
+    # Decided matches must be sorted by accepted date.
+    # decided_matches = sort_matches_by_accepted_date(matches)
+
+    if decided_matches != []
+      if decided_matches.first.winner_id == id
+        winning_streak = true
+      else
+        winning_streak = false
+      end
+    end
+
+    # Winning streak loop
+    if winning_streak
+
+      while winning_streak do
+        decided_matches.each do |match|
+        
+          if match.winner_id == id
+            streak += 1
+          else
+            winning_streak = false
+            break
+          end
+        end
+      end
+    
+    # Losing streak loop
+    else
+
+      until winning_streak do
+        decided_matches.each do |match|
+        
+          if match.winner_id == id
+            streak += 1
+          else
+            winning_streak = true
+            break
+          end
+        end
+      end
+
+    end
+
+    # Return winning streak
+    if !winning_streak
+      "W" + streak.to_s
+
+    # Return losing streak
+    else
+      "L" + streak.to_s
+    end
+  end
+=end
+
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

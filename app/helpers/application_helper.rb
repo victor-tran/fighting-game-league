@@ -60,10 +60,6 @@ module ApplicationHelper
     matches_accepted
   end
 
-  # Returns overall W-L fighter history.
-
-  # Returns current match streak.
-
   # Returns longest win streak ever.
 
   # Returns league W-L history.
