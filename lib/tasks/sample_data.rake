@@ -32,6 +32,12 @@ def make_games
                logo: "skullgirls_logo.png")
   Game.create!(name: "Divekick",
                logo: "divekick_logo.png")
+  Game.create!(name: "Dead or Alive 5 Ultimate",
+               logo: "doa5u_logo.png")
+  Game.create!(name: "Virtua Fighter 5 Final Showdown",
+               logo: "vf5fs_logo.png")
+  Game.create!(name: "Street Fighter III: 3rd Strike",
+               logo: "sf3_3s_logo.png")
 end
 
 def make_characters
@@ -487,6 +493,79 @@ def make_characters
   game.characters.create!(name: "Stream")
   game.characters.create!(name: "The Baz")
   game.characters.create!(name: "Uncle Sensei")
+
+  ############################
+  # Dead or Alive 5 Ultimate #
+  ############################
+  game = Game.find_by_name("Dead or Alive 5 Ultimate")
+  game.characters.create!(name: "Ayane")
+  game.characters.create!(name: "Bass Armstrong")
+  game.characters.create!(name: "Bayman")
+  game.characters.create!(name: "Brad Wong")
+  game.characters.create!(name: "Christie")
+  game.characters.create!(name: "Eliot")
+  game.characters.create!(name: "Hayate")
+  game.characters.create!(name: "Helena")
+  game.characters.create!(name: "Hitomi")
+  game.characters.create!(name: "Jann Lee")
+  game.characters.create!(name: "Kasumi")
+  game.characters.create!(name: "Kokoro")
+  game.characters.create!(name: "La Mariposa")
+  game.characters.create!(name: "Leifang")
+  game.characters.create!(name: "Mila")
+  game.characters.create!(name: "Rig")
+  game.characters.create!(name: "Ryu Hayabusa")
+  game.characters.create!(name: "Tina Armstrong")
+  game.characters.create!(name: "Zack")
+
+  ###################################
+  # Virtua Fighter 5 Final Showdown #
+  ###################################
+  game = Game.find_by_name("Virtua Fighter 5 Final Showdown")
+  game.characters.create!(name: "Akira Yuki")
+  game.characters.create!(name: "Aoi Umenokouji")
+  game.characters.create!(name: "Brad Burns")
+  game.characters.create!(name: "Dural")
+  game.characters.create!(name: "Eileen")
+  game.characters.create!(name: "El Blaze")
+  game.characters.create!(name: "Goh Hinogami")
+  game.characters.create!(name: "Jacky Bryant")
+  game.characters.create!(name: "Jean Kujo")
+  game.characters.create!(name: "Jeffry McWild")
+  game.characters.create!(name: "Kage-Maru")
+  game.characters.create!(name: "Lau Chan")
+  game.characters.create!(name: "Lei-Fei")
+  game.characters.create!(name: "Lion Rafale")
+  game.characters.create!(name: "Pai Chan")
+  game.characters.create!(name: "Sarah Bryant")
+  game.characters.create!(name: "Shun Di")
+  game.characters.create!(name: "Taka-Arashi")
+  game.characters.create!(name: "Vanessa Lewis")
+  game.characters.create!(name: "Wolf Hawkfield")
+
+  ##################################
+  # Street Fighter III: 3rd Strike #
+  ##################################
+  game = Game.find_by_name("Street Fighter III: 3rd Strike")
+  game.characters.create!(name: "Akuma")
+  game.characters.create!(name: "Alex")
+  game.characters.create!(name: "Dudley")
+  game.characters.create!(name: "Elena")
+  game.characters.create!(name: "Hugo")
+  game.characters.create!(name: "Ibuki")
+  game.characters.create!(name: "Ken")
+  game.characters.create!(name: "Necro")
+  game.characters.create!(name: "Oro")
+  game.characters.create!(name: "Ryu")
+  game.characters.create!(name: "Sean")
+  game.characters.create!(name: "Urien")
+  game.characters.create!(name: "Yang")
+  game.characters.create!(name: "Yun")
+  game.characters.create!(name: "Chun-Li")
+  game.characters.create!(name: "Makoto")
+  game.characters.create!(name: "Q")
+  game.characters.create!(name: "Remy")
+  game.characters.create!(name: "Twelve")
 end
 
 def make_users
