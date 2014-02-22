@@ -78,9 +78,13 @@ class User < ActiveRecord::Base
         # current_user is either player 1 or 2 and where the current
         # round is equal to the league's current round and the current
         # season is equals to the league's current season.
-        my_current_matches.add(league.matches.where(
+        current_match = league.matches.where(
           "round_number = ? AND season_number = ? AND p1_id = ? OR p2_id = ?", 
-          league.current_round, league.current_season_number, 1, 1).first)
+          league.current_round, league.current_season_number, id, id).first
+
+        unless current_match == nil 
+          my_current_matches.add(current_match)
+        end
       end
 
     end
