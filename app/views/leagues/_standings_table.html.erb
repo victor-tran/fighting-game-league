@@ -1,4 +1,4 @@
-<% user_map = @league.generate_user_season_standings %>
+<% standings = @league.generate_user_season_standings %>
 <!-- Panel -->
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -15,22 +15,22 @@
         <th>L</th>
         <th>Streak</th>
       </tr>
-      <% @league.users.each do |user| %>
+      <% for i in 0..standings.count - 1 %>
         <tr>
           <td>
-            <%= link_to user.alias, user_path(user) %>
+            <%= link_to User.find(standings[i][0]).alias, user_path(User.find(standings[i][0])) %>
           </td>
           <td>
-            <%= user_map[user][2] %>
+            <%= standings[i][1][2] %>
           </td>
           <td>
-            <%= user_map[user][0] %>
+            <%= standings[i][1][0] %>
           </td>
           <td>
-            <%= user_map[user][1] %>
+            <%= standings[i][1][1] %>
           </td>
           <td>
-            
+            Streak
           </td>
         </tr>
       <% end %>

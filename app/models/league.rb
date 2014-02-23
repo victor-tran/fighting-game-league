@@ -57,17 +57,22 @@ class League < ActiveRecord::Base
     current_matches
   end
 
-  # Generates a user hashmap that contains user => W-L-MP
+  # Returns an array sorted by Wins that contains each user's W-L-MP.
   def generate_user_season_standings
-    user_hashmap = {}
+
+    # Get all the matches for this current season only.
     match_set = matches_for_current_season
 
     # Set all user's W-L values to 0-0 and set matches played to 0.
+    user_hashmap = {}
     users.each do |user|
       user_hashmap[user] = [0,0,0]
     end
 
+    # Calculate each user's W-L-MP
     match_set.each do |match|
+
+      # Only calculate if match has been accepted by p1 & p2.
       if match.p1_accepted == true && match.p2_accepted == true
         if match.p1_id = match.winner_id
           user_hashmap[User.find(match.p1_id)][0] += 1
@@ -88,7 +93,8 @@ class League < ActiveRecord::Base
       end
     end
 
-    user_hashmap
+    # Convert hashmap to an array that is sorted by Wins.
+    user_hashmap.to_a.sort_by{ |k| -k[1][0] }
   end
 
   # Generates and schedules matches for a single round-robin schedule.

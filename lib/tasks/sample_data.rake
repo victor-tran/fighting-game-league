@@ -586,6 +586,22 @@ def make_users
                password: "foobar",
                password_confirmation: "foobar",
                fight_bucks: "50")
+
+  User.create!(first_name: "jaja",
+               last_name: "jaja",
+               alias: "jaja",
+               email: "jaja@jaja.com",
+               password: "foobar",
+               password_confirmation: "foobar",
+               fight_bucks: "50")
+
+  User.create!(first_name: "lolo",
+               last_name: "jones",
+               alias: "lala",
+               email: "lala@foo.com",
+               password: "foobar",
+               password_confirmation: "foobar",
+               fight_bucks: "50")
 end
 
 def make_leagues
