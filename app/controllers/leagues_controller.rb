@@ -65,6 +65,10 @@ class LeaguesController < ApplicationController
     redirect_to @league
   end
 
+  def statistics
+    @league = League.find(params[:id])
+  end
+
   private
   
     def league_params

@@ -3,6 +3,7 @@ FightingGameLeague::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :leagues do
     member do
+      get :statistics
       patch :start, :next_round, :end_season
     end
   end
