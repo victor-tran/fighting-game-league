@@ -1,7 +1,7 @@
 class League < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
-  has_many :matches, dependent: :destroy
+  has_many :matches
 
   belongs_to :game
 
