@@ -2,8 +2,6 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :leagues, :through => :memberships
   has_many :matches, :through => :leagues
-
-  # Betting associations
   has_many :bets, foreign_key: 'better_id'
 
   before_save { self.email = email.downcase }
