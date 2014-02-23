@@ -93,8 +93,8 @@ class League < ActiveRecord::Base
       end
     end
 
-    # Convert hashmap to an array that is sorted by Wins.
-    user_hashmap.to_a.sort_by{ |k| -k[1][0] }
+    # Convert hashmap to an array that is sorted by Wins and then by MP.
+    user_hashmap.to_a.sort_by{ |user| [ -user[1][0], -user[1][2] ] }
   end
 
   # Generates and schedules matches for a single round-robin schedule.
