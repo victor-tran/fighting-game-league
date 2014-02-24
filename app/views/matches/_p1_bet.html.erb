@@ -1,4 +1,5 @@
 <%= form_for(current_user.bets.build(favorite_id: @match.p1_id)) do |f| %>
+  <%= f.number_field :wager_amount %>
   <%= f.hidden_field :match_id, value: @match.id %>
   <%= f.hidden_field :favorite_id, value: @match.p1_id %>
   <%= f.submit "Bet!", class: "btn btn-lg btn-primary" %>

@@ -66,9 +66,9 @@ class User < ActiveRecord::Base
   end
 
   # Adds bet to current_user.bets
-  def bet!(match, favorite)
-    bets.create!(match_id: match.id, favorite_id: favorite.id)
-    self.update_attribute(:fight_bucks, self.fight_bucks - 1)
+  def bet!(match, favorite, wager)
+    bets.create!(match_id: match.id, favorite_id: favorite.id, wager_amount: wager)
+    self.update_attribute(:fight_bucks, self.fight_bucks - (wager))
   end
 
   # Returns true if current user is fighting in match.

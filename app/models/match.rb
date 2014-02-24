@@ -64,7 +64,7 @@ class Match < ActiveRecord::Base
     self.bets.each do |bet|
       if bet.favorite_id == winning_id
         user = User.find(bet.better_id)
-        user.update_attribute(:fight_bucks, user.fight_bucks + 2)
+        user.update_attribute(:fight_bucks, bet.wager_amount * 2)
       end
     end
     
