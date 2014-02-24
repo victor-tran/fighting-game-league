@@ -8,7 +8,7 @@
 
     <!-- Player 1 Portrait -->
     <div class="col-md-4 col-xs-4">
-      <h1><%= image_tag User.find(@match.p1_id).avatar.url(:medium) %></h1>
+      <h1><%= image_tag User.find(@match.p1_id).avatar.url(:large) %></h1>
     </div>
 
     <!-- VS -->
@@ -18,7 +18,7 @@
 
     <!-- Player 2 Portrait -->
     <div class="col-md-4 col-xs-4">
-      <h1><%= image_tag User.find(@match.p2_id).avatar.url(:medium) %></h1>
+      <h1><%= image_tag User.find(@match.p2_id).avatar.url(:large) %></h1>
     </div>
     
   </div>
@@ -44,12 +44,8 @@
       <% else %>
         <p><%= @match.match_date %></p>
       <% end %>
-      <% if @match.p1_score == 0 && @match.p2_score == 0 %>
-        <p>TBD</p>
-      <% else %>
-        <%= @match.p1_score %> : <%= @match.p2_score %></p>
-      <% end %>
-
+      
+      <%= @match.p1_score %> : <%= @match.p2_score %></p>
       <p><%= match_bet_info(@match) %></p>
     </div>
 

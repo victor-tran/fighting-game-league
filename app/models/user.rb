@@ -16,15 +16,16 @@ class User < ActiveRecord::Base
   # Paperclip image stuff.
   has_attached_file :avatar, 
     styles: {
-      thumb: '100x100>',
-      square: '200x200#',
-      medium: '300x300>'
+      thumb: '80x80#',
+      square: '160x160#',
+      medium: '300x300>',
+      large: '500x500>'
     }, 
     :default_url => "/images/:style/missing.png"
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
-  # Validate the attached image is image/jpg, image/png, etc
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  # Validates that the attached image is jpg or png.
+  validates_attachment :avatar,
+    :content_type => { :content_type => ["image/jpg", "image/png", "image/jpeg"] }
   
   # Validations
   validates :first_name, presence: true, length: { maximum: MAX_LENGTH_FIRST_NAME }

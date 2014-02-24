@@ -3,7 +3,10 @@
 <%= simple_form_for@user, :html => { :multipart => true } do |f| %>
 
   <h1>Update your profile</h1>
+  <br>
+  <%= image_tag current_user.avatar.url(:medium) %>
   <%= f.file_field :avatar %>
+  <br>
   <%= f.input :first_name %>
   <%= f.input :last_name %>
   <%= f.input :alias %>
