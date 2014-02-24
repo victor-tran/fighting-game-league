@@ -25,9 +25,9 @@
             </td>
             <td>
               <% if current_user.id == match.p1_id %>
-                <%= link_to User.find(match.p2_id).alias, user_path(match.p2_id) %>
+                <%= link_to User.find(match.p2_id).alias, match %>
               <% else %>
-                <%= link_to User.find(match.p1_id).alias, user_path(match.p1_id) %>
+                <%= link_to User.find(match.p1_id).alias, match %>
               <% end %>
             </td>
 

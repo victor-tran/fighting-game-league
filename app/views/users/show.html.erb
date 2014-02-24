@@ -4,7 +4,9 @@
     
     <!-- User Portrait and Current League List-->
     <div class="col-md-4">
-      <%= image_tag User.find(@user.id).avatar.url(:medium) %>
+      <% unless @user.avatar.url == "/images/original/missing.png" %>
+        <%= image_tag @user.avatar.url(:medium) %>
+      <% end %>
       
       <ul class="list-unstyled">
         <p>Current Leagues</p>
