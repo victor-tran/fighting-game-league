@@ -1,6 +1,6 @@
 <h1>My matches</h1>
 <ul class="list-unstyled">
-  <% pending_matches = pending_matches(current_user.matches, current_user) %>
+  <% pending_matches = current_user.pending_matches %>
   <% if !pending_matches.empty? %>
     <hr>
 

@@ -22,7 +22,7 @@
             <li><%= link_to " Create New league", new_league_path, class: "glyphicon glyphicon-plus" %></li>
             <li>
               <%= link_to " Pending Matches", matches_path, class: "glyphicon glyphicon-tower" %>
-              <span class="badge pull-right"><%= pending_matches(current_user.matches, current_user).count%></span>
+              <span class="badge pull-right"><%= current_user.pending_matches.count%></span>
             </li>
           </ul>
           <hr>

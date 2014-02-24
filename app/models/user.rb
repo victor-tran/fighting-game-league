@@ -1,8 +1,12 @@
 class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :leagues, :through => :memberships
-  has_many :matches, :through => :leagues
+  has_many :p1_matches, class_name: 'Match', foreign_key: 'p1_id'
+  has_many :p2_matches, class_name: 'Match', foreign_key: 'p2_id'
   has_many :bets, foreign_key: 'better_id'
+  def matches
+    p1_matches + p2_matches
+  end
 
   before_save { self.email = email.downcase }
   
@@ -182,7 +186,39 @@ class User < ActiveRecord::Base
   end
 =end
 
-  def User.new_remember_token
+  # Returns a list of all pending matches for user.
+  def pending_matches
+
+    # Set of matches to be returned
+    pending_matches = Set.new
+
+    matches.each do |match|
+      if match.round_number == League.find(match.league_id).current_round
+
+        # Add to pending matches if character hasn't been set yet.
+        if id == match.p1_id && match.p1_character == nil
+          pending_matches.add(match)
+        elsif id == match.p2_id && match.p2_character == nil
+          pending_matches.add(match)
+
+        # Add to pending matches if date has not been set yet.
+        elsif match.match_date == nil
+          pending_matches.add(match)
+
+        # Add to pending matches if matches have NOT been accepted by user yet.
+        elsif id == match.p1_id && match.p1_accepted == false
+          pending_matches.add(match)
+        elsif id == match.p2_id && match.p2_accepted == false
+          pending_matches.add(match)
+        end
+
+      end
+    end
+    
+    pending_matches
+  end
+
+  def new_remember_token
     SecureRandom.urlsafe_base64
   end
 
