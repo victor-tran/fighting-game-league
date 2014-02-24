@@ -2,7 +2,9 @@
 
 <div class="container banner">
 	<!-- League Banner -->
-	<%= image_tag @league.banner.url(:large) %>
+	<% unless @league.banner.url == "/images/original/missing.png" %>
+		<%= image_tag @league.banner.url(:large) %>
+	<% end %>
 </div>
 
 <div class="container">

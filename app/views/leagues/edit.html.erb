@@ -3,7 +3,10 @@
 <%= simple_form_for @league, :html => { :multipart => true } do |f| %>
   <%= f.error_notification %>
   <br>
-  <%= image_tag @league.banner.url(:medium) %>
+  <p>League Banner</p>
+  <% unless @league.banner.url == "/images/original/missing.png" %>
+    <%= image_tag @league.banner.url(:medium) %>
+  <% end %>
   <%= f.file_field :banner %>
   <br>
   <%= f.input :name %>
