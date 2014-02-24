@@ -4,7 +4,7 @@
     
     <!-- User Portrait and Current League List-->
     <div class="col-md-4">
-      <%= placeholdit_image_tag "300" %>
+      <%= image_tag User.find(@user.id).avatar.url(:medium) %>
       
       <ul class="list-unstyled">
         <p>Current Leagues</p>
