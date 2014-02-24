@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140223230819) do
+ActiveRecord::Schema.define(version: 20140224161349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,10 @@ ActiveRecord::Schema.define(version: 20140223230819) do
     t.datetime "updated_at"
     t.integer  "match_count"
     t.string   "info"
+    t.string   "banner_file_name"
+    t.string   "banner_content_type"
+    t.integer  "banner_file_size"
+    t.datetime "banner_updated_at"
   end
 
   add_index "leagues", ["commissioner_id"], name: "index_leagues_on_commissioner_id", using: :btree

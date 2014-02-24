@@ -20,6 +20,20 @@ class League < ActiveRecord::Base
   validates :match_count, presence: true
   validates :info, presence: true
 
+  # Banner stuff.
+  has_attached_file :banner, 
+    styles: {
+      small: '100x100>',
+      medium: '400x125',
+      large: '1140x275#'
+    }, 
+    :default_url => "/images/:style/missing.png"
+
+  # Validates that the attached image is jpg or png.
+  validates_attachment :banner,
+    :content_type => { :content_type => ["image/jpg", "image/png", "image/jpeg", "image/gif"] }
+
+  # Search stuff.
   def self.text_search(query)
     if query.present?
       where("name @@ :q", q: query)
