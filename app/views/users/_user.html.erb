@@ -1,4 +1,4 @@
 <li>
-  <%= gravatar_for user %>
+  <%= image_tag user.avatar.url(:thumb) %>
   <%= link_to user.first_name + " '" + user.alias + "' " + user.last_name, user %>
 </li>
