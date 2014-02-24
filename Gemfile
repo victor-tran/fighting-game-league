@@ -16,6 +16,8 @@ gem 'bootstrap-will_paginate'
 gem 'faker'
 gem 'simple_form'
 gem 'placeholdit'
+gem 'paperclip'
+gem 'aws-sdk'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]

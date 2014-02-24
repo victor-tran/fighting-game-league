@@ -12,6 +12,19 @@ class User < ActiveRecord::Base
   MIN_LENGTH_PASSWORD = 6
   MAX_LENGTH_TAGLINE = 60
   MAX_LENGTH_BIO = 2500
+
+  # Paperclip image stuff.
+  has_attached_file :avatar, 
+    styles: {
+      thumb: '100x100>',
+      square: '200x200#',
+      medium: '300x300>'
+    }, 
+    :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+  # Validate the attached image is image/jpg, image/png, etc
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
   
   # Validations
   validates :first_name, presence: true, length: { maximum: MAX_LENGTH_FIRST_NAME }

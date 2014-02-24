@@ -1,9 +1,9 @@
 <% provide(:title, "Edit user") %>
 
-<%= simple_form_for(@user) do |f| %>
+<%= simple_form_for@user, :html => { :multipart => true } do |f| %>
 
   <h1>Update your profile</h1>
-
+  <%= f.file_field :avatar %>
   <%= f.input :first_name %>
   <%= f.input :last_name %>
   <%= f.input :alias %>
