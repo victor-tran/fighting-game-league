@@ -9,7 +9,7 @@
         <!-- User Avatar and Profile Link -->
         <section>
           <%= image_tag current_user.avatar.url(:square) %>
-          <h3><%= link_to current_user.alias, current_user %><h3>
+          <h3><%= link_to current_user.alias, current_user %></h3>
           <h6>Fight Bucks: <%= current_user.fight_bucks %></h6>
         </section>
 
