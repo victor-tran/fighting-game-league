@@ -218,7 +218,7 @@ class User < ActiveRecord::Base
     pending_matches
   end
 
-  def new_remember_token
+  def User.new_remember_token
     SecureRandom.urlsafe_base64
   end
 
