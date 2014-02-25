@@ -132,7 +132,7 @@ class User < ActiveRecord::Base
     # Decided matches must be sorted by accepted date.
     decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
 
-    unless decided_matches == []
+    if decided_matches != []
       streak = 0
 
       if decided_matches.first.winner_id == id
@@ -191,6 +191,10 @@ class User < ActiveRecord::Base
       else
         "L" + streak.to_s
       end
+    
+    # User doesn't have any decided matches yet.
+    else
+      0
     end
   end
 
