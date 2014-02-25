@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
 
   # Returns current match streak.
   def current_streak
-    unless matches.empty?
+    if !matches.empty?
 
       # Decided matches must be sorted by accepted date.
       decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
@@ -197,13 +197,14 @@ class User < ActiveRecord::Base
       else
         0
       end
+    else
+      0
     end
-    0
   end
 
   # Returns the longest match win streak.
   def longest_win_streak_ever
-    unless matches.empty?
+    if !matches.empty?
       # Decided matches must be sorted by accepted date.
       decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
 
@@ -230,8 +231,10 @@ class User < ActiveRecord::Base
       else
         0
       end
+
+    else
+      0
     end
-    0
   end
 
   # Returns a list of all pending matches for user.
