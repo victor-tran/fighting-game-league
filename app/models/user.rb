@@ -128,105 +128,110 @@ class User < ActiveRecord::Base
 
   # Returns current match streak.
   def current_streak
+    unless matches.empty?
 
-    # Decided matches must be sorted by accepted date.
-    decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
+      # Decided matches must be sorted by accepted date.
+      decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
 
-    if decided_matches != []
-      streak = 0
+      if !decided_matches.empty?
+        streak = 0
 
-      if decided_matches.first.winner_id == id
-        winning_streak = true
-      else
-        winning_streak = false
-      end
+        if decided_matches.first.winner_id == id
+          winning_streak = true
+        else
+          winning_streak = false
+        end
 
 
-      # Winning streak loop
-      if winning_streak
+        # Winning streak loop
+        if winning_streak
 
-        while winning_streak do
-          
-          decided_matches.each do |match|
-          
-            if match.winner_id == id
-              streak += 1
-            else
-              winning_streak = false
-              break
+          while winning_streak do
+            
+            decided_matches.each do |match|
+            
+              if match.winner_id == id
+                streak += 1
+              else
+                winning_streak = false
+                break
+              end
             end
+
+            winning_streak = false
+            break
+          end
+        
+        # Losing streak loop
+        else
+
+          until winning_streak do
+            
+            decided_matches.each do |match|
+            
+              if match.winner_id == id
+                winning_streak = true
+                break
+              else              
+                streak += 1
+              end
+
+            end
+
+            winning_streak = true
+            break
           end
 
-          winning_streak = false
-          break
+        end
+
+        # Return winning streak
+        if !winning_streak
+          "W" + streak.to_s
+
+        # Return losing streak
+        else
+          "L" + streak.to_s
         end
       
-      # Losing streak loop
+      # User doesn't have any decided matches yet.
       else
-
-        until winning_streak do
-          
-          decided_matches.each do |match|
-          
-            if match.winner_id == id
-              winning_streak = true
-              break
-            else              
-              streak += 1
-            end
-
-          end
-
-          winning_streak = true
-          break
-        end
-
+        0
       end
-
-      # Return winning streak
-      if !winning_streak
-        "W" + streak.to_s
-
-      # Return losing streak
-      else
-        "L" + streak.to_s
-      end
-    
-    # User doesn't have any decided matches yet.
-    else
-      0
     end
+    0
   end
 
   # Returns the longest match win streak.
   def longest_win_streak_ever
+    unless matches.empty?
+      # Decided matches must be sorted by accepted date.
+      decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
 
-    # Decided matches must be sorted by accepted date.
-    decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
+      if !decided_matches.empty?
+        longest_streak = 0
+        streak = 0
 
-    if decided_matches != []
-      longest_streak = 0
-      streak = 0
+        decided_matches.each do |match|
+          if match.winner_id == id
+            streak += 1
+            if streak > longest_streak
+              longest_streak = streak
+            end
 
-      decided_matches.each do |match|
-        if match.winner_id == id
-          streak += 1
-          if streak > longest_streak
-            longest_streak = streak
+          else
+            streak = 0
           end
 
-        else
-          streak = 0
         end
 
+        longest_streak
+      
+      # User doesn't have any decided matches yet.
+      else
+        0
       end
-
-      longest_streak
-    
-    # User doesn't have any decided matches yet.
-    else
-      0
     end
+    0
   end
 
   # Returns a list of all pending matches for user.
