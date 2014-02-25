@@ -198,6 +198,37 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Returns the longest match win streak.
+  def longest_win_streak_ever
+
+    # Decided matches must be sorted by accepted date.
+    decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
+
+    if decided_matches != []
+      longest_streak = 0
+      streak = 0
+
+      decided_matches.each do |match|
+        if match.winner_id == id
+          streak += 1
+          if streak > longest_streak
+            longest_streak = streak
+          end
+
+        else
+          streak = 0
+        end
+
+      end
+
+      longest_streak
+    
+    # User doesn't have any decided matches yet.
+    else
+      0
+    end
+  end
+
   # Returns a list of all pending matches for user.
   def pending_matches
 
