@@ -1,7 +1,6 @@
 <% provide(:title, 'New League') %>
 
 <%= simple_form_for(@league) do |f| %>
-  <%= f.error_notification %>
   <%= f.input :name %>
   <%= f.association :game, :selected => 1 %>
         

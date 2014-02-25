@@ -20,8 +20,9 @@ class League < ActiveRecord::Base
   validates :current_round, presence: true
   validates :match_count, presence: true
   validates :info, presence: true
-  has_secure_password
-  validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
+  has_secure_password validations: false
+  validates :password, length: { minimum: MIN_LENGTH_PASSWORD },
+                       allow_blank: true
 
   # Banner stuff.
   has_attached_file :banner, 
