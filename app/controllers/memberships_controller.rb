@@ -3,10 +3,22 @@ class MembershipsController < ApplicationController
   
   def create
     @league = League.find(params[:membership][:league_id])
-    current_user.join!(@league)
-    respond_to do |format|
-      format.html { redirect_to @league }
-      format.js
+
+    if @league.password_protected 
+      if @league.authenticate(params[:membership][:password])
+        current_user.join!(@league)
+        flash[:notice] = "Joined " + @league.name
+        redirect_to @league
+      else
+        flash[:warning] = "Invalid password"
+        redirect_to join_password_league_path(@league)
+      end
+    else
+      current_user.join!(@league)
+      respond_to do |format|
+        format.html { redirect_to @league }
+        format.js
+      end
     end
   end
 

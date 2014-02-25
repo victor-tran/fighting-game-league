@@ -69,10 +69,15 @@ class LeaguesController < ApplicationController
     @league = League.find(params[:id])
   end
 
+  def join_password
+    @league = League.find(params[:id])
+  end
+
   private
   
     def league_params
       params.require(:league).permit(:name, :game_id, :commissioner_id, :started, 
-        :current_season_number, :current_round, :match_count, :info, :banner)
+        :current_season_number, :current_round, :match_count, :info, :banner,
+        :password_protected, :password, :password_confirmation)
     end
 end

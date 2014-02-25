@@ -7,6 +7,7 @@ class League < ActiveRecord::Base
 
   # Constants
   MAX_LENGTH_LEAGUE_NAME = 50
+  MIN_LENGTH_PASSWORD = 6
 
   # Validations
   validates :name,  presence: true,
@@ -19,6 +20,8 @@ class League < ActiveRecord::Base
   validates :current_round, presence: true
   validates :match_count, presence: true
   validates :info, presence: true
+  has_secure_password
+  validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
 
   # Banner stuff.
   has_attached_file :banner, 

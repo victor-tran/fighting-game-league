@@ -34,6 +34,8 @@
 				<% else %>	
 					<h1>You need to have an even number of fighters in the league to begin!</h1>
 				<% end %>
+			<% elsif @league.password_protected %>
+				<%= link_to 'Join league', join_password_league_path(@league), class: "btn btn-primary" %>
 			<% else %>
 				<%= render 'join_form' %>
 			<% end %>		
