@@ -30,7 +30,7 @@
             <%= standings[i][1][1] %>
           </td>
           <td>
-            Streak
+            <%= User.find(standings[i][0]).current_streak %>
           </td>
         </tr>
       <% end %>
