@@ -126,65 +126,73 @@ class User < ActiveRecord::Base
     wins.to_s + "-" + losses.to_s
   end
 
-=begin
   # Returns current match streak.
   def current_streak
 
-    streak = 0
-
     # Decided matches must be sorted by accepted date.
-    # decided_matches = sort_matches_by_accepted_date(matches)
+    decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort_by &:finalized_date
 
-    if decided_matches != []
+    unless decided_matches == []
+      streak = 0
+
       if decided_matches.first.winner_id == id
         winning_streak = true
       else
         winning_streak = false
       end
-    end
 
-    # Winning streak loop
-    if winning_streak
 
-      while winning_streak do
-        decided_matches.each do |match|
-        
-          if match.winner_id == id
-            streak += 1
-          else
-            winning_streak = false
-            break
+      # Winning streak loop
+      if winning_streak
+
+        while winning_streak do
+          
+          decided_matches.each do |match|
+          
+            if match.winner_id == id
+              streak += 1
+            else
+              winning_streak = false
+              break
+            end
           end
-        end
-      end
-    
-    # Losing streak loop
-    else
 
-      until winning_streak do
-        decided_matches.each do |match|
-        
-          if match.winner_id == id
-            streak += 1
-          else
-            winning_streak = true
-            break
+          winning_streak = false
+          break
+        end
+      
+      # Losing streak loop
+      else
+
+        until winning_streak do
+          
+          decided_matches.each do |match|
+          
+            if match.winner_id == id
+              winning_streak = true
+              break
+            else              
+              streak += 1
+            end
+
           end
+
+          winning_streak = true
+          break
         end
+
       end
 
-    end
+      # Return winning streak
+      if !winning_streak
+        "W" + streak.to_s
 
-    # Return winning streak
-    if !winning_streak
-      "W" + streak.to_s
-
-    # Return losing streak
-    else
-      "L" + streak.to_s
+      # Return losing streak
+      else
+        "L" + streak.to_s
+      end
     end
   end
-=end
 
   # Returns a list of all pending matches for user.
   def pending_matches
