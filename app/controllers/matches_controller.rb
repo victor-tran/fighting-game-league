@@ -131,6 +131,7 @@ class MatchesController < ApplicationController
   private
     def match_params
       params.require(:match).permit(:p1_score, :p2_score, :match_date, 
-        :p1_accepted, :p2_accepted, :p1_character, :p2_character, :disputed)
+        :p1_accepted, :p2_accepted, :p1_character, :p2_character, :disputed,
+        :finalized_date)
     end
 end

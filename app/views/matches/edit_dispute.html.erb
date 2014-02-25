@@ -9,6 +9,7 @@
   <%= f.hidden_field :p1_accepted, :value => true %>
   <%= f.hidden_field :p2_accepted, :value => true %>
   <%= f.hidden_field :disputed, :value => false %>
+  <%= f.hidden_field :finalized_date, :value => Time.now %>
   <%= f.submit "Resolve dispute", class: "btn btn-success", 
         :confirm => "Are you sure this is the correct score?" %>
 <% end %>

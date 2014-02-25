@@ -1,5 +1,6 @@
 <%= form_for(match, html: { method: :patch }, :url => confirm_score_match_path(match.id)) do |f| %>
   <%= f.hidden_field :p1_accepted, :value => true %>
+  <%= f.hidden_field :finalized_date, :value => Time.now %>
   <%= f.submit "Accept score", class: "btn btn-success", 
                 :confirm => "Are you sure?" %>
 <% end %>
