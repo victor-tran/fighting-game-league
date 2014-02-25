@@ -1,9 +1,27 @@
 <h1>My matches</h1>
 <ul class="list-unstyled">
+
+  <% disputed_matches = current_user.league_disputes %>
+  <% unless disputed_matches.empty? %>
+    <h2>Commissioner Disputes</h2>
+    <li>
+      <% disputed_matches.each do |match| %>
+        <p>League: <%= link_to League.find(match.league_id).name, League.find(match.league_id) %></p>
+        <% if match.match_date != nil %>
+          <p>Date: <%= match.match_date %></p>
+        <% end %>
+        <p><%= link_to match.display_score, match %></p>
+
+        <%= link_to 'Resolve Dispute', edit_dispute_match_path(match), class: "btn btn-primary" %>
+      <% end %>
+    </li>
+  <% end %>
+
   <% pending_matches = current_user.pending_matches %>
   <% if !pending_matches.empty? %>
     <hr>
 
+    <h2>My League Matches</h2>
     <!-- Loop to list current pending matches -->
     <% pending_matches.each do |match| %>
       <li>
@@ -48,11 +66,16 @@
         <!-- Score has been changed -->
         <% else %>
 
+          <!-- Match has been disputed -->
+          <% if match.disputed %>
+            <p><%= link_to "Score Disputed", '#', class: "btn btn-warning", :disabled => true %></p>
+
           <!-- Display correct accept button-->
-          <% if current_user.id == match.p1_id %>
+          <% elsif current_user.id == match.p1_id %>
             <% if match.p1_accepted == false %>
               <p><%= render partial: 'p1_accept', locals: { match: match } %><p>
               <p><%= render partial: 'decline_match_score', locals: { match: match } %></p>
+              <p><%= render partial: 'dispute_match_score', locals: { match: match } %></p>
             <% else %>
               <p><%= link_to "Score Accepted", p1_edit_score_match_path(match), class: "btn btn-success", :disabled => true %><p>
             <% end %>
@@ -60,6 +83,7 @@
             <% if match.p2_accepted == false %>
               <p><%= render partial: 'p2_accept', locals: { match: match } %></p>
               <p><%= render partial: 'decline_match_score', locals: { match: match } %></p>
+              <p><%= render partial: 'dispute_match_score', locals: { match: match } %></p>
             <% else %>
               <p><%= link_to "Score Accepted", p2_edit_score_match_path(match), class: "btn btn-success", :disabled => true %><p>
             <% end %>

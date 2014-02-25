@@ -10,8 +10,10 @@ FightingGameLeague::Application.routes.draw do
   resources :memberships, only: [:create, :destroy]
   resources :matches do
     member do
-      get :p1_edit_score, :p2_edit_score, :p1_edit_character, :p2_edit_character
-      patch :p1_set_score, :p2_set_score, :confirm_score, :p1_set_character, :p2_set_character
+      get :p1_edit_score, :p2_edit_score, :p1_edit_character, :p2_edit_character,
+          :edit_dispute
+      patch :p1_set_score, :p2_set_score, :confirm_score, :p1_set_character, 
+            :p2_set_character, :dispute, :resolve
     end
   end
   resources :bets, only: [:create]

@@ -1,0 +1,14 @@
+<%= simple_form_for(@match, html: { method: :patch }, :url => resolve_match_path(@match)) do |f| %>
+  <%= f.input :p1_character, label: "Player 1 Character", collection: @characters,
+               selected: 1 %>
+  <%= f.input :p2_character, label: "Player 2 Character", collection: @characters, 
+               selected: 1 %>
+  <%= f.input :match_date, label: "Match Date and Time" %>
+  <%= f.input :p1_score, label: User.find(@match.p1_id).alias + " score" %>
+  <%= f.input :p2_score, label: User.find(@match.p2_id).alias + " score" %>
+  <%= f.hidden_field :p1_accepted, :value => true %>
+  <%= f.hidden_field :p2_accepted, :value => true %>
+  <%= f.hidden_field :disputed, :value => false %>
+  <%= f.submit "Resolve dispute", class: "btn btn-success", 
+        :confirm => "Are you sure this is the correct score?" %>
+<% end %>

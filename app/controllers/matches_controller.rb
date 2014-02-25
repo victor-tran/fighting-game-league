@@ -107,8 +107,30 @@ class MatchesController < ApplicationController
     end
   end
 
+  def dispute
+    @match = Match.find(params[:id])
+    if @match.update_attributes(match_params)
+      flash[:notice] = "Match dispute sent to commissioner."
+      redirect_to matches_path
+    end
+  end
+
+  def edit_dispute
+    @match = Match.find(params[:id])
+    @characters = Game.find(@match.game_id).characters
+  end
+
+  def resolve
+    @match = Match.find(params[:id])
+    if @match.update_attributes(match_params)
+      flash[:notice] = "Dispute resolved."
+      redirect_to matches_path
+    end
+  end
+
   private
     def match_params
-      params.require(:match).permit(:p1_score, :p2_score, :match_date, :p1_accepted, :p2_accepted, :p1_character, :p2_character)
+      params.require(:match).permit(:p1_score, :p2_score, :match_date, 
+        :p1_accepted, :p2_accepted, :p1_character, :p2_character, :disputed)
     end
 end

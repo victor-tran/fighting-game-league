@@ -214,8 +214,22 @@ class User < ActiveRecord::Base
 
       end
     end
-    
+
     pending_matches
+  end
+
+  # Return list of disputed matches for all leagues that the current user
+  # is a commissioner for.
+  def league_disputes
+    commissioned_leagues = leagues.where("commissioner_id = ?", id)
+
+    disputed_matches = Set.new
+
+    commissioned_leagues.each do |league|
+      disputed_matches = disputed_matches + league.matches.where("disputed = ?", true)
+    end
+
+    disputed_matches
   end
 
   def User.new_remember_token
