@@ -24,7 +24,22 @@ module ApplicationHelper
     matches_accepted
   end
 
-  # Returns longest win streak ever.
+  # Returns W-L record for given set of matches.
+  def WL_record(matches)
+    wins = 0
+    losses = 0
 
-  # Returns league W-L history.
+    matches.each do |match|
+      if match.p1_accepted == true && match.p2_accepted == true
+        if match.winner_id == id
+          wins += 1
+        else
+          losses += 1
+        end
+      end
+    end
+
+    wins.to_s + "-" + losses.to_s
+  end
+
 end

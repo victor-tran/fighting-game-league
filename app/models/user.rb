@@ -108,24 +108,6 @@ class User < ActiveRecord::Base
     my_current_matches
   end
 
-  # Returns overall W-L fighter history.
-  def overall_WL
-    wins = 0
-    losses = 0
-
-    matches.each do |match|
-      if match.p1_accepted == true && match.p2_accepted == true
-        if match.winner_id == id
-          wins += 1
-        else
-          losses += 1
-        end
-      end
-    end
-
-    wins.to_s + "-" + losses.to_s
-  end
-
   # Returns current match streak.
   def current_streak
     if !matches.empty?
