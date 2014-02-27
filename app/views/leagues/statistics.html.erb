@@ -1,6 +1,7 @@
 <% standings = generate_user_standings(@league.matches) %>
 <h1><%= @league.name %></h1>
 <h2>League Statistics</h2>
+<h3>Total Matches Played: <%= @league.matches.count %></h3>
 
 <!-- Table -->
 <div class="table-responsive">
@@ -10,7 +11,6 @@
       <th>MP</th>
       <th>W</th>
       <th>L</th>
-      <th>Streak</th>
     </tr>
     <% for i in 0..standings.count - 1 %>
       <tr>
@@ -25,9 +25,6 @@
         </td>
         <td>
           <%= standings[i][1][1] %>
-        </td>
-        <td>
-          Streak
         </td>
       </tr>
     <% end %>
