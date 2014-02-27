@@ -47,7 +47,6 @@
       <% end %>
       
       <%= @match.p1_score %> : <%= @match.p2_score %></p>
-      <p><%= match_bet_info(@match) %></p>
     </div>
 
     <!-- Player 2 -->
@@ -72,35 +71,32 @@
     <div class="col-md-4 col-xs-4">
       <% if @match.scores_not_set? %>
         <% if current_user.fight_bucks > 0 %>
-          <% unless current_user.fighting_in?(@match) %>
+          <% if !current_user.fighting_in?(@match) %>
             <% unless current_user.betting_on?(@match) %>
               <%= render 'p1_bet' %>
             <% end %>
+          <% else %>
+            <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", disabled: true %>
           <% end %>
         <% end %>
       <% end %>
     </div>
 
-    <!-- Edit Match Score -->
+    <!-- Bet Info -->
     <div class="col-md-4 col-xs-4">
-
-      <!-- If match score hasn't been changed and current user is one of the fighters -->
-      <% if @match.p1_accepted == false && @match.p2_accepted == false %>
-        <% if current_user.fighting_in?(@match) %>
-          <%= link_to "Edit Match Date", edit_match_path(@match), 
-              class: "btn btn-primary btn-lg" %>
-        <% end %>
-      <% end %>
+      <p><%= match_bet_info(@match) %></p>
     </div>
 
     <!-- Player 2 Bet -->
     <div class="col-md-4 col-xs-4">
       <% if @match.scores_not_set? %>
         <% if current_user.fight_bucks > 0 %>
-          <% unless current_user.fighting_in?(@match) %>
+          <% if !current_user.fighting_in?(@match) %>
             <% unless current_user.betting_on?(@match) %>
               <%= render 'p2_bet' %>
             <% end %>
+          <% else %>
+            <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", disabled: true %>
           <% end %>
         <% end %>
       <% end %>
