@@ -43,8 +43,11 @@ class UsersController < ApplicationController
   
   private
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :alias, :email, :password,
-       :password_confirmation, :bio, :tagline, :fight_bucks, :avatar)
+      params.require(:user).permit(:first_name, :last_name, :alias, :email, 
+                                   :password, :password_confirmation, :bio, 
+                                   :tagline, :fight_bucks, :avatar,
+                                   :facebook_account, :twitter_account,
+                                   :twitch_account)
     end
 
   	# Before filters

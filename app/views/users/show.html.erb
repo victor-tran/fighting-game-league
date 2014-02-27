@@ -26,7 +26,29 @@
     <div class="col-md-8">
       <h1>
         <%= @user.alias %>
-        <%= link_to "Send Message", '#', class: "btn btn-primary" %>
+        <% if @user.facebook_account == nil %>
+          <%= link_to image_tag("facebook.png", size: "40"), '#' %>
+        <% else %>
+          <%= link_to image_tag("facebook.png", size: "40"), 
+                                "https://www.facebook.com/" + 
+                                @user.facebook_account %>
+        <% end %>
+
+        <% if @user.twitter_account == nil %>
+          <%= link_to image_tag("twitter.png", size: "40"), '#' %>
+        <% else %>
+        <%= link_to image_tag("twitter.png", size: "40"), 
+                              "https://www.twitter.com/" + 
+                              @user.twitter_account %>
+        <% end %>
+
+        <% if @user.twitch_account == nil %>
+          <%= link_to image_tag("twitch.png", size: "40"), '#' %>
+        <% else %>                      
+        <%= link_to image_tag("twitch.png", size: "40"), 
+                              "http://www.twitch.tv/" + 
+                              @user.twitch_account %>
+        <% end %>
       </h1>
 
       <h2>
