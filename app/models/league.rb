@@ -75,6 +75,20 @@ class League < ActiveRecord::Base
     current_matches
   end
 
+  # Returns the number of total matches played for the league for the
+  # statistics page.
+  def total_matches_played
+    count = 0
+
+    matches.each do |match|
+      unless match.finalized_date == nil 
+        count += 1
+      end
+    end
+
+    count
+  end
+
   # Generates and schedules matches for a single round-robin schedule.
   def generate_matches
     
