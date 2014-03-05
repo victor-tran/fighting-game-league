@@ -31,7 +31,7 @@
         <section>
           <ul class="list-unstyled">
             <%= link_to "My Fight Stats", '#' %>
-            <li>W-L Record: <%= WL_record(current_user.matches) %></li>
+            <li>W-L Record: <%= WL_record(current_user, current_user.matches) %></li>
             <li>Current Streak: <%= current_user.current_streak %></li>
             <li>Longest Win Streak: <%= current_user.longest_win_streak_ever %></li>
           </ul>
