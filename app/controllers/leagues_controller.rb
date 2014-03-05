@@ -23,7 +23,6 @@ class LeaguesController < ApplicationController
 
   def show
     @league = League.find(params[:id])
-    @users = @league.users
   end
 
   def edit
@@ -67,10 +66,35 @@ class LeaguesController < ApplicationController
 
   def statistics
     @league = League.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
   end
 
   def join_password
     @league = League.find(params[:id])
+  end
+
+  def profile
+    @league = League.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def standings
+    @league = League.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def fighters
+    @league = League.find(params[:id])
+    @users = @league.users
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

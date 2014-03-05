@@ -1,1 +1,1 @@
-$("#join_form").html("<%= escape_javascript(render('leagues/leave')) %>")
+$("#join_form").html("<%= escape_javascript(render(partial: 'leagues/leave', locals: { league: league })) %>")

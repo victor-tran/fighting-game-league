@@ -1,30 +1,30 @@
 <!-- Current Match Table -->
 <div class="panel panel-default">
   <div class="panel-heading">
-    Season <%= @league.current_season_number %>: Round <%= @league.current_round %> of <%= @league.total_rounds %>
+    Season <%= league.current_season_number %>: Round <%= league.current_round %> of <%= league.total_rounds %>
   </div>
   
   <!-- Table -->
   <div class="table-responsive">
-  	<table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover">
       <tr>
         <th>Match</th>
-    		<th>Player 1</th>
-    		<th>Score</th>
-    		<th>Player 2</th>
-    		<th>Score</th>
-    	</tr>
-    	<% @league.matches_for_current_season.each do |match| %>
-        <% if match.round_number == @league.current_round %>
-      		<tr>
+        <th>Player 1</th>
+        <th>Score</th>
+        <th>Player 2</th>
+        <th>Score</th>
+      </tr>
+      <% league.matches_for_current_season.each do |match| %>
+        <% if match.round_number == league.current_round %>
+          <tr>
             <td><%= link_to "View Matchup", match %></td>
-      			<td><%= link_to User.find(match.p1_id).alias, user_path(match.p1_id) %></td>
-      			<td><%= match.p1_score %></td>
-      			<td><%= link_to User.find(match.p2_id).alias, user_path(match.p2_id) %></td>
-      			<td><%= match.p2_score %></td>
-      		</tr>
+            <td><%= link_to User.find(match.p1_id).alias, user_path(match.p1_id) %></td>
+            <td><%= match.p1_score %></td>
+            <td><%= link_to User.find(match.p2_id).alias, user_path(match.p2_id) %></td>
+            <td><%= match.p2_score %></td>
+          </tr>
         <% end %>
-    	<% end %>
+      <% end %>
     </table>
   </div>
 </div>

@@ -1,80 +1,77 @@
 <% if signed_in? %>
   <!-- Main -->
-  <div class="container">
-    <div class="row">
+  <div class="row">
 
-      <!-- User Sidebar -->
-      <div class="col-md-3">
-      
-        <!-- User Avatar and Profile Link -->
-        <section>
-          <%= image_tag current_user.avatar.url(:square) %>
-          <h3><%= link_to current_user.alias, current_user %></h3>
-          <h6>Fight Bucks: <%= current_user.fight_bucks %></h6>
-        </section>
+    <!-- User Sidebar -->
+    <div class="col-md-3">
+    
+      <!-- User Avatar and Profile Link -->
+      <section>
+        <%= image_tag current_user.avatar.url(:square) %>
+        <h3><%= link_to current_user.alias, current_user %></h3>
+        <h6>Fight Bucks: <%= current_user.fight_bucks %></h6>
+      </section>
 
-        <!-- Useful Links -->
-        <section>
-          <ul class="list-unstyled">
-            <li><%= link_to " Home", root_path, class: "glyphicon glyphicon-home" %></li>
-            <li><%= link_to " Find a League", leagues_path, class: "glyphicon glyphicon-search" %></li>
-            <li><%= link_to " Create New league", new_league_path, class: "glyphicon glyphicon-plus" %></li>
-            <li>
-              <%= link_to " Pending Matches", matches_path, class: "glyphicon glyphicon-tower" %>
-              <span class="badge pull-right"><%= current_user.pending_matches.count%></span>
-            </li>
-          </ul>
-          <hr>
-        </section>
+      <!-- Useful Links -->
+      <section>
+        <ul class="list-unstyled">
+          <li><%= link_to " Home", root_path, class: "glyphicon glyphicon-home" %></li>
+          <li><%= link_to " Find a League", leagues_path, class: "glyphicon glyphicon-search" %></li>
+          <li><%= link_to " Create New league", new_league_path, class: "glyphicon glyphicon-plus" %></li>
+          <li>
+            <%= link_to " Pending Matches", matches_path, class: "glyphicon glyphicon-tower" %>
+            <span class="badge pull-right"><%= current_user.pending_matches.count%></span>
+          </li>
+        </ul>
+        <hr>
+      </section>
 
-        <!-- User Statistics -->
-        <section>
-          <ul class="list-unstyled">
-            <%= link_to "My Fight Stats", '#' %>
-            <li>W-L Record: <%= WL_record(current_user, current_user.matches) %></li>
-            <li>Current Streak: <%= current_user.current_streak %></li>
-            <li>Longest Win Streak: <%= current_user.longest_win_streak_ever %></li>
-          </ul>
-
-          <hr>
-        </section>
-      </div>
-
-      <!-- My Matches -->
-      <div class="col-md-6">
-        <%= render 'my_current_matches' %>
-      </div> 
-
-      <!-- Right Sidebar -->
-      <div class="col-md-3">
-
-        <!-- My Leagues -->
-        <ul class="list-unstyled"><%= link_to " My Leagues", '#' %>
-          <% if !current_user.leagues.empty? %>
-            
-            <% current_user.leagues.each do |league| %>
-              <% if current_user.id == league.commissioner_id %>
-                <li><%=link_to league.name, league, class: "glyphicon glyphicon-euro" %></li>
-              <% else %>
-                <li><%=link_to league.name, league %></li>
-              <% end %>
-            <% end %>
-
-          <% else %>
-            <li>No leagues yet.</li>
-          <% end %>
+      <!-- User Statistics -->
+      <section>
+        <ul class="list-unstyled">
+          <%= link_to "My Fight Stats", '#' %>
+          <li>W-L Record: <%= WL_record(current_user, current_user.matches) %></li>
+          <li>Current Streak: <%= current_user.current_streak %></li>
+          <li>Longest Win Streak: <%= current_user.longest_win_streak_ever %></li>
         </ul>
 
-        <hr> 
+        <hr>
+      </section>
+    </div>
 
-        <!-- My Bets -->
-        <%= render 'my_bets_table' %>
+    <!-- My Matches -->
+    <div class="col-md-6">
+      <%= render 'my_current_matches' %>
+    </div> 
 
-        <hr> 
+    <!-- Right Sidebar -->
+    <div class="col-md-3">
 
-      </div>
+      <!-- My Leagues -->
+      <ul class="list-unstyled"><%= link_to " My Leagues", '#' %>
+        <% if !current_user.leagues.empty? %>
+          
+          <% current_user.leagues.each do |league| %>
+            <% if current_user.id == league.commissioner_id %>
+              <li><%=link_to league.name, league, class: "glyphicon glyphicon-euro" %></li>
+            <% else %>
+              <li><%=link_to league.name, league %></li>
+            <% end %>
+          <% end %>
 
-    </div> <!-- /Container -->
+        <% else %>
+          <li>No leagues yet.</li>
+        <% end %>
+      </ul>
+
+      <hr> 
+
+      <!-- My Bets -->
+      <%= render 'my_bets_table' %>
+
+      <hr> 
+
+    </div>
   </div> <!-- /Main -->
 
 <% else %>
