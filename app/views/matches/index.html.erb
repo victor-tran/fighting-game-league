@@ -1,4 +1,3 @@
-<h1>My matches</h1>
 <ul class="list-unstyled">
 
   <% disputed_matches = current_user.league_disputes %>
@@ -19,7 +18,6 @@
 
   <% pending_matches = current_user.pending_matches %>
   <% if !pending_matches.empty? %>
-    <hr>
 
     <h2>My League Matches</h2>
     <!-- Loop to list current pending matches -->
