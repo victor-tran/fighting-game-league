@@ -11,7 +11,7 @@
       <ul class="list-unstyled">
         <p>Current Leagues</p>
         <% if !@user.leagues.empty? %>
-          <% current_user.leagues.each do |league| %>
+          <% @user.leagues.each do |league| %>
             <li><%=link_to league.name, league %></li>
           <% end %>
 
