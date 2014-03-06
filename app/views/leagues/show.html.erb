@@ -3,10 +3,7 @@
 <div class="banner">
 
   <!-- League Banner -->
-  <% if @league.banner.url == "/images/original/missing.png" %>
-  <% else %>
-    <%= image_tag @league.banner.url(:large) %>
-  <% end %>
+  <%= image_tag @league.banner.url(:large) %>
 </div>
 
 <!-- League Navbar -->

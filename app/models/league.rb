@@ -31,7 +31,7 @@ class League < ActiveRecord::Base
       medium: '400x125',
       large: '1140x275#'
     }, 
-    :default_url => "/images/:style/missing.png"
+    :default_url => "http://www.screenslam.com/blog/wp-content/uploads/2012/05/missing-ashley-judd-banner.jpg"
 
   # Validates that the attached image is jpg or png.
   validates_attachment :banner,

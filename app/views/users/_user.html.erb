@@ -1,6 +1,6 @@
 <li>
-  <% unless user.avatar.url == "/images/original/missing.png" %>
+  <div class="user-thumb">
     <%= image_tag user.avatar.url(:thumb) %>
-  <% end %>
+  </div>
   <%= link_to user.alias, user %>
 </li>

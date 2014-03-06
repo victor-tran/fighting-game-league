@@ -91,7 +91,7 @@ section {
   height: 275px;
   border-width: 2px;
   border-style: groove;
-  border-bottom-style: none;
+  // border-bottom-style: none;
 }
 
 /* League tab bar */
@@ -99,5 +99,31 @@ section {
   border-width: 2px;
   border-style: groove;
   border-top-style: none;
-  //padding-top: 2px;
+  padding-top: 2px;
+  margin-bottom: 10px;
+}
+
+/* User thumbs */
+.user-thumb {
+  float:left;
+  margin-right: 10px;
+}
+
+.p1-match-thumb {
+  float:left;
+  margin-right: 10px;
+}
+
+.p2-match-thumb {
+  float:right;
+  margin-left: 10px;
+  vertical-align: baseline;
+}
+
+.p1-match-user {
+  vertical-align: text-bottom;
+}
+
+.p2-match-user {
+  vertical-align: text-bottom;
 }

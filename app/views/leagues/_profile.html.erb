@@ -1,4 +1,4 @@
-<div class="tab-pane active" id="#profile">
+<div class="tab-pane active">
   
   <!-- League Profile -->
   <div class="league-info">
@@ -35,6 +35,7 @@
     <% end %>
 
     <% if @league.started %>
+      <h2>Current Matches</h2>
       <%= render partial: 'match_table', locals: { league: @league } %>
 
       <% if all_matches_accepted?(@league.matches.where("round_number = ?", @league.current_round)) && current_user.id == commissioner.id %>
