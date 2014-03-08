@@ -19,7 +19,12 @@ FightingGameLeague::Application.routes.draw do
   resources :bets, only: [:create]
   root :to => "home#index"
 
+  get "home/stats"
+  get "home/about"
+
   match '/register', to: 'users#new', via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
+  match "/stats", to: 'home#stats', via: 'get'
+  match "/about", to: 'home#about', via: 'get'
 end

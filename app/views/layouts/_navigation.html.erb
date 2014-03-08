@@ -15,6 +15,8 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+            <li><%= link_to "About", about_path %></li>
+            <li><%= link_to "FGL Stats", stats_path %></li>
             <% if signed_in? %>
               <li class="dropdown">
                 <a href="#" class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>

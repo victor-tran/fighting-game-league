@@ -1,0 +1,77 @@
+<h1>Number of Fighters: <%= User.count %></h1> 
+<h1>Number of Matches Generated: <%= Match.count %></h1>
+<h1>
+  Number of Matches Played: 
+  <%= Match.where("p1_accepted = ? AND p2_accepted = ?", true, true).count %>
+</h1>
+<h1>Number of Bets: <%= Bet.count %></h1>
+
+<h1>Number of Leagues: <%= League.count %></h1>
+
+<% Game.all.each do |game| %>
+  <%= image_tag Game.find(game.id).logo, size: "50" %>:
+  <%= League.where("game_id = ?", game.id).count %>
+<% end %>
+
+<h1>Most Played Characters</h1>
+<% result_hashmap = count_characters %>
+<% Game.all.each do |game| %>
+  <%= image_tag Game.find(game.id).logo, size: "50" %>
+  <%= result_hashmap[game][0][0].name %>:
+  <%= result_hashmap[game][0][1] %>
+<% end %>
+
+<h1>Most Wins (All Games)</h1>
+<p>
+  <% hash = most_wins_all_games %>
+  <%= link_to hash[:user].alias, hash[:user] %>: <%= hash[:wins] %>
+</p>
+
+<h1>Most Wins (Per Game)</h1>
+<% Game.all.each do |game| %>
+  <p>
+    <% hash = most_wins_per_game(game) %>
+    <%= game.name %> -- 
+    <% if hash[:wins] == 0 %>
+      No matches played yet.
+    <% else %>
+      <%= link_to hash[:user].alias, hash[:user] %>: <%= hash[:wins] %>
+    <% end %>
+  </p>
+<% end %>
+<h1>Most MP in a League (Per Game)</h1>
+<% Game.all.each do |game| %>
+  <p>
+    <% hash = most_matches_played_in_a_league(game) %>
+    <%= game.name %> -- 
+    <% if hash[:mp] == 0 %>
+      No matches played yet.
+    <% else %>
+      <%= link_to hash[:league].name, hash[:league] %>: <%= hash[:mp] %>
+    <% end %>
+  </p>
+<% end %>
+
+<h1>
+  Most fight bucks bet on one match: 
+  <% hash = most_fight_bucks_bet_on_one_match %>
+  <%= link_to hash[:amount], hash[:match] %>
+</h1>
+
+<h1>
+  Highest number of bets ever placed on one match:
+  <% hash = highest_number_of_bets %>
+  <%= link_to hash[:count], hash[:match] %>
+</h1>
+
+<h1>
+  Most fight bucks ever bet on one match by a single user:
+  <% if Bet.maximum("wager_amount") == nil %>
+    0
+  <% else %>
+    <% wager = Bet.maximum("wager_amount") %>
+    <% bet = Bet.find_by_wager_amount(wager) %>
+    <% user = User.find(bet.better_id) %>
+    <%= link_to user.alias, user %>: <%= link_to wager, Match.find(bet.match_id) %>
+  <% end %>
+</h1>
