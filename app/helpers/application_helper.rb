@@ -161,7 +161,7 @@ module ApplicationHelper
     user_hash
   end
 
-  # Returns a hash that contains a user and the amount of wins they have
+  # Returns a hash that contains the user that has the most amount of wins 
   # for a given game.
   def most_wins_per_game(game)
     user_hash = Hash.new
