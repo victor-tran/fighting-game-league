@@ -109,11 +109,11 @@ class User < ActiveRecord::Base
   end
 
   # Returns current match streak.
-  def current_streak
-    if !matches.empty?
+  def current_streak(match_set)
+    if !match_set.empty?
 
-      # Decided matches must be sorted by accepted date.
-      decided_matches = matches.reject! { |match| match.finalized_date == nil }.sort { |x,y| y <=> x }
+      # Remove any matches that aren't finalized yet and sort by DESC order.
+      decided_matches = match_set.reject! { |match| match.finalized_date == nil }.sort { |x,y| y <=> x }
 
       if !decided_matches.empty?
         streak = 0
