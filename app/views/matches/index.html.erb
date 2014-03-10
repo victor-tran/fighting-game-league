@@ -5,15 +5,20 @@
     <h2>Commissioner Disputes</h2>
     <li>
       <% disputed_matches.each do |match| %>
-        <p>League: <%= link_to League.find(match.league_id).name, League.find(match.league_id) %></p>
+        <p>
+          League: <%= link_to League.find(match.league_id).name, 
+                               League.find(match.league_id) %>
+        </p>
         <% if match.match_date != nil %>
           <p>Date: <%= match.match_date %></p>
         <% end %>
         <p><%= link_to match.display_score, match %></p>
 
-        <%= link_to 'Resolve Dispute', edit_dispute_match_path(match), class: "btn btn-primary" %>
+        <%= link_to 'Resolve Dispute', edit_dispute_match_path(match),
+                                       class: "btn btn-primary" %>
       <% end %>
     </li>
+    <hr>
   <% end %>
 
   <% pending_matches = current_user.pending_matches %>
@@ -23,7 +28,9 @@
     <!-- Loop to list current pending matches -->
     <% pending_matches.each do |match| %>
       <li>
-        <p>League: <%= link_to League.find(match.league_id).name, League.find(match.league_id) %></p>
+        <!-- Match Info -->
+        <p>League: <%= link_to League.find(match.league_id).name, 
+                               League.find(match.league_id) %></p>
         <% if match.match_date != nil %>
           <p>Date: <%= match.match_date %></p>
         <% end %>
@@ -32,58 +39,116 @@
         <!-- Select Character -->
         <% if current_user.id == match.p1_id %>
           <% if match.p1_character == nil %>
-            <p><%= link_to "Set P1 Character", p1_edit_character_match_path(match), class: "btn btn-primary" %></p>
+            <p>
+              <%= link_to "Set P1 Character", p1_edit_character_match_path(match),
+                                               class: "btn btn-primary" %>
+            </p>
           <% else %>
-            <p><%= link_to "Character Set", p1_edit_character_match_path(match), class: "btn btn-success", disabled: true %><p>
+            <p>
+              <%= link_to "Character Set", p1_edit_character_match_path(match), 
+                                            class: "btn btn-success", 
+                                            disabled: true %>
+            <p>
           <% end %>
         <% else %>
           <% if match.p2_character == nil %>
-            <p><%= link_to "Set P2 Character", p2_edit_character_match_path(match), class: "btn btn-primary" %></p>
+            <p>
+              <%= link_to "Set P2 Character", p2_edit_character_match_path(match), 
+                                               class: "btn btn-primary" %>
+            </p>
           <% else %>
-            <p><%= link_to "Character Set", p2_edit_character_match_path(match), class: "btn btn-success", disabled: true %><p>
+            <p>
+              <%= link_to "Character Set", p2_edit_character_match_path(match), 
+                                            class: "btn btn-success", 
+                                            disabled: true %>
+            <p>
           <% end %>
         <% end %>
 
         <!-- Set Date -->
         <% if match.match_date == nil %>
-          <p><%= link_to "Set Date", edit_match_path(match), class: "btn btn-primary" %></p>
+          <p>
+            <%= link_to "Set Date", edit_match_path(match), 
+                                    class: "btn btn-primary" %>
+          </p>
         <% else %>
-          <p><%= link_to "Date Set", edit_match_path(match), class: "btn btn-success", disabled: true %></p>
+          <p>
+            <%= link_to "Date Set", edit_match_path(match), 
+                                     class: "btn btn-success", 
+                                     disabled: true %>
+          </p>
         <% end %>
 
-        <!-- Set Scores -->
-        <% if match.p1_score == 0 && match.p2_score == 0 %>
+        <!-- Score Buttons -->
+        <% if (current_user.id == match.p1_id && match.p1_character == nil) || 
+              (current_user.id == match.p2_id && match.p2_character == nil) ||
+              match.match_date == nil %>
 
-          <!-- Display correct accept button-->
-          <% if current_user.id == match.p1_id %>
-            <p><%= link_to "Set Score", p1_edit_score_match_path(match), class: "btn btn-primary" %></p>
+          <% if match.p1_score == 0 && match.p2_score == 0 %>
+            <!-- Set Score Button-->
+            <p><%= link_to "Set Score", '#', class: "btn btn-primary", 
+                                             disabled: true %></p>
           <% else %>
-            <p><%= link_to "Set Score", p2_edit_score_match_path(match), class: "btn btn-primary" %></p>
+            <!-- Accept/Decline/Dispute Match Button-->
+            <p>
+              <%= link_to "Accept Score", '#', class: "btn btn-primary", 
+                                                disabled: true %>
+            <p>
+            <p>
+              <%= link_to "Decline Score", '#', class: "btn btn-primary", 
+                                                 disabled: true %>
+            <p>
+            <p>
+              <%= link_to "Dispute Score", '#', class: "btn btn-warning", 
+                                                 disabled: true %>
+            <p>
           <% end %>
-        
-        <!-- Score has been changed -->
+
         <% else %>
+          <% if match.p1_score == 0 && match.p2_score == 0 %>
+            
+            <!-- Set Score Button-->
+            <% if current_user.id == match.p1_id %>
+              <p>
+                <%= link_to "Set Score", p1_edit_score_match_path(match),
+                                          class: "btn btn-primary" %>
+              </p>
+            <% else %>
+              <p>
+                <%= link_to "Set Score", p2_edit_score_match_path(match), 
+                                          class: "btn btn-primary" %>
+              </p>
+            <% end %>
+          
+          <!-- Disputed Match Button -->
+          <% elsif match.disputed %>
+            <p>
+              <%= link_to "Score Disputed", '#', class: "btn btn-warning", 
+                                                 disabled: true %>
+            </p>
 
-          <!-- Match has been disputed -->
-          <% if match.disputed %>
-            <p><%= link_to "Score Disputed", '#', class: "btn btn-warning", disabled: true %></p>
-
-          <!-- Display correct accept button-->
+          <!-- Accept/Decline/Dispute Match Button-->
           <% elsif current_user.id == match.p1_id %>
             <% if match.p1_accepted == false %>
               <p><%= render partial: 'p1_accept', locals: { match: match } %><p>
-              <p><%= render partial: 'decline_match_score', locals: { match: match } %></p>
-              <p><%= render partial: 'dispute_match_score', locals: { match: match } %></p>
-            <% else %>
-              <p><%= link_to "Score Accepted", p1_edit_score_match_path(match), class: "btn btn-success", disabled: true %><p>
-            <% end %>
-          <% else %>
-            <% if match.p2_accepted == false %>
+              <p>
+                <%= render partial: 'decline_match_score', 
+                           locals: { match: match } %>
+              </p>
+              <p>
+                <%= render partial: 'dispute_match_score', 
+                           locals: { match: match } %>
+              </p>
+            <% elsif match.p2_accepted == false %>
               <p><%= render partial: 'p2_accept', locals: { match: match } %></p>
-              <p><%= render partial: 'decline_match_score', locals: { match: match } %></p>
-              <p><%= render partial: 'dispute_match_score', locals: { match: match } %></p>
-            <% else %>
-              <p><%= link_to "Score Accepted", p2_edit_score_match_path(match), class: "btn btn-success", disabled: true %><p>
+              <p>
+                <%= render partial: 'decline_match_score', 
+                           locals: { match: match } %>
+              </p>
+              <p>
+                <%= render partial: 'dispute_match_score', 
+                           locals: { match: match } %>
+              </p>
             <% end %>
           <% end %>
         <% end %>
@@ -92,6 +157,6 @@
     <% end %>
 
   <% else %>
-    <li>No pending matches.</li>
+    <li>No pending league matches.</li>
   <% end %>
 </ul>

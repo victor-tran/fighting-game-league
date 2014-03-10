@@ -226,7 +226,10 @@ class User < ActiveRecord::Base
     # Set of matches to be returned
     pending_matches = Set.new
 
+    # Iterate through all matches.
     matches.each do |match|
+
+      # Consider the match if it is a match for the league's current round.
       if match.round_number == League.find(match.league_id).current_round
 
         # Add to pending matches if character hasn't been set yet.
