@@ -89,11 +89,11 @@
           <% else %>
             <!-- Accept/Decline/Dispute Match Button-->
             <p>
-              <%= link_to "Accept Score", '#', class: "btn btn-primary", 
+              <%= link_to "Accept Score", '#', class: "btn btn-success", 
                                                disabled: true %>
             <p>
             <p>
-              <%= link_to "Decline Score", '#', class: "btn btn-primary", 
+              <%= link_to "Decline Score", '#', class: "btn btn-danger", 
                                                 disabled: true %>
             <p>
             <p>
@@ -141,7 +141,9 @@
                 <%= render partial: 'dispute_match_score', 
                            locals: { match: match } %>
               </p>
-            <% elsif match.p2_accepted == false %>
+            <% end %>
+          <% else %>
+            <% if match.p2_accepted == false %>
               <p><%= render partial: 'p2_accept', locals: { match: match } %></p>
               <p>
                 <%= render partial: 'decline_match_score', 
