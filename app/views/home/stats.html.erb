@@ -24,7 +24,11 @@
 <h1>Most Wins (All Games)</h1>
 <p>
   <% hash = most_wins_all_games %>
-  <%= link_to hash[:user].alias, hash[:user] %>: <%= hash[:wins] %>
+  <% if hash[:wins] == 0 %>
+      No wins yet.
+  <% else %>
+    <%= link_to hash[:user].alias, hash[:user] %>: <%= hash[:wins] %>
+  <% end %>
 </p>
 
 <h1>Most Wins (Per Game)</h1>
@@ -55,13 +59,21 @@
 <h1>
   Most fight bucks bet on one match: 
   <% hash = most_fight_bucks_bet_on_one_match %>
-  <%= link_to hash[:amount], hash[:match] %>
+  <% if hash[:amount] == 0 %>
+      0
+  <% else %>
+    <%= link_to hash[:amount], hash[:match] %>
+  <% end %>
 </h1>
 
 <h1>
   Highest number of bets ever placed on one match:
   <% hash = highest_number_of_bets %>
-  <%= link_to hash[:count], hash[:match] %>
+  <% if hash[:count] == 0 %>
+    0
+  <% else %>
+    <%= link_to hash[:count], hash[:match] %>
+  <% end %>
 </h1>
 
 <h1>
