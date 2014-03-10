@@ -2,6 +2,7 @@
 
   <% disputed_matches = current_user.league_disputes %>
   <% unless disputed_matches.empty? %>
+    <!-- Commissioner Match Disputes -->
     <h2>Commissioner Disputes</h2>
     <li>
       <% disputed_matches.each do |match| %>
@@ -46,8 +47,7 @@
           <% else %>
             <p>
               <%= link_to "Character Set", p1_edit_character_match_path(match), 
-                                            class: "btn btn-success", 
-                                            disabled: true %>
+                                            class: "btn btn-success" %>
             <p>
           <% end %>
         <% else %>
@@ -59,8 +59,7 @@
           <% else %>
             <p>
               <%= link_to "Character Set", p2_edit_character_match_path(match), 
-                                            class: "btn btn-success", 
-                                            disabled: true %>
+                                            class: "btn btn-success" %>
             <p>
           <% end %>
         <% end %>
@@ -74,8 +73,7 @@
         <% else %>
           <p>
             <%= link_to "Date Set", edit_match_path(match), 
-                                     class: "btn btn-success", 
-                                     disabled: true %>
+                                     class: "btn btn-success" %>
           </p>
         <% end %>
 
@@ -92,31 +90,35 @@
             <!-- Accept/Decline/Dispute Match Button-->
             <p>
               <%= link_to "Accept Score", '#', class: "btn btn-primary", 
-                                                disabled: true %>
+                                               disabled: true %>
             <p>
             <p>
               <%= link_to "Decline Score", '#', class: "btn btn-primary", 
-                                                 disabled: true %>
+                                                disabled: true %>
             <p>
             <p>
               <%= link_to "Dispute Score", '#', class: "btn btn-warning", 
-                                                 disabled: true %>
+                                                disabled: true %>
             <p>
           <% end %>
 
         <% else %>
           <% if match.p1_score == 0 && match.p2_score == 0 %>
             
-            <!-- Set Score Button-->
-            <% if current_user.id == match.p1_id %>
+            <!-- Set Score Button -->
+            <% if match.match_date.to_date > Date.today || 
+                  match.match_date > Time.now %>
+              <p><%= link_to "Set Score", '#', class: "btn btn-primary", 
+                                               disabled: true %></p>
+            <% elsif current_user.id == match.p1_id %>
               <p>
                 <%= link_to "Set Score", p1_edit_score_match_path(match),
-                                          class: "btn btn-primary" %>
+                                         class: "btn btn-primary" %>
               </p>
             <% else %>
               <p>
                 <%= link_to "Set Score", p2_edit_score_match_path(match), 
-                                          class: "btn btn-primary" %>
+                                         class: "btn btn-primary" %>
               </p>
             <% end %>
           
