@@ -5,7 +5,14 @@
   <h1>Select P2 Character</h1>
   <%= f.input :p2_characters, label: "Player 2 Character",
                               collection: @characters,
-                              as: :check_boxes,
-                              prompt: "Choose your character..." %>
+                              as: :check_boxes %>
   <%= f.button :submit, "Select Character", class: "btn-lg btn-primary" %>
 <% end %>
+
+<script>
+$('input[type=checkbox]').change(function(e){
+   if ($('input[type=checkbox]:checked').length > 3) {
+        $(this).prop('checked', false)
+   }
+})
+</script>
