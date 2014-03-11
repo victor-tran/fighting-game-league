@@ -233,9 +233,9 @@ class User < ActiveRecord::Base
       if match.round_number == League.find(match.league_id).current_round
 
         # Add to pending matches if character hasn't been set yet.
-        if id == match.p1_id && match.p1_character == nil
+        if id == match.p1_id && match.p1_characters.empty?
           pending_matches.add(match)
-        elsif id == match.p2_id && match.p2_character == nil
+        elsif id == match.p2_id && match.p2_characters.empty?
           pending_matches.add(match)
 
         # Add to pending matches if date has not been set yet.

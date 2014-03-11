@@ -3,6 +3,9 @@
 <%= simple_form_for(@match, method: :patch , :url => p2_set_character_match_path(@match)) do |f| %>
 
   <h1>Select P2 Character</h1>
-  <%= f.input :p2_character, label: "Player 2 Character", collection: @characters, prompt: "Choose your character..." %>
+  <%= f.input :p2_characters, label: "Player 2 Character",
+                              collection: @characters,
+                              as: :check_boxes,
+                              prompt: "Choose your character..." %>
   <%= f.button :submit, "Select Character", class: "btn-lg btn-primary" %>
 <% end %>
