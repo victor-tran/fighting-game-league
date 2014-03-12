@@ -95,6 +95,8 @@ class League < ActiveRecord::Base
     matches_per_round = users.count / 2
 
     # Generate all possible combinations of head-to-head matches.
+    # Each match in the match array will be an array with 2 users.
+    # Player 1 = match[0] and Player 2 = match[1]
     match_array = users.combination(2).to_a
 
     # The hashmap that will keep track of who has already been
@@ -106,7 +108,8 @@ class League < ActiveRecord::Base
     # been scheduled to play for that round through our generated hashmap.
     for i in 1..total_rounds
 
-      # Will reset all user's values to false before each round of scheduling.
+      # Will reset all user's scheduled values to false before each round of 
+      # scheduling.
       users.each do |user|
         user_hashmap[user] = false
       end
@@ -145,4 +148,61 @@ class League < ActiveRecord::Base
       end
     end
   end
+
+  # Swap the second quarter of an array with the last quarter
+  def swap_interleaved(a)
+    n = a.size >> 2
+    a[n..2*n-1],a[3*n..4*n-1] = a[3*n..4*n-1],a[n..2*n-1]
+  end
+
+  # Swap the third quarter of an array with the last quarter
+  def swap(a)
+    n = a.size >> 2
+    a[2*n..3*n-1],a[3*n..4*n-1] = a[3*n..4*n-1],a[2*n..3*n-1]
+  end
+
+  # For the given array, swap_interleaved, then swap
+  # if level is not reached, split array in half and recurse for both halves
+  def rec(a, level)
+    swap_interleaved a
+    swap(a)
+    if (level>0)
+      a[0..a.size/2-1] = rec(a[0..a.size/2-1], level-1)
+      a[a.size/2..-1] = rec(a[a.size/2..-1], level-1)
+    end
+    a
+  end
+
+  # Generate the matchups for a single elimination tournament.
+  def generate_single_elimination_tournament_matchups(user_array)
+    # Match up first-round pairings
+    num_players = user_array.length
+    n = (Math.log(num_players-1)/Math.log(2)).to_i+1
+
+    # New array (2**n in size)
+    a = Array.new(2**n)
+
+    # add players
+    a[0..num_players-1] = user_array
+
+    # make first-round pairings
+    a = a[0..a.size/2-1].zip(a[a.size/2..-1].reverse)
+
+    # recurse
+    (n-3).downto(0) do |l|
+      rec(a,l)
+    end
+
+    # remove double byes
+    result = []
+    a.each_slice(2) do |a,b|
+      if a[1] || b[1]
+        result << a << b
+      else
+        result << [a[0],b[0]]
+      end
+    end
+    result
+  end
+
 end
