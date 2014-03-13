@@ -5,7 +5,7 @@ class MatchesController < ApplicationController
 
   def show
     @match = Match.find(params[:id])
-    @league = League.find(@match.league_id)
+    @league = @match.league
   end
 
   def edit
@@ -79,7 +79,7 @@ class MatchesController < ApplicationController
 
   def p1_edit_character
     @match = Match.find(params[:id])
-    @characters = Game.find(@match.game_id).characters
+    @characters = @match.game.characters
   end
 
   def p1_set_character
@@ -94,7 +94,7 @@ class MatchesController < ApplicationController
 
   def p2_edit_character
     @match = Match.find(params[:id])
-    @characters = Game.find(@match.game_id).characters
+    @characters = @match.game.characters
   end
 
   def p2_set_character
@@ -117,7 +117,7 @@ class MatchesController < ApplicationController
 
   def edit_dispute
     @match = Match.find(params[:id])
-    @characters = Game.find(@match.game_id).characters
+    @characters = @match.game.characters
   end
 
   def resolve

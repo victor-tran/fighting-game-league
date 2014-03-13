@@ -15,17 +15,17 @@ module LeaguesHelper
       # Only calculate if match has been accepted by p1 & p2.
       if match.p1_accepted == true && match.p2_accepted == true
         if match.p1_id == match.winner_id
-          user_hashmap[User.find(match.p1_id)][0] += 1
-          user_hashmap[User.find(match.p1_id)][2] += 1
+          user_hashmap[match.p1][0] += 1
+          user_hashmap[match.p1][2] += 1
 
-          user_hashmap[User.find(match.p2_id)][1] += 1
-          user_hashmap[User.find(match.p2_id)][2] += 1
+          user_hashmap[match.p2][1] += 1
+          user_hashmap[match.p2][2] += 1
         else
-          user_hashmap[User.find(match.p2_id)][0] += 1
-          user_hashmap[User.find(match.p2_id)][2] += 1
+          user_hashmap[match.p2][0] += 1
+          user_hashmap[match.p2][2] += 1
 
-          user_hashmap[User.find(match.p1_id)][1] += 1
-          user_hashmap[User.find(match.p1_id)][2] += 1
+          user_hashmap[match.p1][1] += 1
+          user_hashmap[match.p1][2] += 1
         end
 
         # Remove the match from match_set

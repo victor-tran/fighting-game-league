@@ -8,7 +8,7 @@
 
     <!-- Player 1 Portrait -->
     <div class="col-md-4 col-xs-4">
-      <h1><%= image_tag User.find(@match.p1_id).avatar.url(:large) %></h1>
+      <h1><%= image_tag @match.p1.avatar.url(:large) %></h1>
     </div>
 
     <!-- VS -->
@@ -18,7 +18,7 @@
 
     <!-- Player 2 Portrait -->
     <div class="col-md-4 col-xs-4">
-      <h1><%= image_tag User.find(@match.p2_id).avatar.url(:large) %></h1>
+      <h1><%= image_tag @match.p2.avatar.url(:large) %></h1>
     </div>
     
   </div>

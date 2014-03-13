@@ -8,6 +8,8 @@
 
 <h1>Number of Leagues: <%= League.count %></h1>
 
+<h1>League With The Most Fighters:</h1>
+
 <% Game.all.each do |game| %>
   <%= image_tag Game.find(game.id).logo, size: "50" %>:
   <%= League.where("game_id = ?", game.id).count %>

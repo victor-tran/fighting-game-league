@@ -1,20 +1,21 @@
 <% provide(:title, 'New League') %>
 
 <%= simple_form_for(@league) do |f| %>
+  <%= render 'shared/error_messages', object: f.object  %>
   <%= f.input :name %>
-  <%= f.association :game, :selected => 1 %>
+  <%= f.association :game, selected: 1 %>
         
-  <%= f.input :match_count, :collection => [1, 2, 3, 4, 5, 7, 10, 15, 20],
-        :selected => 5, label: "Number of Games for Win", hint: "Ex. First-to-5" %>
-  <%= f.input :info, label: "League Info", as: :text, :input_html => { :rows => 5 },
+  <%= f.input :match_count, collection: [1, 2, 3, 4, 5, 7, 10, 15, 20],
+        selected: 5, label: "Number of Games for Win", hint: "Ex. First-to-5" %>
+  <%= f.input :info, label: "League Info", as: :text, input_html: { :rows => 5 },
         hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
   <%= f.input :password_protected %>
   <%= f.input :password %>
   <%= f.input :password_confirmation %>
-  <%= f.hidden_field :commissioner_id, :value => current_user.id %>
-  <%= f.hidden_field :started, :value => false %>
-  <%= f.hidden_field :current_season_number, :value => 0 %>
-  <%= f.hidden_field :current_round, :value => 0 %>
+  <%= f.hidden_field :commissioner_id, value: current_user.id %>
+  <%= f.hidden_field :started, value: false %>
+  <%= f.hidden_field :current_season_number, value: 0 %>
+  <%= f.hidden_field :current_round, value: 0 %>
 
   <%= f.button :submit, class: "btn-lg btn-primary" %>
 <% end %>

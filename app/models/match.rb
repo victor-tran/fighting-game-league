@@ -80,7 +80,7 @@ class Match < ActiveRecord::Base
 
   # Returns p1 alias -- p1 score:p2 score -- p2 alias
   def display_score
-    User.find(p1_id).alias + " -- " + p1_score.to_s + ":" + p2_score.to_s + " -- " + User.find(p2_id).alias
+    p1.alias + " -- " + p1_score.to_s + ":" + p2_score.to_s + " -- " + p2.alias
   end
 
   # Returns true if match score = 0:0
