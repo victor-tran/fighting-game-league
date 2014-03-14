@@ -89,7 +89,6 @@ class LeaguesController < ApplicationController
   end
 
   def fighters
-    @users = @league.users
   end
 
   private
