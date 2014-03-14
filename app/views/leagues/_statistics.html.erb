@@ -1,9 +1,9 @@
 <% standings = generate_user_standings(@league.matches_for_current_season) %>
 
 <div class="tab-pane active">
-  <h1><%= @league.name %></h1>
-  <h2>League Statistics</h2>
-  <h3>Total Matches Played: <%= @league.total_matches_played %></h3>
+  <h1><%= @league.name %> Statistics</h1>
+  <h2>Total Matches Played: <%= @league.total_matches_played %></h2>
+  <h3>Regular Season Champs</h3>
 
   <!-- Table -->
   <div class="table-responsive">
