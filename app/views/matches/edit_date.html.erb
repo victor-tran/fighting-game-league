@@ -1,0 +1,9 @@
+<% provide(:title, "Edit date") %>
+
+<%= simple_form_for @match, html: { method: :patch },
+                            url: set_date_match_path(@match) do |f| %>
+
+  <h1>Update match settings</h1>
+  <%= f.input :match_date, label: "Match Date and Time" %>
+  <%= f.button :submit, class: "btn-lg btn-primary" %>
+<% end %>

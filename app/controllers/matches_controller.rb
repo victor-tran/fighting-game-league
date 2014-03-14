@@ -1,5 +1,5 @@
 class MatchesController < ApplicationController
-  before_action :get_match, only: [:edit, :update, :show, :p1_edit_score,
+  before_action :get_match, only: [:edit_date, :set_date, :show, :p1_edit_score,
                                    :p1_set_score, :p2_edit_score, :p2_set_score,
                                    :confirm_score, :p1_edit_character,
                                    :p1_set_character, :p2_edit_character,
@@ -17,15 +17,15 @@ class MatchesController < ApplicationController
     @league = @match.league
   end
 
-  def edit
+  def edit_date
 	end
 
-	def update
-    if @match.update_attributes(match_params)
+	def set_date
+    if @match.update_attributes(match_date_params)
       flash[:notice] = "Match date/time updated."
       redirect_to matches_path
     else
-      render 'edit'
+      render 'edit_date'
     end
   end
 
@@ -122,12 +122,16 @@ class MatchesController < ApplicationController
   end
 
   private
+    def match_date_params
+      params.require(:match).permit(:match_date)
+    end
+
     def edit_dispute_params
       params.require(:match).permit(:p1_score, :p2_score, :match_date, 
         :p1_accepted, :p2_accepted, :disputed, :finalized_date, 
         :p1_characters => [], :p2_characters => [])
     end
-    
+
     def match_params
       params.require(:match).permit(:p1_score, :p2_score, :match_date, 
         :p1_accepted, :p2_accepted, :disputed, :finalized_date, 

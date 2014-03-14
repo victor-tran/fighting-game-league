@@ -67,12 +67,12 @@
         <!-- Set Date -->
         <% if match.match_date == nil %>
           <p>
-            <%= link_to "Set Date", edit_match_path(match), 
+            <%= link_to "Set Date", edit_date_match_path(match), 
                                     class: "btn btn-primary" %>
           </p>
         <% else %>
           <p>
-            <%= link_to "Date Set", edit_match_path(match), 
+            <%= link_to "Date Set", edit_date_match_path(match), 
                                      class: "btn btn-success" %>
           </p>
         <% end %>
