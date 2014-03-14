@@ -138,8 +138,8 @@
                            locals: { match: match } %>
               </p>
               <p>
-                <%= render partial: 'dispute_match_score', 
-                           locals: { match: match } %>
+                <%= link_to "Dispute Score", dispute_match_path(match), method: :patch,
+                      class: "btn btn-large btn-warning" %>
               </p>
             <% end %>
           <% else %>
@@ -150,8 +150,8 @@
                            locals: { match: match } %>
               </p>
               <p>
-                <%= render partial: 'dispute_match_score', 
-                           locals: { match: match } %>
+                <%= link_to "Dispute Score", dispute_match_path(match), method: :patch,
+                      class: "btn btn-large btn-warning" %>
               </p>
             <% end %>
           <% end %>

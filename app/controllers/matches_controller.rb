@@ -105,10 +105,9 @@ class MatchesController < ApplicationController
   end
 
   def dispute
-    if @match.update_attributes(match_params)
-      flash[:notice] = "Match dispute sent to commissioner."
-      redirect_to matches_path
-    end
+    @match.update_attribute(:disputed, true)
+    flash[:notice] = "Match dispute sent to commissioner."
+    redirect_to matches_path
   end
 
   def edit_dispute

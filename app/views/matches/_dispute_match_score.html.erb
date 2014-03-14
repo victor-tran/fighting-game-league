@@ -1,5 +1,0 @@
-<%= form_for(match, html: { method: :patch }, :url => dispute_match_path(match.id)) do |f| %>
-  <%= f.hidden_field :disputed, :value => true %>
-  <%= f.submit "Dispute score", class: "btn btn-warning", 
-        :confirm => "Are you sure? It's up to the commissioner now to set the score." %>
-<% end %>
