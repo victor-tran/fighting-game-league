@@ -1,8 +1,10 @@
-<%= form_for(@league, html: { method: :patch }, :url => start_league_path) do |f| %>
-  <%= f.hidden_field :started, :value => true %>
-  <%= f.hidden_field :current_season_number, :value => (@league.current_season_number + 1) %>
-  <%= f.hidden_field :current_round, :value => 1 %>
+<%= simple_form_for @league, html: { method: :patch },
+                             url: start_league_path do |f| %>
+  <%= f.hidden_field :started, value: true %>
+  <%= f.hidden_field :current_season_number,
+                               value: (@league.current_season_number + 1) %>
+  <%= f.hidden_field :current_round, value: 1 %>
   <%= f.submit "Start Season " + (@league.current_season_number + 1).to_s,
                 class: "btn btn-large btn-primary", 
-                :confirm => "Are you sure? You cannot stop the season once you've started." %>
+                confirm: "Are you sure? You cannot stop the season once you've started." %>
 <% end %>

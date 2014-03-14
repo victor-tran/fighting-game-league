@@ -1,7 +1,7 @@
 <% provide(:title, 'League Settings') %>
 <h1>League settings</h1>
 <%= simple_form_for @league, :html => { :multipart => true } do |f| %>
-  <%= f.error_notification %>
+  <%= render 'shared/error_messages', object: f.object  %>
   <br>
   <p>League Banner</p>
   <% unless @league.banner.url == "/images/original/missing.png" %>

@@ -9,9 +9,12 @@
         selected: 5, label: "Number of Games for Win", hint: "Ex. First-to-5" %>
   <%= f.input :info, label: "League Info", as: :text, input_html: { rows: 5 },
         hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
-  <%= f.input :password_protected %>
-  <%= f.input :password %>
-  <%= f.input :password_confirmation %>
+  <%= f.input :password_protected, as: :boolean, checked_value: true,
+                                   unchecked_value: false %>
+  <div id="password_details" style="display:none;">
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+  </div>
   <%= f.hidden_field :commissioner_id, value: current_user.id %>
   <%= f.hidden_field :started, value: false %>
   <%= f.hidden_field :current_season_number, value: 0 %>
@@ -21,4 +24,19 @@
 <% end %>
 
 <br>
-<p>Note: Round-robin league set-up. Number of rounds will be calculated the number of players in the league when it is started.</p>
+<p>
+  Note: Round-robin league set-up. Number of rounds will be calculated
+  the number of players in the league when it is started.
+</p>
+
+<script type="text/javascript">
+  var checkbox = document.getElementById('league_password_protected');
+  var details_div = document.getElementById('password_details');
+  checkbox.onchange = function() {
+     if(this.checked) {
+       details_div.style['display'] = 'block';
+     } else {
+       details_div.style['display'] = 'none';
+     }
+  };
+</script>

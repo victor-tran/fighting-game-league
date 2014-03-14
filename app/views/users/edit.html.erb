@@ -1,6 +1,6 @@
 <% provide(:title, "Edit user") %>
 
-<%= simple_form_for @user, :html => { :multipart => true } do |f| %>
+<%= simple_form_for @user, html: { multipart: true } do |f| %>
 
   <h1>Update your profile</h1>
   <br>
@@ -23,6 +23,5 @@
   <%= f.input :bio, as: :text %>
   <%= f.input :password %>
   <%= f.input :password_confirmation %>
-  <%= f.hidden_field :fight_bucks, :value => @user.fight_bucks %>
   <%= f.button :submit, class: "btn-lg btn-primary" %>
 <% end %>

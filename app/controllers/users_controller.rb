@@ -14,24 +14,9 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
-  def edit
-  end
-  
-  def update
-    if @user.update_attributes(user_params)
-      flash[:notice] = "Profile updated."
-      redirect_to @user
-    else
-      render 'edit'
-    end
-  end
-  
-  def show
-  end
-  
+
   def create
-    @user = User.new(user_params)
+    @user = User.new(create_user_params)
     if @user.save
       sign_in @user
       UserMailer.signup_confirmation(@user).deliver
@@ -42,13 +27,33 @@ class UsersController < ApplicationController
     end
   end
   
+  def edit
+  end
+  
+  def update
+    if @user.update_attributes(edit_user_params)
+      flash[:notice] = "Profile updated."
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+  
+  def show
+  end
+  
   private
-    def user_params
+    def create_user_params
+      params.require(:user).permit(:first_name, :last_name, :alias, :email, 
+                                   :password, :password_confirmation,
+                                   :fight_bucks)
+    end
+
+    def edit_user_params
       params.require(:user).permit(:first_name, :last_name, :alias, :email, 
                                    :password, :password_confirmation, :bio, 
-                                   :tagline, :fight_bucks, :avatar,
-                                   :facebook_account, :twitter_account,
-                                   :twitch_account)
+                                   :tagline, :avatar, :facebook_account,
+                                   :twitter_account, :twitch_account)
     end
 
   	# Before filters

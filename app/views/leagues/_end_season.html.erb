@@ -1,5 +1,5 @@
 <%= form_for(@league, html: { method: :patch }, :url => end_season_league_path) do |f| %>
-  <%= f.hidden_field :started, :value => false %>
-  <%= f.hidden_field :current_round, :value => 0 %>
+  <%= f.hidden_field :started, value: false %>
+  <%= f.hidden_field :current_round, value: 0 %>
   <%= f.submit "End season", class: "btn btn-large btn-success" %>
 <% end %>

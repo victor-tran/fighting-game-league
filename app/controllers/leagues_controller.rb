@@ -27,7 +27,7 @@ class LeaguesController < ApplicationController
   end
 
   def create
-    @league = League.new(league_params)
+    @league = League.new(create_league_params)
     if @league.save
       # User will join their own league.
       current_user.memberships.build(league_id: @league.id)
@@ -46,7 +46,7 @@ class LeaguesController < ApplicationController
   end
   
   def update
-    if @league.update_attributes(league_params)
+    if @league.update_attributes(edit_league_params)
       flash[:notice] = "League successfully updated."
       redirect_to @league   
     else
@@ -55,7 +55,7 @@ class LeaguesController < ApplicationController
   end
 
   def start
-    if @league.update_attributes(league_params)
+    if @league.update_attributes(start_league_params)
       @league.generate_matches
       flash[:notice] = "League successfully started!"
     end
@@ -63,15 +63,15 @@ class LeaguesController < ApplicationController
   end
 
   def next_round
-    if @league.update_attributes(league_params)
-      flash[:notice] = "Round " + @league.current_round.to_s + " started."
-    end
+    @league.update_attribute(:current_round, @league.current_round + 1)
+    flash[:notice] = "Round " + @league.current_round.to_s + " started."
     redirect_to @league
   end
 
   def end_season
-    if @league.update_attributes(league_params)
-      flash[:notice] = "Season " + @league.current_season_number.to_s + " complete!"
+    if @league.update_attributes(end_season_params)
+      flash[:notice] = "Season " + @league.current_season_number.to_s +
+                       " complete!"
     end
     redirect_to @league
   end
@@ -92,9 +92,27 @@ class LeaguesController < ApplicationController
   end
 
   private
-  
+    def create_league_params
+      params.require(:league).permit(:name, :game_id, :commissioner_id, :started,
+        :current_season_number, :current_round, :match_count, :info,
+        :password_protected, :password, :password_confirmation)
+    end
+
+    def edit_league_params
+      params.require(:league).permit(:name, :match_count, :info, :banner)
+    end
+
+    def start_league_params
+      params.require(:league).permit(:started, :current_season_number,
+                                     :current_round)
+    end
+
+    def end_season_params
+      params.require(:league).permit(:started, :current_round)
+    end
+
     def league_params
-      params.require(:league).permit(:name, :game_id, :commissioner_id, :started, 
+      params.require(:league).permit(:name, :game_id, :commissioner_id, :started,
         :current_season_number, :current_round, :match_count, :info, :banner,
         :password_protected, :password, :password_confirmation)
     end

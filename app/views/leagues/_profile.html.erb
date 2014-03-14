@@ -36,10 +36,14 @@
       <h2>Current Matches</h2>
       <%= render partial: 'match_table', locals: { league: @league } %>
 
-      <% if all_matches_accepted?(@league.matches.where("round_number = ?", @league.current_round)) && current_user.id == commissioner.id && @league.has_more_rounds_left_in_season? %>
-        <%= render 'next_round' %>
-      <% else %>
-        <%= render 'end_season' %>
+      <% if all_matches_accepted?(@league.matches.where("round_number = ?", @league.current_round)) && current_user.id == commissioner.id %>
+        <% if @league.has_more_rounds_left_in_season? %>
+          <%= link_to "Go to Round " + (@league.current_round + 1).to_s, 
+                      next_round_league_path, method: :patch,
+                      class: "btn btn-large btn-success" %>
+        <% else %>
+          <%= render 'end_season' %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
