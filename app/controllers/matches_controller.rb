@@ -1,20 +1,26 @@
 class MatchesController < ApplicationController
+  before_action :get_match, only: [:edit, :update, :show, :p1_edit_score,
+                                   :p1_set_score, :p2_edit_score, :p2_set_score,
+                                   :confirm_score, :p1_edit_character,
+                                   :p1_set_character, :p2_edit_character,
+                                   :p2_set_character, :dispute, :edit_dispute,
+                                   :resolve]
+
+  def get_match
+    @match = Match.find(params[:id])
+  end
 
   def index
   end
 
   def show
-    @match = Match.find(params[:id])
     @league = @match.league
   end
 
   def edit
-		@match = Match.find(params[:id])
 	end
 
 	def update
-    @match = Match.find(params[:id])
-
     if @match.update_attributes(match_params)
       flash[:notice] = "Match date/time updated."
       redirect_to matches_path
@@ -24,11 +30,9 @@ class MatchesController < ApplicationController
   end
 
   def p1_edit_score
-    @match = Match.find(params[:id])
   end
 
   def p1_set_score
-    @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
       if @match.p1_score == 0 && @match.p2_score == 0
         @match.update_attribute(:p1_accepted, false)
@@ -43,11 +47,9 @@ class MatchesController < ApplicationController
   end
 
   def p2_edit_score
-    @match = Match.find(params[:id])
   end
 
   def p2_set_score
-    @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
       if @match.p1_score == 0 && @match.p2_score == 0
         @match.update_attribute(:p2_accepted, false)
@@ -62,7 +64,6 @@ class MatchesController < ApplicationController
   end
 
   def confirm_score
-    @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
       
       # Match score accepted. 
@@ -78,12 +79,10 @@ class MatchesController < ApplicationController
   end
 
   def p1_edit_character
-    @match = Match.find(params[:id])
     @characters = @match.game.characters
   end
 
   def p1_set_character
-    @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
       unless @match.p1_characters.empty?
         flash[:notice] = "P1 character set."
@@ -93,12 +92,10 @@ class MatchesController < ApplicationController
   end
 
   def p2_edit_character
-    @match = Match.find(params[:id])
     @characters = @match.game.characters
   end
 
   def p2_set_character
-    @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
       unless @match.p2_characters.empty?
         flash[:notice] = "P2 character set."
@@ -108,7 +105,6 @@ class MatchesController < ApplicationController
   end
 
   def dispute
-    @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
       flash[:notice] = "Match dispute sent to commissioner."
       redirect_to matches_path
@@ -116,12 +112,10 @@ class MatchesController < ApplicationController
   end
 
   def edit_dispute
-    @match = Match.find(params[:id])
     @characters = @match.game.characters
   end
 
   def resolve
-    @match = Match.find(params[:id])
     if @match.update_attributes(match_params)
       flash[:notice] = "Dispute resolved."
       redirect_to matches_path

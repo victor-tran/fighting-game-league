@@ -1,4 +1,22 @@
 class LeaguesController < ApplicationController
+
+  before_action :get_league,    only: [:edit, :update, :show, :start, :next_round,
+                                    :end_season, :statistics, :join_password,
+                                    :profile, :standings, :fighters]
+
+  before_action :respond_to_js, only: [:profile, :standings, :statistics,
+                                       :fighters]
+
+
+  def get_league
+    @league = League.find(params[:id])
+  end
+
+  def respond_to_js
+    respond_to do |format|
+      format.js
+    end
+  end
   
   def index
     @leagues = League.text_search(params[:query]).page(params[:page]).per_page(20)
@@ -22,15 +40,12 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    @league = League.find(params[:id])
   end
 
   def edit
-    @league = League.find(params[:id])
   end
   
   def update
-    @league = League.find(params[:id])
     if @league.update_attributes(league_params)
       flash[:notice] = "League successfully updated."
       redirect_to @league   
@@ -40,7 +55,6 @@ class LeaguesController < ApplicationController
   end
 
   def start
-    @league = League.find(params[:id])
     if @league.update_attributes(league_params)
       @league.generate_matches
       flash[:notice] = "League successfully started!"
@@ -49,7 +63,6 @@ class LeaguesController < ApplicationController
   end
 
   def next_round
-    @league = League.find(params[:id])
     if @league.update_attributes(league_params)
       flash[:notice] = "Round " + @league.current_round.to_s + " started."
     end
@@ -57,44 +70,26 @@ class LeaguesController < ApplicationController
   end
 
   def end_season
-    @league = League.find(params[:id])
     if @league.update_attributes(league_params)
       flash[:notice] = "Season " + @league.current_season_number.to_s + " complete!"
     end
     redirect_to @league
   end
 
-  def statistics
-    @league = League.find(params[:id])
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def join_password
-    @league = League.find(params[:id])
   end
 
   def profile
-    @league = League.find(params[:id])
-    respond_to do |format|
-      format.js
-    end
   end
 
   def standings
-    @league = League.find(params[:id])
-    respond_to do |format|
-      format.js
-    end
+  end
+
+  def statistics
   end
 
   def fighters
-    @league = League.find(params[:id])
     @users = @league.users
-    respond_to do |format|
-      format.js
-    end
   end
 
   private
