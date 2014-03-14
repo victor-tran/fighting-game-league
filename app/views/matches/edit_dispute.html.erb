@@ -1,4 +1,5 @@
-<%= simple_form_for(@match, html: { method: :patch }, :url => resolve_match_path(@match)) do |f| %>
+<%= simple_form_for @match, html: { method: :patch },
+                            url: resolve_match_path(@match) do |f| %>
   <%= f.input :p1_characters, label: "Player 1 Character",
                               collection: @characters,
                               as: :check_boxes %>
@@ -6,12 +7,12 @@
                               collection: @characters,
                               as: :check_boxes %>
   <%= f.input :match_date, label: "Match Date and Time" %>
-  <%= f.input :p1_score, label: User.find(@match.p1_id).alias + " score" %>
-  <%= f.input :p2_score, label: User.find(@match.p2_id).alias + " score" %>
-  <%= f.hidden_field :p1_accepted, :value => true %>
-  <%= f.hidden_field :p2_accepted, :value => true %>
-  <%= f.hidden_field :disputed, :value => false %>
-  <%= f.hidden_field :finalized_date, :value => Time.now %>
+  <%= f.input :p1_score, label: @match.p1.alias + " score" %>
+  <%= f.input :p2_score, label: @match.p2.alias + " score" %>
+  <%= f.hidden_field :p1_accepted, value: true %>
+  <%= f.hidden_field :p2_accepted, value: true %>
+  <%= f.hidden_field :disputed, value: false %>
+  <%= f.hidden_field :finalized_date, value: Time.now %>
   <%= f.submit "Resolve dispute", class: "btn btn-success", 
-        :confirm => "Are you sure this is the correct score?" %>
+                confirm: "Are you sure these are the correct settings?" %>
 <% end %>

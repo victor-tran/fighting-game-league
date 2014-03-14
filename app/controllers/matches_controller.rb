@@ -115,13 +115,19 @@ class MatchesController < ApplicationController
   end
 
   def resolve
-    if @match.update_attributes(match_params)
+    if @match.update_attributes(edit_dispute_params)
       flash[:notice] = "Dispute resolved."
       redirect_to matches_path
     end
   end
 
   private
+    def edit_dispute_params
+      params.require(:match).permit(:p1_score, :p2_score, :match_date, 
+        :p1_accepted, :p2_accepted, :disputed, :finalized_date, 
+        :p1_characters => [], :p2_characters => [])
+    end
+    
     def match_params
       params.require(:match).permit(:p1_score, :p2_score, :match_date, 
         :p1_accepted, :p2_accepted, :disputed, :finalized_date, 
