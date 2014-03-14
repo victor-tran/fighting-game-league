@@ -1,8 +1,8 @@
 class LeaguesController < ApplicationController
 
   before_action :get_league,    only: [:edit, :update, :show, :start, :next_round,
-                                    :end_season, :statistics, :join_password,
-                                    :profile, :standings, :fighters]
+                                       :end_season, :statistics, :join_password,
+                                       :profile, :standings, :fighters]
 
   before_action :respond_to_js, only: [:profile, :standings, :statistics,
                                        :fighters]
