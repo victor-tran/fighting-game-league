@@ -132,26 +132,32 @@
           <!-- Accept/Decline/Dispute Match Button-->
           <% elsif current_user.id == match.p1_id %>
             <% if match.p1_accepted == false %>
-              <p><%= render partial: 'p1_accept', locals: { match: match } %><p>
               <p>
-                <%= render partial: 'decline_match_score', 
-                           locals: { match: match } %>
+                <%= link_to "Accept Score", accept_score_match_path(match),
+                        method: :patch, class: "btn btn-large btn-success" %>
               </p>
               <p>
-                <%= link_to "Dispute Score", dispute_match_path(match), method: :patch,
-                      class: "btn btn-large btn-warning" %>
+                <%= link_to "Decline Score", decline_score_match_path(match),
+                        method: :patch, class: "btn btn-large btn-danger" %>
+              </p>
+              <p>
+                <%= link_to "Dispute Score", dispute_match_path(match),
+                        method: :patch, class: "btn btn-large btn-warning" %>
               </p>
             <% end %>
           <% else %>
             <% if match.p2_accepted == false %>
-              <p><%= render partial: 'p2_accept', locals: { match: match } %></p>
               <p>
-                <%= render partial: 'decline_match_score', 
-                           locals: { match: match } %>
+                <%= link_to "Accept Score", accept_score_match_path(match),
+                        method: :patch, class: "btn btn-large btn-success" %>
               </p>
               <p>
-                <%= link_to "Dispute Score", dispute_match_path(match), method: :patch,
-                      class: "btn btn-large btn-warning" %>
+                <%= link_to "Decline Score", decline_score_match_path(match),
+                        method: :patch, class: "btn btn-large btn-danger" %>
+              </p>
+              <p>
+                <%= link_to "Dispute Score", dispute_match_path(match),
+                        method: :patch, class: "btn btn-large btn-warning" %>
               </p>
             <% end %>
           <% end %>

@@ -1,10 +1,10 @@
 class MatchesController < ApplicationController
   before_action :get_match, only: [:edit_date, :set_date, :show, :p1_edit_score,
                                    :p1_set_score, :p2_edit_score, :p2_set_score,
-                                   :confirm_score, :p1_edit_character,
-                                   :p1_set_character, :p2_edit_character,
-                                   :p2_set_character, :dispute, :edit_dispute,
-                                   :resolve]
+                                   :accept_score, :decline_score,
+                                   :p1_edit_character, :p1_set_character,
+                                   :p2_edit_character, :p2_set_character,
+                                   :dispute, :edit_dispute, :resolve]
 
   def get_match
     @match = Match.find(params[:id])
@@ -63,17 +63,19 @@ class MatchesController < ApplicationController
     end
   end
 
-  def confirm_score
-    if @match.update_attributes(match_params)
-      
-      # Match score accepted. 
-      if @match.p1_accepted == true || @match.p2_accepted == true
+  def accept_score
+    if @match.update_attributes(p1_accepted: true, p2_accepted: true,
+                                finalized_date: Time.now)
         @match.pay_winning_betters
         flash[:notice] = "Match score accepted."
-      # Match score declined.
-      else
-        flash[:error] = "Match score declined."
-      end
+    end
+    redirect_to matches_path
+  end
+
+  def decline_score
+    if @match.update_attributes(p1_accepted: false, p2_accepted: false,
+                                p1_score: 0, p2_score: 0)
+    flash[:error] = "Match score declined."
     end
     redirect_to matches_path
   end
