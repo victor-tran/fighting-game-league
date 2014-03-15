@@ -1,6 +1,7 @@
 <% provide(:title, "Select P1 Character") %>
 
-<%= simple_form_for(@match, method: :patch , :url => p1_set_character_match_path(@match)) do |f| %>
+<%= simple_form_for @match, method: :patch,
+                            url: p1_set_character_match_path(@match) do |f| %>
 
   <h1>Select P1 Character</h1>
   <%= f.input :p1_characters, label: "Player 1 Character",

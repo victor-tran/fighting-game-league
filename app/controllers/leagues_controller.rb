@@ -110,10 +110,4 @@ class LeaguesController < ApplicationController
     def end_season_params
       params.require(:league).permit(:started, :current_round)
     end
-
-    def league_params
-      params.require(:league).permit(:name, :game_id, :commissioner_id, :started,
-        :current_season_number, :current_round, :match_count, :info, :banner,
-        :password_protected, :password, :password_confirmation)
-    end
 end

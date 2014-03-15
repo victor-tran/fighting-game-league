@@ -85,7 +85,7 @@ class MatchesController < ApplicationController
   end
 
   def p1_set_character
-    if @match.update_attributes(match_params)
+    if @match.update_attributes(p1_set_character_params)
       unless @match.p1_characters.empty?
         flash[:notice] = "P1 character set."
       end
@@ -98,7 +98,7 @@ class MatchesController < ApplicationController
   end
 
   def p2_set_character
-    if @match.update_attributes(match_params)
+    if @match.update_attributes(p2_set_character_params)
       unless @match.p2_characters.empty?
         flash[:notice] = "P2 character set."
       end
@@ -142,9 +142,11 @@ class MatchesController < ApplicationController
       params.require(:match).permit(:p1_score, :p2_score, :p2_accepted)
     end
 
-    def match_params
-      params.require(:match).permit(:p1_score, :p2_score, :match_date, 
-        :p1_accepted, :p2_accepted, :disputed, :finalized_date, 
-        :p1_characters => [], :p2_characters => [])
+    def p1_set_character_params
+      params.require(:match).permit(:p1_characters => [])
+    end
+
+    def p2_set_character_params
+      params.require(:match).permit(:p2_characters => [])
     end
 end
