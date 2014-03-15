@@ -1,4 +1,6 @@
 class Match < ActiveRecord::Base
+
+  # Associations
   belongs_to :league
   belongs_to :p1, class_name: "User"
   belongs_to :p2, class_name: "User"
@@ -16,9 +18,11 @@ class Match < ActiveRecord::Base
   validates :game_id, presence: true
   validate :match_scores_are_at_match_count
   
-  before_save :convert_int_to_strings
+  before_save :convert_character_ids_to_strings
 
-  def convert_int_to_strings
+  # Removes the empty element and converts the Character ID's to strings
+  # before sending the character array to the database.
+  def convert_character_ids_to_strings
     self.p2_characters.reject! { |c| c.empty? }
     self.p2_characters.collect! { |i| i.to_s }
   end
