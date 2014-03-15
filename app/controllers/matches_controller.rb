@@ -21,7 +21,7 @@ class MatchesController < ApplicationController
 	end
 
 	def set_date
-    if @match.update_attributes(match_date_params)
+    if @match.update_attributes(set_date_params)
       flash[:notice] = "Match date/time updated."
       redirect_to matches_path
     else
@@ -33,7 +33,7 @@ class MatchesController < ApplicationController
   end
 
   def p1_set_score
-    if @match.update_attributes(match_params)
+    if @match.update_attributes(p1_set_score_params)
       if @match.p1_score == 0 && @match.p2_score == 0
         @match.update_attribute(:p1_accepted, false)
         render 'p1_edit_score'
@@ -50,7 +50,7 @@ class MatchesController < ApplicationController
   end
 
   def p2_set_score
-    if @match.update_attributes(match_params)
+    if @match.update_attributes(p2_set_score_params)
       if @match.p1_score == 0 && @match.p2_score == 0
         @match.update_attribute(:p2_accepted, false)
         render 'p2_edit_score'
@@ -115,21 +115,29 @@ class MatchesController < ApplicationController
   end
 
   def resolve
-    if @match.update_attributes(edit_dispute_params)
+    if @match.update_attributes(resolve_params)
       flash[:notice] = "Dispute resolved."
       redirect_to matches_path
     end
   end
 
   private
-    def match_date_params
+    def set_date_params
       params.require(:match).permit(:match_date)
     end
 
-    def edit_dispute_params
+    def resolve_params
       params.require(:match).permit(:p1_score, :p2_score, :match_date, 
         :p1_accepted, :p2_accepted, :disputed, :finalized_date, 
         :p1_characters => [], :p2_characters => [])
+    end
+
+    def p1_set_score_params
+      params.require(:match).permit(:p1_score, :p2_score, :p1_accepted)
+    end
+
+    def p2_set_score_params
+      params.require(:match).permit(:p1_score, :p2_score, :p2_accepted)
     end
 
     def match_params

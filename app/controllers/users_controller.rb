@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update_attributes(edit_user_params)
+    if @user.update_attributes(update_user_params)
       flash[:notice] = "Profile updated."
       redirect_to @user
     else
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
                                    :fight_bucks)
     end
 
-    def edit_user_params
+    def update_user_params
       params.require(:user).permit(:first_name, :last_name, :alias, :email, 
                                    :password, :password_confirmation, :bio, 
                                    :tagline, :avatar, :facebook_account,

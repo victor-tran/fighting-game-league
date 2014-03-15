@@ -46,7 +46,7 @@ class LeaguesController < ApplicationController
   end
   
   def update
-    if @league.update_attributes(edit_league_params)
+    if @league.update_attributes(update_league_params)
       flash[:notice] = "League successfully updated."
       redirect_to @league   
     else
@@ -98,7 +98,7 @@ class LeaguesController < ApplicationController
         :password_protected, :password, :password_confirmation)
     end
 
-    def edit_league_params
+    def update_league_params
       params.require(:league).permit(:name, :match_count, :info, :banner)
     end
 
