@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
-  has_many :leagues, :through => :memberships
+  has_many :leagues, through: :memberships
   has_many :p1_matches, class_name: 'Match', foreign_key: 'p1_id'
   has_many :p2_matches, class_name: 'Match', foreign_key: 'p2_id'
   has_many :bets, foreign_key: 'better_id'

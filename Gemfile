@@ -30,6 +30,8 @@ group :development, :test do
   gem 'rspec-rails'
 end
 group :test do
+  gem 'capybara'
+  gem 'factory_girl_rails'
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
 end
