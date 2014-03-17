@@ -14,6 +14,7 @@ describe User do
 
   subject { @user }
 
+  # User attributes checks.
   it { should respond_to(:first_name) }
   it { should respond_to(:last_name) }
   it { should respond_to(:alias) }
@@ -22,7 +23,24 @@ describe User do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:fight_bucks) }
+  it { should respond_to(:avatar) }
+
+  # User methods checks.
   it { should respond_to(:authenticate) }
+  it { should respond_to(:full_name) }
+  it { should respond_to(:memberOf?) }
+  it { should respond_to(:join!) }
+  it { should respond_to(:leave!) }
+  it { should respond_to(:betting_on?) }
+  it { should respond_to(:bet!) }
+  it { should respond_to(:fighting_in?) }
+  it { should respond_to(:current_matches) }
+  it { should respond_to(:current_streak) }
+  it { should respond_to(:longest_win_streak_ever) }
+  it { should respond_to(:pending_matches) }
+  it { should respond_to(:league_disputes) }
+
+  it { should be_valid }
 
   describe "when first_name is not present" do
     before { @user.first_name = " " }
