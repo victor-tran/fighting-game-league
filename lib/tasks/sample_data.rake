@@ -91,6 +91,7 @@ def make_characters
   game.characters.create!(name: "Hugo")
   game.characters.create!(name: "Rolento")
   game.characters.create!(name: "Elena")
+  game.characters.create!(name: "Decapre")
 
   ###############################
   # Ulimate Marvel vs. Capcom 3 #

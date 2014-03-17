@@ -13,8 +13,8 @@ class Match < ActiveRecord::Base
   validates :p2_id, presence: true
   validates :season_number, presence: true
   validates :league_id, presence: true
-  validates_numericality_of :p1_score, :only_integer => true
-  validates_numericality_of :p2_score, :only_integer => true
+  validates_numericality_of :p1_score, only_integer: true
+  validates_numericality_of :p2_score, only_integer: true
   validates :game_id, presence: true
   validate :match_scores_are_at_match_count
   

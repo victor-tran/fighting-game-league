@@ -15,7 +15,7 @@ describe League do
 
   subject { @league }
 
-  # League attributes checks.
+  # League attribute checks.
   it { should respond_to(:name) }
   it { should respond_to(:game_id) }
   it { should respond_to(:commissioner_id) }
@@ -28,7 +28,7 @@ describe League do
   it { should respond_to(:password) }
   it { should respond_to(:banner) }
 
-  # League methods checks.
+  # League method checks.
   it { should respond_to(:authenticate) }
   #it { should respond_to(:text_search) }
   it { should respond_to(:total_rounds) }
@@ -40,6 +40,7 @@ describe League do
   it { should respond_to(:swap) }
   it { should respond_to(:generate_single_elimination_tournament_matchups) }
 
+  # Check to see that subject league is valid.
   it { should be_valid }
 
   describe "when name is not present" do
