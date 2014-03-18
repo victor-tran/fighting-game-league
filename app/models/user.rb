@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   end
 
   # Returns true if current user is a member of given league.
-  def memberOf?(league)
+  def member_of?(league)
     memberships.find_by(league_id: league.id)
   end
   

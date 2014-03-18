@@ -24,11 +24,17 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:fight_bucks) }
   it { should respond_to(:avatar) }
+  it { should respond_to(:memberships) }
+  it { should respond_to(:leagues) }
+  it { should respond_to(:p1_matches) }
+  it { should respond_to(:p2_matches) }
+  it { should respond_to(:matches) }
+  it { should respond_to(:bets) }
 
   # User method checks.
   it { should respond_to(:authenticate) }
   it { should respond_to(:full_name) }
-  it { should respond_to(:memberOf?) }
+  it { should respond_to(:member_of?) }
   it { should respond_to(:join!) }
   it { should respond_to(:leave!) }
   it { should respond_to(:betting_on?) }
@@ -140,6 +146,24 @@ describe User do
 
       it { should_not eq user_for_invalid_password }
       specify { expect(user_for_invalid_password).to be_false }
+    end
+  end
+
+  describe "joining leagues" do
+    let(:league) { FactoryGirl.create(:league) }
+    before do
+      @user.save
+      @user.join!(league)
+    end
+
+    it { should be_member_of(league) }
+    its(:leagues) { should include(league) }
+
+    describe "and leaving leagues" do
+      before { @user.leave!(league) }
+
+      it { should_not be_member_of(league) }
+      its(:leagues) { should_not include(league) }
     end
   end
 

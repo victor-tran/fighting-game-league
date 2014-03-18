@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe Bet do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should respond_to(:wager_amount) }
+  it { should respond_to(:match) }
+  it { should respond_to(:better) }
+  it { should respond_to(:favorite) }
 end

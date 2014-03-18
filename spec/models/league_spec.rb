@@ -27,6 +27,10 @@ describe League do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:banner) }
+  it { should respond_to(:memberships) }
+  it { should respond_to(:users) }
+  it { should respond_to(:matches) }
+  it { should respond_to(:game) }
 
   # League method checks.
   it { should respond_to(:authenticate) }

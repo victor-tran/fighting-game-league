@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe Match do
   before do
-    League.create!(name: "Example League",
-              game_id: 1,
-              commissioner_id: 1,
-              started: false,
-              current_season_number: 0,
-              current_round: 0,
-              info: "Example info",
-              match_count: 5)
     @match = Match.new(
               round_number: 1, 
               p1_id: 1, 
@@ -44,5 +36,5 @@ describe Match do
   it { should respond_to(:scores_not_set?) }
 
   # Check to see that subject match is valid.
-  # it { should be_valid } FIX FACTORY ASSOCIATIONS BLAH
+  #it { should be_valid }
 end

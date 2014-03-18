@@ -1,5 +1,5 @@
 <div id="join_form">
-  <% if current_user.memberOf?(league) %>
+  <% if current_user.member_of?(league) %>
 		<%= render partial: 'leave', locals: { league: league } %>
   <% else %>
     <%= render partial: 'join', locals: { league: league } %>

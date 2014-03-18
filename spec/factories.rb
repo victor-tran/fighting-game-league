@@ -8,4 +8,15 @@ FactoryGirl.define do
     password_confirmation  "foobar"
     fight_bucks            50
   end
+
+  factory :league do
+    name                  "Example League"
+    game_id               1
+    match_count           5
+    info                  "Example text"
+    commissioner_id       1
+    started               false
+    current_season_number 0
+    current_round         0
+  end
 end
