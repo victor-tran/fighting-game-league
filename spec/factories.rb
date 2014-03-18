@@ -6,16 +6,6 @@ FactoryGirl.define do
     email                 "dfaced@gmail.com"
     password              "foobar"
     password_confirmation "foobar"
-  end
-
-  factory :league do
-    name                  "Example League"
-    game_id               1
-    commissioner_id       1
-    started               false
-    current_season_number 0
-    current_round         0
-    info                  "Example info"
-    match_count           5
+    fight_bucks           50
   end
 end

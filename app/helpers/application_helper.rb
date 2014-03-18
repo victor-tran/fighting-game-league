@@ -69,11 +69,15 @@ module ApplicationHelper
 
       # Count each occurrence of a character's selection in a match.
       match_set.each do |match|
-        unless match.p1_character == nil
-          game_hashmap[game][Character.find(match.p1_character)] += 1
+        unless match.p1_characters.empty?
+          for j in 0..match.p1_characters.length-1
+            game_hashmap[game][Character.find(match.p1_characters[j])] += 1
+          end
         end
-        unless match.p2_character == nil
-          game_hashmap[game][Character.find(match.p2_character)] += 1
+        unless match.p2_characters.empty?
+          for j in 0..match.p2_characters.length-1
+            game_hashmap[game][Character.find(match.p2_characters[j])] += 1
+          end
         end
       end
 

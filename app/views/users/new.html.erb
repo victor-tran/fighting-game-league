@@ -4,12 +4,14 @@
 
   <h1>Sign Up</h1>
 
+  <%= render 'shared/error_messages', object: f.object %>
+
   <%= f.input :first_name %>
   <%= f.input :last_name %>
   <%= f.input :alias %>
   <%= f.input :email %>
   <%= f.input :password %>
-  <%= f.input :password_confirmation %>
+  <%= f.input :password_confirmation, label: "Confirmation" %>
   <%= f.hidden_field :fight_bucks, value: 50 %>
-  <%= f.button :submit, class: "btn-lg btn-primary" %>
+  <%= f.button :submit, "Create account", class: "btn-lg btn-primary" %>
 <% end %>

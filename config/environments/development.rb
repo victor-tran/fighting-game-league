@@ -55,4 +55,6 @@ FightingGameLeague::Application.configure do
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
   }
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end
