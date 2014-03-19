@@ -167,4 +167,43 @@ describe User do
     end
   end
 
+  describe "full_name" do
+    it "is equal to a user's first name + 'alias' + last name" do
+      test_name = @user.first_name + " '" + @user.alias + "' " + @user.last_name
+      test_name.should eq(@user.full_name)
+    end
+  end
+
+  describe "betting_on?" do
+    it "is a pending example"
+  end
+
+  describe "bet!" do
+    it "is a pending example"
+  end
+
+  describe "fighting_in?" do
+    it "is a pending example"
+  end
+
+  describe "current_matches" do
+    it "is a pending example"
+  end
+
+  describe "current_streak" do
+    it "is a pending example"
+  end
+
+  describe "longest_win_streak_ever" do
+    it "is a pending example"
+  end
+
+  describe "pending_matches" do
+    it "is a pending example"
+  end
+
+  describe "league_disputes" do
+    it "is a pending example"
+  end
+
 end

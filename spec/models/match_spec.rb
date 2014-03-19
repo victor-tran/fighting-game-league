@@ -37,4 +37,28 @@ describe Match do
 
   # Check to see that subject match is valid.
   #it { should be_valid }
+
+  describe "match_scores_are_at_match_count" do
+    it "is a pending example"
+  end
+
+  describe "convert_character_ids_to_strings" do
+    it "is a pending example"
+  end
+
+  describe "winner_id" do
+    it "is a pending example"
+  end
+
+  describe "pay_winning_betters" do
+    it "is a pending example"
+  end
+
+  describe "display_score" do
+    it "is a pending example"
+  end
+
+  describe "scores_not_set?" do
+    it "is a pending example"
+  end
 end

@@ -32,7 +32,7 @@ module LeaguesHelper
         match_set.delete(match)
       end
     end
-
+    
     # Convert hashmap to an array that is sorted by Wins and then by MP.
     user_hashmap.to_a.sort_by{ |user| [ -user[1][0], -user[1][2] ] }
   end

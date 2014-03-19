@@ -100,4 +100,24 @@ describe League do
 
     it { should_not be_valid }
   end
+
+  describe "total_rounds" do
+    it "is a pending example"
+  end
+
+  describe "has_more_rounds_left_in_season" do
+    it "is a pending example"
+  end
+
+  describe "matches_for_current_season" do
+    it "is a pending example"
+  end
+
+  describe "total_matches_played" do
+    it "is a pending example"
+  end
+
+  describe "generate_matches" do
+    it "is a pending example"
+  end
 end
