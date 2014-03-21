@@ -81,7 +81,8 @@ describe "User pages" do
         it { should have_title("Fighting Game League") }
 
         # Testing flash notice after successful signin.
-        it { should have_selector('div.alert.alert-success', text: 'Welcome to the Fighting Game League!') }
+        it { should have_selector('div.alert.alert-success',
+                            text: 'Welcome to the Fighting Game League!') }
 
         # Check to see that correct navbar links are there.
         it { should have_link('Settings') }

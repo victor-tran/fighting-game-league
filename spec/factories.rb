@@ -19,4 +19,15 @@ FactoryGirl.define do
     current_season_number 0
     current_round         0
   end
+
+  factory :match do
+    round_number  1 
+    p1_id         1
+    p2_id         2
+    season_number 1
+    league_id     league
+    p1_accepted   false
+    p2_accepted   false
+    game_id       1
+  end
 end
