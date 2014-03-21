@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :league do
-    name                  "Example League"
+    sequence(:name)       { |n| "Example League #{n}" }
     game_id               1
     match_count           5
     info                  "Example text"

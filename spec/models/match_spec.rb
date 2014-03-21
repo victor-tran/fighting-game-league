@@ -1,16 +1,21 @@
 require 'spec_helper'
 
 describe Match do
+  
+  let(:league) { FactoryGirl.create(:league) }
+
   before do
     @match = Match.new(
               round_number: 1, 
               p1_id: 1, 
               p2_id: 2,
               season_number: 1,
-              league_id: 1,
+              league_id: league.id,
               p1_accepted: false,
               p2_accepted: false,
-              game_id: 1)
+              game_id: 1,
+              p1_score: 0,
+              p2_score: 0)
   end
 
   subject { @match }
@@ -36,7 +41,7 @@ describe Match do
   it { should respond_to(:scores_not_set?) }
 
   # Check to see that subject match is valid.
-  #it { should be_valid }
+  it { should be_valid }
 
   describe "match_scores_are_at_match_count" do
     it "is a pending example"
