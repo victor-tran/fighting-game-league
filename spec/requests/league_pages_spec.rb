@@ -6,22 +6,34 @@ describe "League pages" do
 
   # Test league index page.
   describe "index" do
-    it "is a pending example"
+    before { visit leagues_path }
+
+    # Assert that title and h1 content are present.
+    it { should have_title("All leagues") }
+    it { should have_content("All leagues") }
+
+    # Assert that search query field and button are present.
+    it { find_field('query') }
+    it { find('#league_search').should have_button('Search') }
+
+    describe "pagination" do
+
+      before(:all) { 30.times { FactoryGirl.create(:league) } }
+      after(:all)  { League.delete_all }
+
+      it { should have_selector('div.pagination') }
+
+      it "should list each league" do
+        # There are only 20 leagues per page, so there should be 2 pages.
+        League.paginate(page: 2).each do |league|
+          expect(page).to have_selector('li', text: league.name)
+        end
+      end
+    end
   end
 
   # Test league show page.
   describe "show" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:league) { FactoryGirl.create(:league, commissioner_id: user.id) }
-    before do
-      
-      visit league_path(league)
-    end
-
-    it { should have_title(league.name) }
-    it { should have_title(league.game.name) }
-    it { should have_title(league.info) }
-    it { should have_title(league.match_count) }
 
     # Test everything that should be on a league's show page regardless of
     # being a signed in user or not.
