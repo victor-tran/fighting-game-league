@@ -34,7 +34,6 @@ describe League do
 
   # League method checks.
   it { should respond_to(:authenticate) }
-  #it { should respond_to(:text_search) }
   it { should respond_to(:total_rounds) }
   it { should respond_to(:has_more_rounds_left_in_season?) }
   it { should respond_to(:matches_for_current_season) }
@@ -43,6 +42,9 @@ describe League do
   it { should respond_to(:swap_interleaved) }
   it { should respond_to(:swap) }
   it { should respond_to(:generate_single_elimination_tournament_matchups) }
+  it 'should respond to :text_search' do
+    League.should respond_to(:text_search)
+  end
 
   # Check to see that subject league is valid.
   it { should be_valid }
