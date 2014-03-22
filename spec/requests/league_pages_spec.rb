@@ -174,7 +174,18 @@ describe "League pages" do
     # Test everything that should be on a league's show page regardless of
     # being a signed in user or not.
     describe "page" do
-      it "is a pending example"
+
+      let(:user) { FactoryGirl.create(:user) }
+      let(:league) { FactoryGirl.create(:league, commissioner_id: user.id) }
+      before do
+        visit league_path(league)
+      end
+      
+      it { should have_title(league.name) }
+      it { should have_link('Profile') }
+      it { should have_link('Standings') }
+      it { should have_link('Statistics') }
+      it { should have_link('Fighters') }
     end
 
     # Test signed in-user landing on show page.

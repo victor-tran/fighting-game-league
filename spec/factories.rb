@@ -1,4 +1,9 @@
 FactoryGirl.define do
+  factory :game do
+    name "USF4"
+    logo "lol.png"
+  end
+
   factory :user do
     first_name            "Example"
     last_name             "User"
@@ -11,7 +16,7 @@ FactoryGirl.define do
 
   factory :league do
     sequence(:name)       { |n| "Example League #{n}" }
-    game_id               1
+    game
     match_count           5
     info                  "Example text"
     commissioner_id       1
