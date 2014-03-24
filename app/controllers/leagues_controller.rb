@@ -1,5 +1,8 @@
 class LeaguesController < ApplicationController
 
+  before_action :signed_in_user, only: [:new, :edit, :update]
+  before_action :is_commissioner, only: [:edit, :update]
+
   before_action :get_league,    only: [:edit, :update, :show, :start, :next_round,
                                        :end_season, :statistics, :join_password,
                                        :profile, :standings, :fighters]
@@ -109,5 +112,18 @@ class LeaguesController < ApplicationController
 
     def end_season_params
       params.require(:league).permit(:started, :current_round)
+    end
+
+    # Authorization methods
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+      end
+    end
+
+    def is_commissioner
+      @league = League.find(params[:id])
+      redirect_to(root_url) unless current_user?(User.find(@league.commissioner_id))
     end
 end

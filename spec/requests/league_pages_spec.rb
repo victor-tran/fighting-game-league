@@ -4,6 +4,109 @@ describe "League pages" do
 
   subject { page }
 
+  # Test new league page.
+  describe "new league" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:submit) { "Create League" }
+    before(:all) do
+      Game.create!(name: "Ultra Street Fighter IV",
+               logo: "usf4_logo.jpg")
+      Game.create!(name: "Ultimate Marvel vs. Capcom 3",
+                   logo: "umvc3_logo.png")
+      Game.create!(name: "Injustice: Gods Among Us",
+                   logo: "injustice_logo.png")
+      Game.create!(name: "Super Smash Bros. Melee",
+                   logo: "melee_logo.png")
+      Game.create!(name: "Killer Instinct",
+                   logo: "ki_logo.png")
+      Game.create!(name: "King of Fighters XIII",
+                   logo: "kof_13_logo.jpg")
+      Game.create!(name: "Street Fighter x Tekken",
+                   logo: "sfxt_logo.jpg")
+      Game.create!(name: "Persona 4 Arena",
+                   logo: "p4a_logo.png")
+      Game.create!(name: "Tekken Tag Tournament 2",
+                   logo: "ttt2_logo.jpg")
+      Game.create!(name: "Mortal Kombat 9",
+                   logo: "mk_logo.png")
+      Game.create!(name: "Skullgirls",
+                   logo: "skullgirls_logo.png")
+      Game.create!(name: "Divekick",
+                   logo: "divekick_logo.png")
+      Game.create!(name: "Dead or Alive 5 Ultimate",
+                   logo: "doa5u_logo.png")
+      Game.create!(name: "Virtua Fighter 5 Final Showdown",
+                   logo: "vf5fs_logo.png")
+      Game.create!(name: "Street Fighter III: 3rd Strike",
+                   logo: "sf3_3s_logo.png")
+    end
+    after(:all) do
+      Game.delete_all
+    end
+    before do
+      sign_in user
+      visit new_league_path
+    end
+
+    it { should have_title("New League") }
+
+    # Filling out no fields.
+    describe "with no fields filled in" do
+      it "should not create a league" do
+        expect { click_button submit }.not_to change(League, :count)
+      end
+
+      describe "after submission" do
+        before { click_button submit }
+
+        # Test title after signing up with invalid information.
+        it { should have_title("New League") }
+
+        # Test error messages.
+        it { should have_content("error") }
+      end
+    end
+
+    # Filling out all fields with valid information.
+    describe "with valid information" do
+      before do
+        fill_in "Name",            with: "El Classico"
+        select "Killer Instinct",  from: "Game"
+        select "10",               from: "Number of Games for Win"
+        fill_in "Info",            with: "blah blah blah"
+      end
+
+      describe "for a non-password protected league" do
+        
+        it "should create a league" do
+          expect { click_button submit }.to change(League, :count).by(1)
+        end
+
+        describe "after saving the league" do
+          before { click_button submit }
+
+          # El Classico should have been created in the DB.
+          let(:league) { League.find_by(name: 'El Classico') }
+
+          # Test title.
+          it { should have_title("El Classico") }
+          it { should have_content("El Classico") }
+          it { should have_content("Game: Killer Instinct") }
+          it { should have_content("Match Count: First-to-10") }
+          it { should have_content("About: blah blah blah") }
+
+          # Testing flash notice after successful signin.
+          it { should have_selector('div.alert.alert-success',
+                              text: 'League created!') }
+        end
+      end
+
+      describe "for a password protected league" do
+        it "is a pending example"
+      end
+    end
+  end
+
   # Test league index page.
   describe "index" do
     before { visit leagues_path }

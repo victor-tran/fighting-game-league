@@ -51,6 +51,28 @@ describe "Authentication" do
     
     describe "for non-signed-in users" do
 
+      describe "in the Leagues controller" do
+        
+        let(:league) { FactoryGirl.create(:league) }
+
+        describe "visiting the new page" do
+          before { visit new_league_path }
+          it { should have_title('Sign in') }
+          it { should have_selector('div.alert.alert-success') }
+        end
+
+        describe "visiting the edit page" do
+          before { visit edit_league_path(league) }
+          it { should have_title('Sign in') }
+          it { should have_selector('div.alert.alert-success') }
+        end
+
+        describe "submitting to the update action" do
+          before { patch league_path(league) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+
       describe "in the Users controller" do
 
         describe "when attempting to visit a protected page" do
