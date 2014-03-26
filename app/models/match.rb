@@ -17,22 +17,18 @@ class Match < ActiveRecord::Base
   validates_numericality_of :p2_score, only_integer: true
   validates :game_id, presence: true
   validate :match_scores_are_at_match_count
-  
-  before_save :convert_character_ids_to_strings
-
-  # Removes the empty element and converts the Character ID's to strings
-  # before sending the character array to the database.
-  def convert_character_ids_to_strings
-    self.p2_characters.reject! { |c| c.empty? }
-    self.p2_characters.collect! { |i| i.to_s }
-  end
  
   # Match score count validation
   def match_scores_are_at_match_count
     match_count = League.find(league_id).match_count
 
+    # Make sure that scores can't be negative.  
+    if p1_score < 0 || p2_score < 0
+      errors.add(:match_score, " cannot be negative")
+  
+
     # Score is being changed
-    if p1_score > 0 || p2_score > 0
+    elsif p1_score > 0 || p2_score > 0
 
       # Either player's score are not HIGHER than match count
       if p1_score <= match_count && p2_score <= match_count

@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
 
   # Adds bet to current_user.bets
   def bet!(match, favorite, wager)
-    bets.create!(match_id: match.id, favorite_id: favorite.id, wager_amount: wager)
+    self.bets.create!(match_id: match.id, favorite_id: favorite.id, wager_amount: wager)
     self.update_attribute(:fight_bucks, self.fight_bucks - (wager))
   end
 
