@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
     if !match_set.empty?
 
       # Remove any matches that aren't finalized yet and sort by DESC order.
-      decided_matches = match_set.reject { |match| match.finalized_date == nil }.sort { |x,y| y <=> x }
+      decided_matches = match_set.reject { |match| match.finalized_date == nil }.sort { |x,y| y.finalized_date <=> x.finalized_date }
 
       if !decided_matches.empty?
         streak = 0
@@ -188,7 +188,7 @@ class User < ActiveRecord::Base
   def longest_win_streak_ever
     if !matches.empty?
       # Decided matches must be sorted by accepted date.
-      decided_matches = matches.reject { |match| match.finalized_date == nil }.sort { |x,y| y <=> x }
+      decided_matches = matches.reject { |match| match.finalized_date == nil }.sort { |x,y| y.finalized_date <=> x.finalized_date }
       
 
       if !decided_matches.empty?

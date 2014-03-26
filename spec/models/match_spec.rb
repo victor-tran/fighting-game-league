@@ -31,6 +31,9 @@ describe Match do
   it { should respond_to(:p1_accepted) }
   it { should respond_to(:p2_accepted) }
   it { should respond_to(:game_id) }
+  it { should respond_to(:p1) }
+  it { should respond_to(:p2) }
+  it { should respond_to(:league) }
 
   # Match method checks.
   it { should respond_to(:match_scores_are_at_match_count) }

@@ -30,7 +30,9 @@ FactoryGirl.define do
     p1_id         1
     p2_id         2
     season_number 1
-    league_id     league
+    league
+    p1_score      0
+    p2_score      0
     p1_accepted   false
     p2_accepted   false
     game_id       1
