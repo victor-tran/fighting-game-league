@@ -112,14 +112,39 @@ describe "User pages" do
     end
 
     # Test submitting with no information.
-    describe "with invalid information" do
+    describe "with no information" do
       before { click_button "Save changes" }
 
       it { should have_content('error') }
     end
 
-    # Test submitting with valid information.
-    describe "with valid information" do
+    # Test editing user information.
+    describe "social network information" do
+      let(:facebook)  { "foobar_fb" }
+      let(:twitter)   { "foobar_twitter" }
+      let(:twitch)    { "foobar_twitch" }
+      before do
+        fill_in "Facebook account",   with: facebook
+        fill_in "Twitter account",    with: twitter
+        fill_in "Twitch account",     with: twitch
+        fill_in "Password",           with: user.password
+        fill_in "Confirm password",   with: user.password
+        click_button "Save changes"
+      end
+
+      it { should have_selector('div.alert.alert-success') }
+      it { should have_link('Sign out', href: signout_path) }
+      specify { expect(user.reload.facebook_account).to  eq facebook }
+      specify { expect(user.reload.twitter_account).to   eq twitter }
+      specify { expect(user.reload.twitch_account).to    eq twitch }
+    end
+
+    describe "profile picture" do
+      it "is a pending example"
+    end
+
+    # Test editing user information.
+    describe "user information" do
       let(:new_first_name)  { "New" }
       let(:new_last_name)   { "Name" }
       let(:new_alias)       { "Alias" }

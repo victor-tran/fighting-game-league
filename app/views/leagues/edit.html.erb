@@ -1,6 +1,6 @@
 <% provide(:title, 'League Settings') %>
-<h1>League settings</h1>
-<%= simple_form_for @league, :html => { :multipart => true } do |f| %>
+<h1>League Settings</h1>
+<%= simple_form_for @league, html: { multipart: true } do |f| %>
   <%= render 'shared/error_messages', object: f.object  %>
   <br>
   <p>League Banner</p>
@@ -10,10 +10,10 @@
   <%= f.file_field :banner %>
   <br>
   <%= f.input :name %>
-  <%= f.input :match_count, :collection => [1, 2, 3, 4, 5, 7, 10, 15, 20],
+  <%= f.input :match_count, collection: [1, 2, 3, 4, 5, 7, 10, 15, 20],
               label: "Number of Games for Win", hint: "Ex. First-to-5" %>
-  <%= f.input :info, label: "League Info", as: :text, :input_html => { :rows => 5 },
+  <%= f.input :info, label: "League Info", as: :text, input_html: { rows: 5 },
         hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
 
-  <%= f.button :submit, class: "btn-lg btn-primary" %>
+  <%= f.button :submit, "Save changes", class: "btn-lg btn-primary" %>
 <% end %>

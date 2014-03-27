@@ -6,5 +6,5 @@
   <%= f.hidden_field :current_round, value: 1 %>
   <%= f.submit "Start Season " + (@league.current_season_number + 1).to_s,
                 class: "btn btn-large btn-primary", 
-                confirm: "Are you sure? You cannot stop the season once you've started." %>
+                data: { confirm: "Are you sure? You cannot stop the season once you've started." } %>
 <% end %>

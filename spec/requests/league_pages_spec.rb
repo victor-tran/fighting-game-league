@@ -271,6 +271,55 @@ describe "League pages" do
     end
   end
 
+  # Test league edit page.
+  describe "edit" do
+
+    let(:user) { FactoryGirl.create(:user) }
+    let(:league) { FactoryGirl.create(:league, name: "EMBS", commissioner_id: user.id) }
+    before do
+      sign_in user
+      visit edit_league_path(league)
+    end
+
+    # Test to see all the fields are there.
+    describe "page" do
+      it "should have banner and league fields" do
+        should have_title("League Settings")
+        should have_content("League Settings")
+      end
+    end
+
+    # Test submitting with no edited information.
+    describe "with no edited information" do
+      before { click_button "Save changes" }
+      
+      it { should have_selector('div.alert.alert-success') }
+    end
+
+
+    # Test editing league banner.
+    describe "league banner" do
+      it "is a pending example"
+    end    
+
+    # Test editing league information.
+    describe "league information" do
+      let(:new_name)         { "New league name" }
+      let(:new_info)         { "New info" }
+      before do
+        fill_in "Name",             with: new_name
+        select "20",                from: "Number of Games for Win"
+        fill_in "Info",             with: new_info
+        click_button "Save changes"
+      end
+
+      it { should have_selector('div.alert.alert-success') }
+      specify { expect(league.reload.name).to         eq new_name }
+      specify { expect(league.reload.match_count).to  eq 20 }
+      specify { expect(league.reload.info).to         eq new_info }
+    end
+  end
+
   # Test league show page.
   describe "show" do
 
@@ -279,12 +328,12 @@ describe "League pages" do
     describe "page" do
 
       let(:user) { FactoryGirl.create(:user) }
-      let(:league) { FactoryGirl.create(:league, commissioner_id: user.id) }
+      let(:league) { FactoryGirl.create(:league, name: "EMBS", commissioner_id: user.id) }
       before do
         visit league_path(league)
       end
       
-      it { should have_title(league.name) }
+      it { should have_title('EMBS') }
       it { should have_link('Profile') }
       it { should have_link('Standings') }
       it { should have_link('Statistics') }
