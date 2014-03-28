@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :game do
-    name "USF4"
-    logo "lol.png"
+    name "Ultra Street Fighter IV"
+    logo "usf4_logo.jpg"
   end
 
   factory :user do

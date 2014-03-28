@@ -86,7 +86,7 @@ class MatchesController < ApplicationController
 
   def p1_set_character
     if @match.update_attributes(p1_set_character_params)
-      unless @match.p1_characters.empty?
+      unless params[:match][:p1_characters].reject! { |c| c.empty? }.empty?
         flash[:notice] = "P1 character set."
       end
       redirect_to matches_path
@@ -99,7 +99,7 @@ class MatchesController < ApplicationController
 
   def p2_set_character
     if @match.update_attributes(p2_set_character_params)
-      unless @match.p2_characters.empty?
+      unless params[:match][:p1_characters].reject! { |c| c.empty? }.empty?
         flash[:notice] = "P2 character set."
       end
       redirect_to matches_path
