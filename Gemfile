@@ -28,10 +28,15 @@ group :development do
 end
 group :development, :test do
   gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'spork-rails'
+  gem 'guard-spork'
+  gem 'childprocess'
 end
 group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
+  gem 'growl'
 end
