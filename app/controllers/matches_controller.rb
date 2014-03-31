@@ -33,14 +33,12 @@ class MatchesController < ApplicationController
   end
 
   def p1_set_score
-    if @match.update_attributes(p1_set_score_params)
-      if @match.p1_score == 0 && @match.p2_score == 0
-        @match.update_attribute(:p1_accepted, false)
-        render 'p1_edit_score'
-      else
-        flash[:notice] = "Match score set."
-        redirect_to matches_path
-      end
+    if params[:match][:p1_score] == "0" && params[:match][:p2_score] == "0"
+      render 'p1_edit_score'
+    elsif @match.update_attributes(p1_set_score_params)
+      MatchMailer.p1_set_score(@match).deliver
+      flash[:notice] = "Match score set."
+      redirect_to matches_path
     else
       render 'p1_edit_score'
     end
@@ -50,14 +48,12 @@ class MatchesController < ApplicationController
   end
 
   def p2_set_score
-    if @match.update_attributes(p2_set_score_params)
-      if @match.p1_score == 0 && @match.p2_score == 0
-        @match.update_attribute(:p2_accepted, false)
-        render 'p2_edit_score'
-      else
-        flash[:notice] = "Match score set."
-        redirect_to matches_path
-      end
+    if params[:match][:p1_score] == "0" && params[:match][:p2_score] == "0"
+      render 'p2_edit_score'
+    elsif @match.update_attributes(p2_set_score_params)
+      MatchMailer.p2_set_score(@match).deliver
+      flash[:notice] = "Match score set."
+      redirect_to matches_path
     else
       render 'p2_edit_score'
     end
@@ -85,12 +81,13 @@ class MatchesController < ApplicationController
   end
 
   def p1_set_character
-    if @match.update_attributes(p1_set_character_params)
-      unless params[:match][:p1_characters].reject! { |c| c.empty? }.empty?
+    unless params[:match][:p1_characters].reject! { |c| c.empty? }.empty?
+      if @match.update_attributes(p1_set_character_params)
         flash[:notice] = "P1 character set."
       end
-      redirect_to matches_path
     end
+
+    redirect_to matches_path
   end
 
   def p2_edit_character
@@ -98,12 +95,13 @@ class MatchesController < ApplicationController
   end
 
   def p2_set_character
-    if @match.update_attributes(p2_set_character_params)
-      unless params[:match][:p1_characters].reject! { |c| c.empty? }.empty?
+    unless params[:match][:p2_characters].reject! { |c| c.empty? }.empty?
+      if @match.update_attributes(p2_set_character_params)
         flash[:notice] = "P2 character set."
       end
-      redirect_to matches_path
     end
+
+    redirect_to matches_path
   end
 
   def dispute

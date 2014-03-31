@@ -29,7 +29,8 @@ class User < ActiveRecord::Base
 
   # Validates that the attached image is jpg or png.
   validates_attachment :avatar,
-    :content_type => { :content_type => ["image/jpg", "image/png", "image/jpeg", "image/gif"] }
+    content_type: { content_type: ["image/jpg", "image/png", 
+                                   "image/jpeg", "image/gif"] }
   
   # Validations
   validates :first_name, presence: true, length: { maximum: MAX_LENGTH_FIRST_NAME }

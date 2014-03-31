@@ -4,21 +4,27 @@
 <div class="container">
 
   <!-- Player Portraits -->
-  <div class="row">
+  <div class="row player-info">
 
     <!-- Player 1 Portrait -->
     <div class="col-md-4 col-xs-4">
-      <h1><%= image_tag @match.p1.avatar.url(:large) %></h1>
+      <div class="player-vs-portrait">
+        <%= image_tag @match.p1.avatar.url(:large) %>
+      </div>
     </div>
 
     <!-- VS -->
     <div class="col-md-4 col-xs-4">
-      <%= image_tag "vs.png", size: "280" %>
+      <div class="vs-img">
+        <%= image_tag "vs.png", size: "280" %>
+      </div>
     </div>
 
     <!-- Player 2 Portrait -->
     <div class="col-md-4 col-xs-4">
-      <h1><%= image_tag @match.p2.avatar.url(:large) %></h1>
+      <div class="player-vs-portrait">
+        <%= image_tag @match.p2.avatar.url(:large) %>
+      </div>
     </div>
     
   </div>

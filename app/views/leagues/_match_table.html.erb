@@ -16,16 +16,12 @@
         <% if match.round_number == league.current_round %>
           <tr>
             <td>
-              <div class="p1-match-thumb">
-                <%= image_tag User.find(match.p1_id).avatar.url(:thumb) %>
-              </div>
+              <%= image_tag User.find(match.p1_id).avatar.url(:thumb) %>
               <%= link_to User.find(match.p1_id).alias, user_path(match.p1_id) %>
             </td>
             <td><%= link_to match.p1_score.to_s + ":" + match.p2_score.to_s, match %></td>
             <td>
-              <div class="p2-match-thumb">
-                <%= image_tag User.find(match.p2_id).avatar.url(:thumb) %>
-              </div>
+              <%= image_tag User.find(match.p2_id).avatar.url(:thumb) %>
               <%= link_to User.find(match.p2_id).alias, user_path(match.p2_id) %>
             </td>
           </tr>

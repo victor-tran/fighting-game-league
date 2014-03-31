@@ -109,12 +109,13 @@ section {
   margin-right: 10px;
 }
 
-.p1-match-thumb {
-  float:left;
-  margin-right: 10px;
+/* Player VS portrait */
+.player-vs-portrait {
 }
 
-.p2-match-thumb {
-  float:right;
-  margin-left: 10px;
+/* VS image in matches show page */
+.vs-img {
+  img {
+    margin: 0 auto;
+  }
 }
