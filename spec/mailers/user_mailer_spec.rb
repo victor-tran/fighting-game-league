@@ -31,13 +31,8 @@ describe UserMailer do
       mail.body.encoded.should match(user.alias)
     end
 
-    it "renders link to user's profile page" do
-      mail.body.encoded.should match("http://localhost:3000/users/#{user.id}")
-    end
-
-    describe "renders confirmation link" do
-      it "is a pending example"
-      #mail.body.encoded.should match("http://localhost:3000/users/#{user.id}/confirmation")
+    it "renders confirmation link" do
+      mail.body.encoded.should match("http://localhost:3000/users/#{user.uuid}/confirmation")
     end
   end
 end

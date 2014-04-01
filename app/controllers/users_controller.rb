@@ -18,10 +18,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
     if @user.save
-      sign_in @user
       UserMailer.signup_confirmation(@user).deliver
-      flash[:notice] = "Welcome to the Fighting Game League!"
-      redirect_to root_url
+      render 'pending'
     else
       render 'new'
     end
@@ -41,12 +39,23 @@ class UsersController < ApplicationController
   
   def show
   end
+
+  def confirmation
+    # Find user by UUID and make confirmed true.
+    @user = User.find_by_uuid(params[:uuid])
+    unless @user == nil
+      @user.update_attribute(:confirmed, true)
+      sign_in @user
+      flash[:notice] = "Welcome to the Fighting Game League!"
+    end
+    redirect_to root_url
+  end
   
   private
     def create_user_params
       params.require(:user).permit(:first_name, :last_name, :alias, :email, 
                                    :password, :password_confirmation,
-                                   :fight_bucks)
+                                   :fight_bucks, :uuid, :confirmed)
     end
 
     def update_user_params

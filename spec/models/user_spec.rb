@@ -9,7 +9,9 @@ describe User do
               email: "dfaced@gmail.com",
               password: "foobar",
               password_confirmation: "foobar",
-              fight_bucks: "50")
+              fight_bucks: "50",
+              uuid: SecureRandom.uuid,
+              confirmed: false)
   end
 
   subject { @user }
@@ -30,6 +32,9 @@ describe User do
   it { should respond_to(:p2_matches) }
   it { should respond_to(:matches) }
   it { should respond_to(:bets) }
+
+  it { should respond_to(:uuid) }
+  it { should respond_to(:confirmed) }
 
   # User method checks.
   it { should respond_to(:authenticate) }
@@ -118,7 +123,9 @@ describe User do
               email: "dfaced@gmail.com",
               password: " ",
               password_confirmation: " ",
-              fight_bucks: "50")
+              fight_bucks: "50",
+              uuid: SecureRandom.uuid,
+              confirmed: false)
     end
     it { should_not be_valid }
   end

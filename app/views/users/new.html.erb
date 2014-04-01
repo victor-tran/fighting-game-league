@@ -13,5 +13,7 @@
   <%= f.input :password %>
   <%= f.input :password_confirmation, label: "Confirmation" %>
   <%= f.hidden_field :fight_bucks, value: 50 %>
+  <%= f.hidden_field :uuid, value: SecureRandom.uuid %>
+  <%= f.hidden_field :confirmed, value: false %>
   <%= f.button :submit, "Create account", class: "btn-lg btn-primary" %>
 <% end %>

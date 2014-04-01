@@ -12,9 +12,9 @@ class League < ActiveRecord::Base
   validates :name,  presence: true,
                     uniqueness: { case_sensitive: false },
                     length: { maximum: MAX_LENGTH_LEAGUE_NAME }
-  validates :game_id, presence:true
+  validates :game_id, presence: true
   validates :commissioner_id, presence: true
-  validates_inclusion_of :started, :in => [true, false]
+  validates_inclusion_of :started, in: [true, false]
   validates :current_season_number, presence: true
   validates :current_round, presence: true
   validates :match_count, presence: true
@@ -34,7 +34,8 @@ class League < ActiveRecord::Base
 
   # Validates that the attached image is jpg or png.
   validates_attachment :banner,
-    :content_type => { :content_type => ["image/jpg", "image/png", "image/jpeg", "image/gif"] }
+    :content_type => { :content_type => ["image/jpg", "image/png",
+                                         "image/jpeg", "image/gif"] }
 
   # Search stuff.
   def self.text_search(query)

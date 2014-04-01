@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
   validates :tagline, length: { maximum: MAX_LENGTH_TAGLINE }
   validates :bio, length: { maximum: MAX_LENGTH_BIO }
   validates :fight_bucks, presence: true
+  validates :uuid, presence: true
+  validates_inclusion_of :confirmed, in: [true, false]
   has_secure_password
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
 

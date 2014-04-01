@@ -1,5 +1,5 @@
 <p><%= @user.alias %>,</p>
 
-<p>Thank you for signing up.</p>
+<p>Please click the link below to complete the registration process.</p>
 
-<p><%= link_to "My User Profile", user_url(@user) %></p>
+<p><%= link_to "Confirm my account", confirmation_url(@user.uuid) %></p>

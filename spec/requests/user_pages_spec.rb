@@ -77,21 +77,28 @@ describe "User pages" do
         # user@example.com should have been created in the DB.
         let(:user) { User.find_by(email: 'user@example.com') }
 
-        # Test title.
-        it { should have_title("Fighting Game League") }
+        it { should have_title("Pending Confirmation") }
+        it { should have_content("A confirmation link has been sent to your email.
+                                  Please click on it to finish the registration
+                                  process for your account.") }
 
-        # Testing flash notice after successful signin.
-        it { should have_selector('div.alert.alert-success',
-                            text: 'Welcome to the Fighting Game League!') }
+        describe "and then completing the registration of an account" do
+          before do
+            visit confirmation_path(user.uuid)
+          end
+          # Testing flash notice after successful signin.
+          it { should have_selector('div.alert.alert-success',
+                              text: 'Welcome to the Fighting Game League!') }
 
-        # Check to see that correct navbar links are there.
-        it { should have_link('Settings') }
-        it { should have_link('Sign out') }
+          # Check to see that correct navbar links are there.
+          it { should have_link('Settings') }
+          it { should have_link('Sign out') }
 
-        # Test signout.
-        describe "followed by signout" do
-          before { click_link "Sign out" }
-          it { should have_link('Sign in') }
+          # Test signout.
+          describe "followed by signout" do
+            before { click_link "Sign out" }
+            it { should have_link('Sign in') }
+          end
         end
       end
     end

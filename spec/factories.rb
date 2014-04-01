@@ -12,6 +12,8 @@ FactoryGirl.define do
     password               "foobar"
     password_confirmation  "foobar"
     fight_bucks            50
+    uuid                   { SecureRandom.uuid }
+    confirmed              true
   end
 
   factory :league do

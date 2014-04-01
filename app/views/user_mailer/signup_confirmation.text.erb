@@ -1,5 +1,5 @@
 <%= @user.alias %>,
 
-Thank you for signing up.
+Please click the link below to complete the registration process.
 
-<%= user_url(@user) %>
+<%= link_to "Confirm my account", confirmation_url(@user.uuid) %>

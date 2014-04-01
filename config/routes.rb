@@ -21,10 +21,13 @@ FightingGameLeague::Application.routes.draw do
 
   get "home/stats"
   get "home/about"
+  get "users/pending"
 
   match '/register', to: 'users#new', via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   match "/stats", to: 'home#stats', via: 'get'
   match "/about", to: 'home#about', via: 'get'
+  match '/users/:uuid/confirmation' => 'users#confirmation', :via => :get,
+                                        as: 'confirmation'
 end

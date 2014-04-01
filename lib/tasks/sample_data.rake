@@ -578,7 +578,9 @@ def make_users
                email: "dfaced@gmail.com",
                password: "foobar",
                password_confirmation: "foobar",
-               fight_bucks: "50")
+               fight_bucks: "50",
+               uuid: SecureRandom.uuid,
+               confirmed: true)
 
   User.create!(first_name: "Foo",
                last_name: "Bar",
@@ -586,7 +588,9 @@ def make_users
                email: "foo@bar.com",
                password: "foobar",
                password_confirmation: "foobar",
-               fight_bucks: "50")
+               fight_bucks: "50",
+               uuid: SecureRandom.uuid,
+               confirmed: true)
 
   User.create!(first_name: "jaja",
                last_name: "jaja",
@@ -594,7 +598,9 @@ def make_users
                email: "jaja@jaja.com",
                password: "foobar",
                password_confirmation: "foobar",
-               fight_bucks: "50")
+               fight_bucks: "50",
+               uuid: SecureRandom.uuid,
+               confirmed: true)
 
   User.create!(first_name: "lolo",
                last_name: "jones",
@@ -602,7 +608,9 @@ def make_users
                email: "lala@foo.com",
                password: "foobar",
                password_confirmation: "foobar",
-               fight_bucks: "50")
+               fight_bucks: "50",
+               uuid: SecureRandom.uuid,
+               confirmed: true)
 end
 
 def make_leagues

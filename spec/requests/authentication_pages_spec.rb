@@ -27,19 +27,32 @@ describe "Authentication" do
       before do
         fill_in "Email",    with: user.email.upcase
         fill_in "Password", with: user.password
-        click_button "Sign in"
       end
 
-      # Check navbar links that should change after signing in.
-      it { should have_link('Fighters',    href: users_path) }
-      it { should have_link('Settings',    href: edit_user_path(user)) }
-      it { should have_link('Sign out',    href: signout_path) }
-      it { should_not have_link('Sign in', href: signin_path) }
+      describe "but is not a registered user" do
+        before do
+          user.confirmed = false
+          user.save
+          click_button "Sign in"
+        end
 
-      # Check to see that Sign in link replaces sign out link after signing out.
-      describe "followed by signout" do
-        before { click_link "Sign out" }
-        it { should have_link('Sign in') }
+        it { should have_selector('div.alert.alert-danger') }
+      end
+
+      describe "and is a registered user" do
+        before { click_button "Sign in" }
+
+        # Check navbar links that should change after signing in.
+        it { should have_link('Fighters',    href: users_path) }
+        it { should have_link('Settings',    href: edit_user_path(user)) }
+        it { should have_link('Sign out',    href: signout_path) }
+        it { should_not have_link('Sign in', href: signin_path) }
+
+        # Check to see that Sign in link replaces sign out link after signing out.
+        describe "followed by signout" do
+          before { click_link "Sign out" }
+          it { should have_link('Sign in') }
+        end
       end
     end
   end
@@ -80,13 +93,25 @@ describe "Authentication" do
             visit edit_user_path(user)
             fill_in "Email",    with: user.email
             fill_in "Password", with: user.password
-            click_button "Sign in"
           end
 
-          describe "after signing in" do
+          describe "as a non-registered user" do
+            before do
+              user.confirmed = false
+              user.save
+              click_button "Sign in"
+            end
 
-            it "should render the desired protected page" do
-              expect(page).to have_title('Edit user')
+            it { should have_selector('div.alert.alert-danger') }
+          end
+
+          describe "as a registered user" do
+            before { click_button "Sign in" }
+
+            describe "after signing in" do
+              it "should render the desired protected page" do
+                expect(page).to have_title('Edit user')
+              end
             end
           end
         end
