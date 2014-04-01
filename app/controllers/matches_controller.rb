@@ -36,7 +36,6 @@ class MatchesController < ApplicationController
     if params[:match][:p1_score] == "0" && params[:match][:p2_score] == "0"
       render 'p1_edit_score'
     elsif @match.update_attributes(p1_set_score_params)
-      MatchMailer.p1_set_score(@match).deliver
       flash[:notice] = "Match score set."
       redirect_to matches_path
     else
@@ -51,7 +50,6 @@ class MatchesController < ApplicationController
     if params[:match][:p1_score] == "0" && params[:match][:p2_score] == "0"
       render 'p2_edit_score'
     elsif @match.update_attributes(p2_set_score_params)
-      MatchMailer.p2_set_score(@match).deliver
       flash[:notice] = "Match score set."
       redirect_to matches_path
     else
