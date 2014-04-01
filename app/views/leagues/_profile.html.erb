@@ -2,10 +2,9 @@
   
   <!-- League Profile -->
   <div class="league-info">
-    <% commissioner = User.find(@league.commissioner_id) %>
 
     <% if signed_in? %>
-      <% if current_user.id == commissioner.id %>
+      <% if current_user == @league.commissioner %>
         <h1>
           <%= @league.name %>
           <%= link_to '', edit_league_path(@league), class: "glyphicon glyphicon-cog" %>
@@ -13,13 +12,13 @@
       <% else %>
         <h1><%= @league.name %></h1>
       <% end %>
-      <p>Commissioner: <%= link_to commissioner.full_name, commissioner %></p>
+      <p>Commissioner: <%= link_to @league.commissioner.full_name, @league.commissioner %></p>
       <p>Game: <%= @league.game.name %></p>
       <p>Match Count: First-to-<%= @league.match_count %></p>
       <p>About: <%= @league.info %></p>
 
       <% if !@league.started %>
-        <% if current_user.id == commissioner.id %>
+        <% if current_user == @league.commissioner %>
           <% if @league.users.count % 2 == 0 %>
             <h1>Have everyone ready for the season?</h1>
             <%= render partial: 'start', locals: { league: @league } %>
@@ -41,7 +40,7 @@
 
       <% if all_matches_accepted?(
         @league.matches.where("round_number = ?", @league.current_round)) &&
-                              current_user.id == commissioner.id %>
+                              current_user == @league.commissioner %>
         <% if @league.has_more_rounds_left_in_season? %>
           <%= link_to "Go to Round " + (@league.current_round + 1).to_s, 
                       next_round_league_path(@league), method: :patch,

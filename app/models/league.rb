@@ -3,6 +3,8 @@ class League < ActiveRecord::Base
   has_many :users, through: :memberships
   has_many :matches
   belongs_to :game
+  belongs_to :commissioner, class_name: "User"
+
 
   # Constants
   MAX_LENGTH_LEAGUE_NAME = 50

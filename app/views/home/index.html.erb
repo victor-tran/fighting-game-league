@@ -52,7 +52,7 @@
         <% if !current_user.leagues.empty? %>
           
           <% current_user.leagues.each do |league| %>
-            <% if current_user.id == league.commissioner_id %>
+            <% if current_user == league.commissioner %>
               <li><%=link_to league.name, league, class: "glyphicon glyphicon-euro" %></li>
             <% else %>
               <li><%=link_to league.name, league %></li>
