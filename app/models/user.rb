@@ -233,25 +233,26 @@ class User < ActiveRecord::Base
     matches.each do |match|
 
       # Consider the match if it is a match for the league's current round.
-      if match.round_number == League.find(match.league_id).current_round
+      unless match.tournament_id != nil
+        if match.round_number == League.find(match.league_id).current_round
 
-        # Add to pending matches if character hasn't been set yet.
-        if id == match.p1_id && match.p1_characters.empty?
-          pending_matches.add(match)
-        elsif id == match.p2_id && match.p2_characters.empty?
-          pending_matches.add(match)
+          # Add to pending matches if character hasn't been set yet.
+          if id == match.p1_id && match.p1_characters.empty?
+            pending_matches.add(match)
+          elsif id == match.p2_id && match.p2_characters.empty?
+            pending_matches.add(match)
 
-        # Add to pending matches if date has not been set yet.
-        elsif match.match_date == nil
-          pending_matches.add(match)
+          # Add to pending matches if date has not been set yet.
+          elsif match.match_date == nil
+            pending_matches.add(match)
 
-        # Add to pending matches if matches have NOT been accepted by user yet.
-        elsif id == match.p1_id && match.p1_accepted == false
-          pending_matches.add(match)
-        elsif id == match.p2_id && match.p2_accepted == false
-          pending_matches.add(match)
+          # Add to pending matches if matches have NOT been accepted by user yet.
+          elsif id == match.p1_id && match.p1_accepted == false
+            pending_matches.add(match)
+          elsif id == match.p2_id && match.p2_accepted == false
+            pending_matches.add(match)
+          end
         end
-
       end
     end
 

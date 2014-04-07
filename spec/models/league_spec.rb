@@ -10,7 +10,8 @@ describe League do
               current_season_number: 0,
               current_round: 0,
               info: "Example info",
-              match_count: 5)
+              match_count: 5,
+              playoffs_started: false)
   end
 
   subject { @league }
@@ -27,10 +28,12 @@ describe League do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:banner) }
+  it { should respond_to(:playoffs_started) }
   it { should respond_to(:memberships) }
   it { should respond_to(:users) }
   it { should respond_to(:matches) }
   it { should respond_to(:game) }
+  it { should respond_to(:tournaments) }
 
   # League method checks.
   it { should respond_to(:authenticate) }
@@ -45,6 +48,10 @@ describe League do
   it 'should respond to :text_search' do
     League.should respond_to(:text_search)
   end
+  it { should respond_to(:start_playoffs) }
+  it { should respond_to(:playoffs_complete?) }
+  it { should respond_to(:playoffs_underway?) }
+  it { should respond_to(:awaiting_review?) }
 
   # Check to see that subject league is valid.
   it { should be_valid }
@@ -90,7 +97,7 @@ describe League do
   end
 
   describe "when name is too long" do
-    before { @league.name = "a" * 51 }
+    before { @league.name = "a" * 41 }
     it { should_not be_valid }
   end
 
@@ -276,5 +283,13 @@ describe League do
         expect(flag).to be(true)
       end
     end
+  end
+
+  describe "playoffs_complete?" do
+    it "is a pending example"
+  end
+
+  describe "playoffs_underway?" do
+    it "is a pending example"
   end
 end

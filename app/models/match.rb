@@ -26,12 +26,23 @@ class Match < ActiveRecord::Base
     if p1_score < 0 || p2_score < 0
       errors.add(:match_score, " cannot be negative")
   
+    # Don't allow 0-0 score for tournament matches
+    elsif tournament_id != nil && p1_score == 0 && p2_score == 0
+      errors.add(:at_least_one_match_score, "must be above 0")
 
     # Score is being changed
     elsif p1_score > 0 || p2_score > 0
 
+      # Tournament matches don't adhere to league's match count.
+      if tournament_id != nil
+
+        # Make sure there isn't a tie for a tournament match.
+        if p1_score == p2_score
+          errors.add(:there_cannot, " be a tie")
+        end
+
       # Either player's score are not HIGHER than match count
-      if p1_score <= match_count && p2_score <= match_count
+      elsif p1_score <= match_count && p2_score <= match_count
 
         # At least one of the scores is at the league match count
         if p1_score == match_count || p2_score == match_count

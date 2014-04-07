@@ -32,9 +32,9 @@ describe User do
   it { should respond_to(:p2_matches) }
   it { should respond_to(:matches) }
   it { should respond_to(:bets) }
-
   it { should respond_to(:uuid) }
   it { should respond_to(:confirmed) }
+  it { should respond_to(:playoffs_started) }
 
   # User method checks.
   it { should respond_to(:authenticate) }

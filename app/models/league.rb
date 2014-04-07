@@ -2,12 +2,12 @@ class League < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   has_many :matches
+  has_many :tournaments
   belongs_to :game
   belongs_to :commissioner, class_name: "User"
 
-
   # Constants
-  MAX_LENGTH_LEAGUE_NAME = 50
+  MAX_LENGTH_LEAGUE_NAME = 40
   MIN_LENGTH_PASSWORD = 6
 
   # Validations
@@ -21,6 +21,7 @@ class League < ActiveRecord::Base
   validates :current_round, presence: true
   validates :match_count, presence: true
   validates :info, presence: true
+  validates_inclusion_of :playoffs_started, in: [true, false]
   has_secure_password validations: false
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD },
                        allow_blank: true
@@ -69,8 +70,10 @@ class League < ActiveRecord::Base
     current_matches = Set.new
 
     matches.each do |match|
-      if match.season_number == current_season_number
-        current_matches.add(match)
+      unless match.tournament_id != nil
+        if match.season_number == current_season_number
+          current_matches.add(match)
+        end
       end
     end
 
@@ -205,6 +208,130 @@ class League < ActiveRecord::Base
       end
     end
     result
+  end
+
+  # Returns an array sorted by Wins that contains each user's W-L-MP.
+  def generate_user_standings(match_set)
+
+    # Set all user's W-L values to 0-0 and set matches played to 0.
+    user_hashmap = {}
+    users.each do |user|
+      user_hashmap[user] = [0,0,0]
+    end
+
+    # Calculate each user's W-L-MP
+    match_set.each do |match|
+
+      # Only calculate if match has been accepted by p1 & p2.
+      if match.p1_accepted == true && match.p2_accepted == true
+        if match.p1_id == match.winner_id
+          user_hashmap[match.p1][0] += 1
+          user_hashmap[match.p1][2] += 1
+
+          user_hashmap[match.p2][1] += 1
+          user_hashmap[match.p2][2] += 1
+        else
+          user_hashmap[match.p2][0] += 1
+          user_hashmap[match.p2][2] += 1
+
+          user_hashmap[match.p1][1] += 1
+          user_hashmap[match.p1][2] += 1
+        end
+
+        # Remove the match from match_set
+        match_set.delete(match)
+      end
+    end
+    
+    # Convert hashmap to an array that is sorted by Wins and then by MP.
+    user_hashmap.to_a.sort_by{ |user| [ -user[1][0], -user[1][2] ] }
+  end
+
+  def start_playoffs
+    # Create Challonge double elimination tournament through the Ruby API.
+    t = Challonge::Tournament.new
+    t.name = self.name + " Season " + self.current_season_number.to_s + " Playoffs"
+    t.url = self.name.downcase.tr(' ', '_') + "_season_" + self.current_season_number.to_s + "_playoffs"
+    t.tournament_type = 'double elimination'
+    
+    if t.save
+
+      # Add the participants to the tournament based on seeding during
+      # regular season.
+      seeded_users = self.generate_user_standings(self.matches_for_current_season)
+      for i in 0..seeded_users.count - 1
+        user = User.find(seeded_users[i][0])
+        Challonge::Participant.create(name: user.alias,
+                                      email: user.email,
+                                      misc: user.id,
+                                      tournament: t)
+      end
+
+      # Start the tournament!
+      t.start!
+
+      # Create participants array for the tournament.
+      id_array = Array.new
+      for i in 0..seeded_users.count - 1
+        user = User.find(seeded_users[i][0])
+        id_array[i] = user.id.to_s
+      end
+
+      # After successfully creating a tournament on Challonge,
+      # create a new tournament for FGL.
+      tournaments.create!(name: name + " Season " + current_season_number.to_s + " Playoffs",
+                          league_id: id,
+                          season_number: current_season_number,
+                          participants: id_array,
+                          live_image_url: t.live_image_url,
+                          full_challonge_url: t.full_challonge_url,
+                          game_id: game_id)
+    end
+  end
+
+  def end_playoffs
+    url = tournaments.last.full_challonge_url.sub(/^https?\:\/\//, '').sub(/^challonge.com/,'').sub(/^\//, '')
+    t = Challonge::Tournament.find(url)
+    
+    # Finalize the tournament on Challonge.
+    t.post(:finalize)
+
+    # Find the winner of the tournament and update our DB.
+    t.participants.each do |participant|
+      if participant.final_rank.to_i == 1
+        Tournament.find_by_full_challonge_url(t.full_challonge_url).update_attribute(:winner_id, participant.misc.to_i)
+      end
+    end
+  end
+
+  def awaiting_review?
+    url = tournaments.last.full_challonge_url.sub(/^https?\:\/\//, '').sub(/^challonge.com/,'').sub(/^\//, '')
+    
+    if Challonge::Tournament.find(url).state == "awaiting_review"
+      true
+    else
+      false
+    end
+  end
+
+  def playoffs_underway?
+    url = tournaments.last.full_challonge_url.sub(/^https?\:\/\//, '').sub(/^challonge.com/,'').sub(/^\//, '')
+    
+    if Challonge::Tournament.find(url).state == "underway"
+      true
+    else
+      false
+    end
+  end
+
+  def playoffs_complete?
+    url = tournaments.last.full_challonge_url.sub(/^https?\:\/\//, '').sub(/^challonge.com/,'').sub(/^\//, '')
+    
+    if Challonge::Tournament.find(url).state == "complete"
+      true
+    else
+      false
+    end
   end
 
 end

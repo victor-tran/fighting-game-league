@@ -18,6 +18,7 @@ gem 'simple_form'
 gem 'placeholdit'
 gem 'paperclip'
 gem 'aws-sdk'
+gem 'challonge-api'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

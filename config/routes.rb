@@ -4,7 +4,8 @@ FightingGameLeague::Application.routes.draw do
   resources :leagues do
     member do
       get :statistics, :join_password, :profile, :standings, :fighters
-      patch :start, :next_round, :end_season
+      patch :start, :next_round, :end_season, :start_playoffs,
+            :end_playoffs
     end
   end
   resources :memberships, only: [:create, :destroy]
@@ -17,6 +18,12 @@ FightingGameLeague::Application.routes.draw do
     end
   end
   resources :bets, only: [:create]
+  resources :tournaments do
+    member do
+      get :edit_match_scores
+      patch :set_match_scores
+    end
+  end
   root :to => "home#index"
 
   get "home/stats"

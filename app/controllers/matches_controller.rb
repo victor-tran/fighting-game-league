@@ -10,6 +10,36 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
   end
 
+  # Action for setting scores for a tournament match.
+  def create
+    @match = Match.new(create_match_params)
+    @tournament = Tournament.find(params[:match][:tournament_id])
+    if @match.save
+      # Send scores to Challonge via Challonge API
+      url = @tournament.full_challonge_url.sub(/^https?\:\/\//, '').sub(/^challonge.com/,'').sub(/^\//, '')
+      t = Challonge::Tournament.find(url)
+
+      # Find the match via challonge_match_id
+      t.matches.each do |match|
+        if match.id == params[:match][:challonge_match_id].to_i
+
+          # Send scores to Challonge via Challonge API
+          match.scores_csv = @match.p1_score.to_s + '-' + @match.p2_score.to_s
+          if @match.winner_id == @match.p1_id
+            match.winner_id = match.player1_id
+          else
+            match.winner_id = match.player2_id
+          end
+
+          match.save
+        end
+      end
+      redirect_to league_path(@match.league)
+    else
+      render :template => "tournaments/edit_match_scores"
+    end
+  end
+
   def index
   end
 
@@ -144,5 +174,11 @@ class MatchesController < ApplicationController
 
     def p2_set_character_params
       params.require(:match).permit(:p2_characters => [])
+    end
+
+    def create_match_params
+      params.require(:match).permit(:p1_id, :p2_id, :p1_score, :p2_score, 
+        :match_date, :p1_accepted, :p2_accepted, :disputed, :finalized_date,
+        :round_number, :game_id, :season_number, :league_id, :tournament_id)
     end
 end

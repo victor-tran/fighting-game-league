@@ -1,0 +1,28 @@
+<% url = @tournament.full_challonge_url.sub(/^https?\:\/\//, '').sub(/^challonge.com/,'').sub(/^\//, '') %>
+<% t = Challonge::Tournament.find(url) %>
+<% t.matches.each do |match| %>
+  <% if match.state == "open" %>
+    <p><%= match.player1.name %> vs <%= match.player2.name %></p>
+
+    <%= simple_form_for(@tournament.matches.build) do |f| %>
+      <%= f.hidden_field :round_number, value: match.round %>
+      <%= f.hidden_field :p1_id, value: match.player1.misc.to_i %>
+      <%= f.hidden_field :p2_id, value: match.player2.misc.to_i %>
+      <%= f.input :p1_score, label: match.player1.name + "'s score" %>
+      <%= f.input :p2_score, label: match.player2.name + "'s score" %>
+      <%= f.hidden_field :season_number, value: @tournament.season_number %>
+      <%= f.hidden_field :league_id, value: @tournament.league_id %>
+      <%= f.hidden_field :p1_accepted, value: true %>
+      <%= f.hidden_field :p2_accepted, value: true %>
+      <%= f.hidden_field :game_id, value: @tournament.game_id %>
+      <%= f.hidden_field :finalized_date, value: Time.now %>
+      <%= f.hidden_field :disputed, value: false %>
+      <%= f.hidden_field :match_date, value: Time.now %>
+      <%= f.hidden_field :tournament_id, value: @tournament.id %>
+      <%= f.hidden_field :challonge_match_id, value: match.id %>
+
+      <%= f.submit "Set Score!", class: "btn btn-lg btn-primary" %>
+    <% end %>
+    <hr>
+  <% end %>
+<% end %>

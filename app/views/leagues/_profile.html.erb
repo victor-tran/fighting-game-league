@@ -33,23 +33,41 @@
       <% end %>
     <% end %>
 
+  <% if @league.playoffs_started %>
+    <p>Current Playoff Bracket</p>
+    <p>Challonge URL: <%= link_to @league.tournaments.last.full_challonge_url, url_for(@league.tournaments.last.full_challonge_url) %></p>
+    <% if @league.playoffs_complete? %>
+      <%= render partial: 'end_season', locals: { league: @league } %>
+    <% elsif @league.awaiting_review? %>
+      <%= link_to "Finalize Playoffs", end_playoffs_league_path(@league),
+                  method: :patch, class: "btn btn-large btn-success" %>
+    <% elsif @league.playoffs_underway? %>
+      <%= link_to "Set match scores", edit_match_scores_tournament_path(@league.tournaments.last),
+                                      class: "btn btn-large btn-primary" %>
+    <% end %>
 
-    <% if @league.started %>      
-      <h2>Current Matches</h2>
-      <%= render partial: 'match_table', locals: { league: @league } %>
+    <iframe src="<%= @league.tournaments.last.full_challonge_url %>/module?show_final_results=1"
+            width="100%" height="500" frameborder="0" scrolling="auto"
+            allowtransparency="true"></iframe>
 
-      <% if all_matches_accepted?(
-        @league.matches.where("round_number = ?", @league.current_round)) &&
-                              current_user == @league.commissioner %>
-        <% if @league.has_more_rounds_left_in_season? %>
-          <%= link_to "Go to Round " + (@league.current_round + 1).to_s, 
-                      next_round_league_path(@league), method: :patch,
-                      class: "btn btn-large btn-success" %>
-        <% else %>
-          <%= render 'end_season' %>
-        <% end %>
+  <% elsif @league.started %>      
+    <h2>Current Matches</h2>
+    <%= render partial: 'match_table', locals: { league: @league } %>
+
+    <% if all_matches_accepted?(
+      @league.matches.where("round_number = ?", @league.current_round)) &&
+                            current_user == @league.commissioner %>
+      <% if @league.has_more_rounds_left_in_season? %>
+        <%= link_to "Go to Round " + (@league.current_round + 1).to_s, 
+                    next_round_league_path(@league), method: :patch,
+                    class: "btn btn-large btn-success" %>
+      <% else %>
+        <%= link_to "Start Playoffs", 
+                    start_playoffs_league_path(@league), method: :patch,
+                    class: "btn btn-large btn-primary" %>
       <% end %>
     <% end %>
+  <% end %>
   </div>
 
 </div>

@@ -25,6 +25,7 @@ FactoryGirl.define do
     started               false
     current_season_number 0
     current_round         0
+    playoffs_started      false
   end
 
   factory :match do

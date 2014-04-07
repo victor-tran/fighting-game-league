@@ -626,7 +626,8 @@ def make_leagues
                  commissioner_id: 1,
                  started: false,
                  current_season_number: 0,
-                 current_round: 0)
+                 current_round: 0,
+                 playoffs_started: false)
     g_id += 1
   end
 end

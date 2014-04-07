@@ -5,7 +5,8 @@ class LeaguesController < ApplicationController
 
   before_action :get_league,    only: [:edit, :update, :show, :start, :next_round,
                                        :end_season, :statistics, :join_password,
-                                       :profile, :standings, :fighters]
+                                       :profile, :standings, :fighters,
+                                       :start_playoffs, :end_playoffs]
 
   before_action :respond_to_js, only: [:profile, :standings, :statistics,
                                        :fighters]
@@ -71,6 +72,19 @@ class LeaguesController < ApplicationController
     redirect_to @league
   end
 
+  def start_playoffs
+    @league.update_attribute(:playoffs_started, true)
+    @league.start_playoffs
+    flash[:notice] = "Playoffs started!"
+    redirect_to @league
+  end
+
+  def end_playoffs
+    @league.end_playoffs
+    flash[:notice] = "Playoffs complete!"
+    redirect_to @league
+  end
+
   def end_season
     if @league.update_attributes(end_season_params)
       flash[:notice] = "Season " + @league.current_season_number.to_s +
@@ -98,7 +112,8 @@ class LeaguesController < ApplicationController
     def create_league_params
       params.require(:league).permit(:name, :game_id, :commissioner_id, :started,
         :current_season_number, :current_round, :match_count, :info,
-        :password_protected, :password, :password_confirmation)
+        :password_protected, :password, :password_confirmation,
+        :playoffs_started)
     end
 
     def update_league_params
@@ -111,7 +126,8 @@ class LeaguesController < ApplicationController
     end
 
     def end_season_params
-      params.require(:league).permit(:started, :current_round)
+      params.require(:league).permit(:started, :current_round,
+                                     :playoffs_started)
     end
 
     # Authorization methods

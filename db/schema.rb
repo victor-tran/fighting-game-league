@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140331200504) do
+ActiveRecord::Schema.define(version: 20140404013007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20140331200504) do
     t.datetime "banner_updated_at"
     t.string   "password_digest"
     t.boolean  "password_protected"
+    t.boolean  "playoffs_started"
   end
 
   add_index "leagues", ["commissioner_id"], name: "index_leagues_on_commissioner_id", using: :btree
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 20140331200504) do
     t.datetime "finalized_date"
     t.string   "p1_characters",  default: [], array: true
     t.string   "p2_characters",  default: [], array: true
+    t.integer  "tournament_id"
   end
 
   create_table "memberships", force: true do |t|
@@ -90,9 +92,14 @@ ActiveRecord::Schema.define(version: 20140331200504) do
   create_table "tournaments", force: true do |t|
     t.string   "name"
     t.integer  "league_id"
+    t.integer  "season_number"
+    t.string   "participants",       array: true
     t.integer  "winner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "live_image_url"
+    t.string   "full_challonge_url"
+    t.integer  "game_id"
   end
 
   create_table "users", force: true do |t|
