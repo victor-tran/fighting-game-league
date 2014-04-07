@@ -253,6 +253,7 @@ class League < ActiveRecord::Base
     t.name = self.name + " Season " + self.current_season_number.to_s + " Playoffs"
     t.url = self.name.downcase.tr(' ', '_') + "_season_" + self.current_season_number.to_s + "_playoffs"
     t.tournament_type = 'double elimination'
+    t.show_rounds = true
     
     if t.save
 

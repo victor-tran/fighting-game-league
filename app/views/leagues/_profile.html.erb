@@ -35,7 +35,8 @@
 
   <% if @league.playoffs_started %>
     <p>Current Playoff Bracket</p>
-    <p>Challonge URL: <%= link_to @league.tournaments.last.full_challonge_url, url_for(@league.tournaments.last.full_challonge_url) %></p>
+    <p>Challonge URL: <%= link_to @league.tournaments.last.full_challonge_url,
+                          url_for(@league.tournaments.last.full_challonge_url) %></p>
     <% if @league.playoffs_complete? %>
       <%= render partial: 'end_season', locals: { league: @league } %>
     <% elsif @league.awaiting_review? %>
