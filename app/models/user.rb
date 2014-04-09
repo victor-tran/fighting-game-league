@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :p1_matches, class_name: 'Match', foreign_key: 'p1_id'
   has_many :p2_matches, class_name: 'Match', foreign_key: 'p2_id'
   has_many :bets, foreign_key: 'better_id'
+  has_many :orders
   def matches
     p1_matches + p2_matches
   end
@@ -272,6 +273,24 @@ class User < ActiveRecord::Base
 
     disputed_matches
   end
+
+  # Purchase fight bucks through Paypal.
+  def paypal_url(return_url, notify_url) 
+    values = { 
+      business: 'leaguefg-facilitator@gmail.com',
+      cmd: '_xclick',
+      upload: 1,
+      :return => return_url, 
+      amount: "5",
+      item_name: "5000 FGL Fight Bucks",
+      custom: id,
+      item_number: 5000,
+      notify_url: notify_url
+    }
+    
+    # For test transactions use this URL
+    "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+  end 
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64

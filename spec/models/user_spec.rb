@@ -34,7 +34,7 @@ describe User do
   it { should respond_to(:bets) }
   it { should respond_to(:uuid) }
   it { should respond_to(:confirmed) }
-  it { should respond_to(:playoffs_started) }
+  it { should respond_to(:orders) }
 
   # User method checks.
   it { should respond_to(:authenticate) }
@@ -50,6 +50,7 @@ describe User do
   it { should respond_to(:longest_win_streak_ever) }
   it { should respond_to(:pending_matches) }
   it { should respond_to(:league_disputes) }
+  it { should respond_to(:purchase_fight_bucks) }
 
   # Check to see that subject user is valid.
   it { should be_valid }
@@ -987,5 +988,9 @@ describe User do
         expect(@user.fighting_in?(match)).to eq(true)
       end
     end
+  end
+
+  describe "purchase_fight_bucks" do
+    it "is a pending example"
   end
 end

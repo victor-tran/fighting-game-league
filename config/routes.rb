@@ -1,4 +1,5 @@
 FightingGameLeague::Application.routes.draw do
+  get "payment_notifications/create"
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :leagues do
@@ -24,10 +25,17 @@ FightingGameLeague::Application.routes.draw do
       patch :set_match_scores
     end
   end
+  resources :home do
+    collection do
+      patch :pay_via_paypal
+    end
+  end
+  resources :payment_notifications, only: [:create]
   root :to => "home#index"
 
   get "home/stats"
   get "home/about"
+  get "home/fight_bucks"
   get "users/pending"
 
   match '/register', to: 'users#new', via: 'get'
@@ -35,6 +43,7 @@ FightingGameLeague::Application.routes.draw do
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   match "/stats", to: 'home#stats', via: 'get'
   match "/about", to: 'home#about', via: 'get'
+  match "/fight_bucks", to: 'home#fight_bucks', via: 'get'
   match '/users/:uuid/confirmation' => 'users#confirmation', :via => :get,
                                         as: 'confirmation'
 end

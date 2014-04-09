@@ -52,6 +52,7 @@ describe League do
   it { should respond_to(:playoffs_complete?) }
   it { should respond_to(:playoffs_underway?) }
   it { should respond_to(:awaiting_review?) }
+  it { should respond_to(:end_playoffs) }
 
   # Check to see that subject league is valid.
   it { should be_valid }
@@ -285,11 +286,23 @@ describe League do
     end
   end
 
+  describe "start_playoffs" do
+    it "is a pending example"
+  end
+
+  describe "end_playoffs" do
+    it "is a pending example"
+  end
+
   describe "playoffs_complete?" do
     it "is a pending example"
   end
 
   describe "playoffs_underway?" do
+    it "is a pending example"
+  end
+
+  describe "awaiting_review?" do
     it "is a pending example"
   end
 end

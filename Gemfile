@@ -19,6 +19,7 @@ gem 'placeholdit'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'challonge-api'
+gem 'paypal-sdk-rest'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
