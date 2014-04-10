@@ -1,0 +1,6 @@
+<p>Your credit card information is stored safely with PayPal.</p>
+<%= f.input :type, :as => :select, :collection => [ "visa", "mastercard", "discover", "amex" ] %>
+<%= f.input :number %>
+<%= f.input :cvv2 %>
+<%= f.input :expire_month, :as => :select, :collection => "1".."12" %>
+<%= f.input :expire_year,  :as => :select, :collection => (current_year..(current_year+10)) %>

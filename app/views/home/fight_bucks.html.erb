@@ -1,1 +1,5 @@
-<%= link_to 'Checkout', current_user.paypal_url(root_url, payment_notifications_url) %>
+<%= link_to 'Buy 500 Fight Bucks!', orders_path( :order => { :amount => 5, :description => "500 Fight Bucks", :payment_method => "paypal" }), :method => :post, :class => "btn btn-primary", :disable_with => "Procesing.." %>
+
+<%= link_to 'Buy 2000 Fight Bucks!', orders_path( :order => { :amount => 10, :description => "2000 Fight Bucks", :payment_method => "paypal" }), :method => :post, :class => "btn btn-primary", :disable_with => "Procesing.." %>
+
+<%= link_to 'Buy 10000 Fight Bucks!', orders_path( :order => { :amount => 20, :description => "10000 Fight Bucks", :payment_method => "paypal" }), :method => :post, :class => "btn btn-primary", :disable_with => "Procesing.." %>

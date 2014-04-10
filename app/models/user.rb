@@ -47,6 +47,42 @@ class User < ActiveRecord::Base
   validates_inclusion_of :confirmed, in: [true, false]
   has_secure_password
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
+  validate do
+    if need_credit_card? and credit_card.invalid?
+      errors.add :credit_card_id, "Validation error"
+    end
+  end
+
+  before_save :create_credit_card, :if => :need_credit_card?
+
+  def need_credit_card?
+    # credit_card_id.nil? or credit_card.present?
+    credit_card.present?
+  end
+
+  def create_credit_card
+    credit_card.payer_id = self.email
+    if credit_card.create
+      self.credit_card_id          = credit_card.id
+      self.credit_card_description = credit_card.description
+      true
+    else
+      errors.add :credit_card_id, "Validation error"
+      false
+    end
+  end
+
+  def fetch_credit_card
+    @fetch_credit_card ||= credit_card_id && CreditCard.find(credit_card_id)
+  end
+
+  def credit_card
+    @credit_card ||= CreditCard.new
+  end
+
+  def credit_card=(hash)
+    @credit_card = CreditCard.new(hash)
+  end
 
   # Returns "first_name 'alias' last_name" of given User.
   def full_name
@@ -273,24 +309,6 @@ class User < ActiveRecord::Base
 
     disputed_matches
   end
-
-  # Purchase fight bucks through Paypal.
-  def paypal_url(return_url, notify_url) 
-    values = { 
-      business: 'leaguefg-facilitator@gmail.com',
-      cmd: '_xclick',
-      upload: 1,
-      :return => return_url, 
-      amount: "5",
-      item_name: "5000 FGL Fight Bucks",
-      custom: id,
-      item_number: 5000,
-      notify_url: notify_url
-    }
-    
-    # For test transactions use this URL
-    "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
-  end 
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64

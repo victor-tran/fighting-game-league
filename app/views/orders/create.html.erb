@@ -1,0 +1,17 @@
+<h1>Place Order</h1>
+
+<%= simple_form_for @order do |f| %>
+  <%= f.error_notification %>
+  <%= f.hidden_field :amount %>
+  <%= f.hidden_field :description %>
+  <% if current_user.credit_card_id %>
+    <%- f.input :payment_method, :as => :select, :collection => [ :credit_card, :paypal ], :include_blank => false, :hint => "Update your credit card in Profile page" %>
+  <% else %>
+    <%= f.input :payment_method, :as => :select, :collection => [ :credit_card, :paypal ], :include_blank => false %>
+    <%= f.fields_for :credit_card, @order.credit_card do |cc| %>
+      <%= render "users/credit_card", :f => cc %>
+    <% end %>
+  <% end %>
+  <%= f.button :submit, "Place Order", :class => "btn btn-primary" %>
+<% end %>
+

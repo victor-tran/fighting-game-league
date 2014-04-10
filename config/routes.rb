@@ -30,7 +30,10 @@ FightingGameLeague::Application.routes.draw do
       patch :pay_via_paypal
     end
   end
-  resources :payment_notifications, only: [:create]
+  resources :orders do
+    get :execute
+    get :cancel
+  end
   root :to => "home#index"
 
   get "home/stats"
@@ -46,4 +49,5 @@ FightingGameLeague::Application.routes.draw do
   match "/fight_bucks", to: 'home#fight_bucks', via: 'get'
   match '/users/:uuid/confirmation' => 'users#confirmation', :via => :get,
                                         as: 'confirmation'
+  #match "/" => redirect("/"), :via => :post
 end

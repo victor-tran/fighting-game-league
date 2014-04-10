@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409142055) do
+ActiveRecord::Schema.define(version: 20140409230304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 20140409142055) do
     t.datetime "updated_at"
   end
 
+  create_table "orders", force: true do |t|
+    t.integer  "user_id"
+    t.string   "payment_id"
+    t.string   "state"
+    t.string   "amount"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
   create_table "payment_notifications", force: true do |t|
     t.text     "params"
     t.integer  "user_id"
@@ -96,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140409142055) do
     t.string   "transaction_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "amount"
+    t.string   "amount"
   end
 
   create_table "tournaments", force: true do |t|
@@ -133,6 +145,8 @@ ActiveRecord::Schema.define(version: 20140409142055) do
     t.string   "twitch_account"
     t.string   "uuid"
     t.boolean  "confirmed"
+    t.string   "credit_card_id"
+    t.string   "credit_card_description"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

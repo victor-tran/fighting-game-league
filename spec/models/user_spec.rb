@@ -50,7 +50,6 @@ describe User do
   it { should respond_to(:longest_win_streak_ever) }
   it { should respond_to(:pending_matches) }
   it { should respond_to(:league_disputes) }
-  it { should respond_to(:purchase_fight_bucks) }
 
   # Check to see that subject user is valid.
   it { should be_valid }
