@@ -1,27 +1,20 @@
-<%= link_to 'CC 500 Fight Bucks!', orders_path(
-                                      order: { amount: 5,
-                                               description: "500 Fight Bucks",
-                                               payment_method: "credit_card" }),
-                                      method: :post,
-                                      class: "btn btn-warning" %>
-
-<%= link_to 'Buy 500 Fight Bucks!', orders_path(
+Buy 500 Fight Bucks!
+<%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), orders_path(
                                       order: { amount: 5,
                                                description: "500 Fight Bucks",
                                                payment_method: "paypal" }),
-                                      method: :post,
-                                      class: "btn btn-primary" %>
+                                      method: :post) %>
 
-<%= link_to 'Buy 2000 Fight Bucks!', orders_path(
+Buy 2000 Fight Bucks!
+<%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), orders_path(
                                       order: { amount: 10,
                                                description: "2000 Fight Bucks",
                                                payment_method: "paypal" }),
-                                      method: :post,
-                                      class: "btn btn-primary" %>
+                                      method: :post) %>
 
-<%= link_to 'Buy 10000 Fight Bucks!', orders_path(
-                                        order: { amount: 20,
-                                                 description: "10000 Fight Bucks",
-                                                 payment_method: "paypal" }),
-                                        method: :post,
-                                        class: "btn btn-primary" %>
+Buy 10000 Fight Bucks!
+<%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), orders_path(
+                                      order: { amount: 20,
+                                               description: "10000 Fight Bucks",
+                                               payment_method: "paypal" }),
+                                      method: :post) %>
