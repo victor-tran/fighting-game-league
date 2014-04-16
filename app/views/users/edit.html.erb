@@ -1,29 +1,33 @@
 <% provide(:title, "Edit user") %>
 
-<%= simple_form_for @user, html: { multipart: true } do |f| %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= simple_form_for @user, html: { multipart: true } do |f| %>
 
-  <%= render 'shared/error_messages', object: f.object %>
+      <%= render 'shared/error_messages', object: f.object %>
 
-  <h1>Update your profile</h1>
-  <br>
-  <p>Profile picture</p>
-  <% unless @user.avatar.url == "/images/original/missing.png" %>
-    <%= image_tag current_user.avatar.url(:medium) %>
-  <% end %>
-  <%= f.file_field :avatar %>
-  <br>
-
-  <%= f.input :facebook_account %>
-  <%= f.input :twitter_account %>
-  <%= f.input :twitch_account %>
-
-  <%= f.input :first_name %>
-  <%= f.input :last_name %>
-  <%= f.input :alias %>
-  <%= f.input :email %>
-  <%= f.input :tagline, hint: "Short punchline or motto. 60 chars max." %>
-  <%= f.input :bio, as: :text %>
-  <%= f.input :password %>
-  <%= f.input :password_confirmation, label: "Confirm password" %>
-  <%= f.button :submit, "Save changes", class: "btn-lg btn-primary" %>
-<% end %>
+      <h2>Profile Content</h2>
+      <p>Profile picture</p>
+      <% unless @user.avatar.url == "/images/original/missing.png" %>
+        <%= image_tag current_user.avatar.url(:medium) %>
+      <% end %>
+      <%= f.file_field :avatar %>
+      <%= f.input :facebook_account %>
+      <%= f.input :twitter_account %>
+      <%= f.input :twitch_account %>
+      <%= f.input :tagline, hint: "Short punchline or motto. 60 chars max." %>
+      <%= f.input :bio, as: :text %>
+      <hr>
+      <h2>Personal Information</h2>
+      <%= f.input :first_name %>
+      <%= f.input :last_name %>
+      <%= f.input :alias %>
+      <%= f.input :email %>
+      <hr>
+      <h2>Confirm Changes</h2>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation, label: "Confirm password" %>
+      <%= f.button :submit, "Save changes", class: "btn-lg btn-primary" %>
+    <% end %>
+  </div>
+</div>

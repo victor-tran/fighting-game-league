@@ -101,16 +101,6 @@ ActiveRecord::Schema.define(version: 20140409230304) do
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
-  create_table "payment_notifications", force: true do |t|
-    t.text     "params"
-    t.integer  "user_id"
-    t.string   "status"
-    t.string   "transaction_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "amount"
-  end
-
   create_table "tournaments", force: true do |t|
     t.string   "name"
     t.integer  "league_id"

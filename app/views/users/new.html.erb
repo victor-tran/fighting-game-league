@@ -1,19 +1,22 @@
 <% provide(:title, 'Sign up') %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Sign Up</h1>
 
-<%= simple_form_for(@user) do |f| %>
+    <%= simple_form_for(@user) do |f| %>
 
-  <h1>Sign Up</h1>
+      <%= render 'shared/error_messages', object: f.object %>
 
-  <%= render 'shared/error_messages', object: f.object %>
-
-  <%= f.input :first_name %>
-  <%= f.input :last_name %>
-  <%= f.input :alias %>
-  <%= f.input :email %>
-  <%= f.input :password %>
-  <%= f.input :password_confirmation, label: "Confirmation" %>
-  <%= f.hidden_field :fight_bucks, value: 50 %>
-  <%= f.hidden_field :uuid, value: SecureRandom.uuid %>
-  <%= f.hidden_field :confirmed, value: false %>
-  <%= f.button :submit, "Create account", class: "btn-lg btn-primary" %>
-<% end %>
+      <%= f.input :first_name %>
+      <%= f.input :last_name %>
+      <%= f.input :alias %>
+      <%= f.input :email %>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation, label: "Confirmation" %>
+      <%= f.hidden_field :fight_bucks, value: 50 %>
+      <%= f.hidden_field :uuid, value: SecureRandom.uuid %>
+      <%= f.hidden_field :confirmed, value: false %>
+      <%= f.button :submit, "Create account", class: "btn-lg btn-primary" %>
+    <% end %>
+  </div>
+</div>

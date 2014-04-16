@@ -1,35 +1,39 @@
 <% provide(:title, 'New League') %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>New League</h1>
+    <%= simple_form_for(@league) do |f| %>
+      <%= render 'shared/error_messages', object: f.object  %>
+      <%= f.input :name %>
+      <%= f.association :game, selected: 1 %>
+            
+      <%= f.input :match_count, collection: [1, 2, 3, 4, 5, 7, 10, 15, 20],
+            selected: 5, label: "Number of Games for Win", hint: "Ex. First-to-5" %>
+      <%= f.input :info, label: "League Info", as: :text, input_html: { rows: 5 },
+            hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
+      <%= f.input :password_protected, as: :boolean, checked_value: true,
+                                       unchecked_value: false,
+                                       input_html: { checked: false } %>
+      <div id="password_details" style="display:none;">
+        <%= f.input :password %>
+        <%= f.input :password_confirmation %>
+      </div>
+      <%= f.hidden_field :commissioner_id, value: current_user.id %>
+      <%= f.hidden_field :started, value: false %>
+      <%= f.hidden_field :current_season_number, value: 0 %>
+      <%= f.hidden_field :current_round, value: 0 %>
+      <%= f.hidden_field :playoffs_started, value: false %>
 
-<%= simple_form_for(@league) do |f| %>
-  <%= render 'shared/error_messages', object: f.object  %>
-  <%= f.input :name %>
-  <%= f.association :game, selected: 1 %>
-        
-  <%= f.input :match_count, collection: [1, 2, 3, 4, 5, 7, 10, 15, 20],
-        selected: 5, label: "Number of Games for Win", hint: "Ex. First-to-5" %>
-  <%= f.input :info, label: "League Info", as: :text, input_html: { rows: 5 },
-        hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
-  <%= f.input :password_protected, as: :boolean, checked_value: true,
-                                   unchecked_value: false %>
-  <div id="password_details" style="display:none;">
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
+      <%= f.button :submit, class: "btn-lg btn-primary" %>
+    <% end %>
+
+    <br>
+    <p>
+      Note: Round-robin league set-up. Number of rounds will be calculated
+      the number of players in the league when it is started.
+    </p>
   </div>
-  <%= f.hidden_field :commissioner_id, value: current_user.id %>
-  <%= f.hidden_field :started, value: false %>
-  <%= f.hidden_field :current_season_number, value: 0 %>
-  <%= f.hidden_field :current_round, value: 0 %>
-  <%= f.hidden_field :playoffs_started, value: false %>
-
-  <%= f.button :submit, class: "btn-lg btn-primary" %>
-<% end %>
-
-<br>
-<p>
-  Note: Round-robin league set-up. Number of rounds will be calculated
-  the number of players in the league when it is started.
-</p>
-
+</div>
 <script type="text/javascript">
   var checkbox = document.getElementById('league_password_protected');
   var details_div = document.getElementById('password_details');

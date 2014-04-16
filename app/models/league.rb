@@ -6,6 +6,9 @@ class League < ActiveRecord::Base
   belongs_to :game
   belongs_to :commissioner, class_name: "User"
 
+  # Accessors
+  attr_accessor :password_confirmation
+
   # Constants
   MAX_LENGTH_LEAGUE_NAME = 40
   MIN_LENGTH_PASSWORD = 6
@@ -25,6 +28,19 @@ class League < ActiveRecord::Base
   has_secure_password validations: false
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD },
                        allow_blank: true
+  validate do
+    if password_protected == true
+      if !password.present?
+        errors.add :password, "missing"
+      elsif !password_confirmation.present?
+        errors.add :password_confirmation, "missing"
+      elsif password != password_confirmation
+        errors.add :password, "must match"
+      end
+    elsif password_protected == false and password.present?
+      errors.add :password_protected, "missing when password was present"
+    end
+  end
 
   # Banner stuff.
   has_attached_file :banner, 
