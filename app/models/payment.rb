@@ -21,28 +21,31 @@ class Payment < PayPal::SDK::REST::Payment
       self.payer.funding_instruments = {
         :credit_card_token => {
           :credit_card_id => user.credit_card_id,
-          :payer_id => user.email }}
+          :payer_id => user.email }
+      }
     else
       self.payer.payment_method = "paypal"
     end
   end
 
   def order=(order)
+    binding.pry
     self.intent = "sale"
     add_payment_method(order)
     self.transactions = {
       :amount => {
         :total => order.amount,
-        :currency => "USD" },
+        :currency => "USD"
+      },
       :item_list => {
         :items => { :name => "Fight Bucks", :price => order.amount, :currency => "USD", :quantity => 1 }
       },
       :description => order.description
-     }
-     self.redirect_urls = {
+    }
+    self.redirect_urls = {
        :return_url => order.return_url.sub(/:order_id/, order.id.to_s),
        :cancel_url => order.cancel_url.sub(/:order_id/, order.id.to_s)
-     }
+    }
   end
 
 end

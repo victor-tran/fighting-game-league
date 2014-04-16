@@ -1,0 +1,22 @@
+<% provide(:title, 'Fight Bucks Order') %>
+
+<h1>Place Order</h1>
+
+<%= simple_form_for @order, html: { method: :patch },
+                            url: pay_with_credit_card_orders_path  do |f| %>
+  <%= render 'shared/error_messages', object: f.object  %>
+  <%= f.hidden_field :amount, value: @amount %>
+  <%= f.hidden_field :description, value: @description %>
+  <%= f.hidden_field :payment_method, value: @payment_method %>
+  
+  <%= f.fields_for :credit_card, @order.credit_card do |cc| %>
+    <%= cc.input :first_name %>
+    <%= cc.input :last_name %>
+    <%= cc.input :type, as: :select, collection: [ "visa", "mastercard", "discover", "amex" ] %>
+    <%= cc.input :number %>
+    <%= cc.input :cvv2 %>
+    <%= cc.input :expire_month, as: :select, collection: "1".."12" %>
+    <%= cc.input :expire_year,  as: :select, collection: (current_year..(current_year+10)) %>
+  <% end %>
+  <%= f.button :submit, "Place Order", class: "btn btn-primary" %>
+<% end %>

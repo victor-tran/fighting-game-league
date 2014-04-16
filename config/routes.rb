@@ -25,14 +25,13 @@ FightingGameLeague::Application.routes.draw do
       patch :set_match_scores
     end
   end
-  resources :home do
-    collection do
-      patch :pay_via_paypal
-    end
-  end
   resources :orders do
-    get :execute
-    get :cancel
+    get :execute, :cancel
+
+    collection do
+      get :credit_card
+      patch :pay_with_credit_card
+    end
   end
   root :to => "home#index"
 
@@ -49,5 +48,4 @@ FightingGameLeague::Application.routes.draw do
   match "/fight_bucks", to: 'home#fight_bucks', via: 'get'
   match '/users/:uuid/confirmation' => 'users#confirmation', :via => :get,
                                         as: 'confirmation'
-  #match "/" => redirect("/"), :via => :post
 end

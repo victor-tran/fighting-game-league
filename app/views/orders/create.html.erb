@@ -4,6 +4,8 @@
   <%= render 'shared/error_messages', object: f.object  %>
   <%= f.hidden_field :amount %>
   <%= f.hidden_field :description %>
+  <%= f.hidden_field :payment_method %>
+  
   <% #if current_user.credit_card_id %>
   <%= f.fields_for :credit_card, @order.credit_card do |cc| %>
     <%= render "users/credit_card", :f => cc %>

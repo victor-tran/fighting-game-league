@@ -47,6 +47,8 @@ class User < ActiveRecord::Base
   validates_inclusion_of :confirmed, in: [true, false]
   has_secure_password
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
+
+=begin
   validate do
     if need_credit_card? and credit_card.invalid?
       errors.add :credit_card_id, "Validation error"
@@ -83,6 +85,7 @@ class User < ActiveRecord::Base
   def credit_card=(hash)
     @credit_card = CreditCard.new(hash)
   end
+=end
 
   # Returns "first_name 'alias' last_name" of given User.
   def full_name
