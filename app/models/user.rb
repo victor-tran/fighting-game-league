@@ -25,8 +25,8 @@ class User < ActiveRecord::Base
       square: '160x160#',
       medium: '300x300>',
       large: '500x500>'
-    }, 
-    :default_url => "/images/:style/missing.png"
+    },
+    default_url: "/assets/avatar/:style/missing.png"
 
   # Validates that the attached image is jpg or png.
   validates_attachment :avatar,
@@ -47,45 +47,6 @@ class User < ActiveRecord::Base
   validates_inclusion_of :confirmed, in: [true, false]
   has_secure_password
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD }
-
-=begin
-  validate do
-    if need_credit_card? and credit_card.invalid?
-      errors.add :credit_card_id, "Validation error"
-    end
-  end
-
-  before_save :create_credit_card, :if => :need_credit_card?
-
-  def need_credit_card?
-    # credit_card_id.nil? or credit_card.present?
-    credit_card.present?
-  end
-
-  def create_credit_card
-    credit_card.payer_id = self.email
-    if credit_card.create
-      self.credit_card_id          = credit_card.id
-      self.credit_card_description = credit_card.description
-      true
-    else
-      errors.add :credit_card_id, "Validation error"
-      false
-    end
-  end
-
-  def fetch_credit_card
-    @fetch_credit_card ||= credit_card_id && CreditCard.find(credit_card_id)
-  end
-
-  def credit_card
-    @credit_card ||= CreditCard.new
-  end
-
-  def credit_card=(hash)
-    @credit_card = CreditCard.new(hash)
-  end
-=end
 
   # Returns "first_name 'alias' last_name" of given User.
   def full_name
