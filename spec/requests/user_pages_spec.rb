@@ -115,7 +115,9 @@ describe "User pages" do
     # Test initial visit.
     describe "page" do
       it { should have_title("Edit user") }
-      it { should have_content("Update your profile") }
+      it { should have_content("FGL Profile Content") }
+      it { should have_content("Personal Information") }
+      it { should have_content("Confirm Changes") }
     end
 
     # Test submitting with no information.
@@ -172,6 +174,31 @@ describe "User pages" do
       specify { expect(user.reload.last_name).to   eq new_last_name }
       specify { expect(user.reload.alias).to       eq new_alias }
       specify { expect(user.reload.email).to       eq new_email }
+    end
+  end
+
+  describe "show" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    before { visit user_path(user) }
+
+    it { should have_title(user.alias) }
+    it { should have_content(user.alias) }
+    # Social media buttons
+    # Overall W-L
+    describe "personal information" do
+
+      it { should have_content("Full name: " + user.first_name + " " + user.last_name) }
+
+      describe "when tagline and bio are present" do
+        before do
+          user.tagline = "Stay free."
+          user.bio = "I play Bison."
+        end
+        
+        it { should have_content("Tagline: Stay free.") }
+        it { should have_content("Bio: I play Bison.") }
+      end
     end
   end
 

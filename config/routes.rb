@@ -1,6 +1,9 @@
 FightingGameLeague::Application.routes.draw do
-  get "payment_notifications/create"
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :leagues do
     member do
@@ -33,7 +36,8 @@ FightingGameLeague::Application.routes.draw do
       patch :pay_with_credit_card
     end
   end
-  root :to => "home#index"
+  resources :relationships, only: [:create, :destroy]
+  root to: "home#index"
 
   get "home/stats"
   get "home/about"
@@ -46,6 +50,6 @@ FightingGameLeague::Application.routes.draw do
   match "/stats", to: 'home#stats', via: 'get'
   match "/about", to: 'home#about', via: 'get'
   match "/fight_bucks", to: 'home#fight_bucks', via: 'get'
-  match '/users/:uuid/confirmation' => 'users#confirmation', :via => :get,
+  match '/users/:uuid/confirmation' => 'users#confirmation', via: 'get',
                                         as: 'confirmation'
 end

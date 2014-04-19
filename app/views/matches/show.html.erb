@@ -1,144 +1,138 @@
-<% p1 = User.find(@match.p1_id) %>
-<% p2 = User.find(@match.p2_id) %>
+<!-- Player Portraits -->
+<div class="row player-info">
 
-<div class="container">
-
-  <!-- Player Portraits -->
-  <div class="row player-info">
-
-    <!-- Player 1 Portrait -->
-    <div class="col-md-4 col-xs-4">
-      <div class="player-vs-portrait">
-        <%= image_tag @match.p1.avatar.url(:large) %>
-      </div>
+  <!-- Player 1 Portrait -->
+  <div class="col-md-4 col-xs-4">
+    <div class="player-vs-portrait">
+      <%= image_tag @match.p1.avatar.url(:large) %>
     </div>
-
-    <!-- VS -->
-    <div class="col-md-4 col-xs-4">
-      <div class="vs-img">
-        <%= image_tag "vs.png", size: "280" %>
-      </div>
-    </div>
-
-    <!-- Player 2 Portrait -->
-    <div class="col-md-4 col-xs-4">
-      <div class="player-vs-portrait">
-        <%= image_tag @match.p2.avatar.url(:large) %>
-      </div>
-    </div>
-    
   </div>
 
-  <!-- Player & Match Info -->
-  <div class="row">
-
-    <!-- Player 1 -->
-    <div class="col-md-4 col-xs-4">
-      <p><%= link_to p1.alias, p1 %></p>
-      <p>W-L: <%= WL_record(p1, 
-                    p1.p1_matches.where("league_id = ?", @match.league_id) + 
-                    p1.p2_matches.where("league_id = ?", @match.league_id)) %></p>
-      <p>League Rank: </p>
-      <% unless @match.p1_characters.empty? %>
-        <p>
-          Character: 
-          <% @match.p1_characters.each do |character| %>
-            <%= Character.find(character).name %>
-          <% end %>
-        </p>
-      <% end %>
+  <!-- VS -->
+  <div class="col-md-4 col-xs-4">
+    <div class="vs-img">
+      <%= image_tag "vs.png", size: "280" %>
     </div>
-
-    <!-- Match Info -->
-    <div class="col-md-4 col-xs-4">
-      <p><%= @league.name %> - Round <%= @match.round_number %></p>
-      <% if @match.match_date == nil %>
-        <p>Match Time: TBD</p>
-      <% else %>
-        <p><%= @match.match_date %></p>
-      <% end %>
-      
-      <%= @match.p1_score %> : <%= @match.p2_score %></p>
-    </div>
-
-    <!-- Player 2 -->
-    <div class="col-md-4 col-xs-4">
-      <p><%= link_to p2.alias, p2 %></p>
-      <p>W-L: <%= WL_record(p2, 
-                    p2.p1_matches.where("league_id = ?", @match.league_id) + 
-                    p2.p2_matches.where("league_id = ?", @match.league_id)) %></p>
-      <p>League Rank: </p>
-      <% unless @match.p2_characters.empty? %>
-        <p>
-          Character: 
-          <% @match.p2_characters.each do |character| %>
-            <%= Character.find(character).name %>
-          <% end %>
-        </p>
-      <% end %>
-    </div>
-    
   </div>
 
-  <hr>
+  <!-- Player 2 Portrait -->
+  <div class="col-md-4 col-xs-4">
+    <div class="player-vs-portrait">
+      <%= image_tag @match.p2.avatar.url(:large) %>
+    </div>
+  </div>
   
-  <!-- Bet Buttons & Match Score -->
-  <div class="row">
-    
-    <!-- Player 1 Bet -->
-    <div class="col-md-4 col-xs-4">
-      <% if @match.match_date != nil %>
-        <% if @match.match_date.to_date > Date.today || 
-              @match.match_date > Time.now %>
-          <% if current_user.fight_bucks > 0 %>
-            <% if !current_user.fighting_in?(@match) %>
-              <% unless current_user.betting_on?(@match) %>
-                <%= render 'p1_bet' %>
-              <% end %>
-            <% else %>
-              <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                       disabled: true %>
-            <% end %>
-          <% end %>
-        <% else %>
-          <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                   disabled: true %>
+</div>
+
+<!-- Player & Match Info -->
+<div class="row">
+
+  <!-- Player 1 -->
+  <div class="col-md-4 col-xs-4">
+    <p><%= link_to @match.p1.alias, @match.p1 %></p>
+    <p>W-L: <%= WL_record(@match.p1, 
+                  @match.p1.p1_matches.where("league_id = ?", @match.league_id) + 
+                  @match.p1.p2_matches.where("league_id = ?", @match.league_id)) %></p>
+    <p>League Rank: </p>
+    <% unless @match.p1_characters.empty? %>
+      <p>
+        Character: 
+        <% @match.p1_characters.each do |character| %>
+          <%= Character.find(character).name %>
         <% end %>
-      <% else %>
-        <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                 disabled: true %>
-      <% end %>
-    </div>
-
-    <!-- Bet Info -->
-    <div class="col-md-4 col-xs-4">
-      <p><%= match_bet_info(@match) %></p>
-    </div>
-
-    <!-- Player 2 Bet -->
-    <div class="col-md-4 col-xs-4">
-      <% if @match.match_date != nil %>
-        <% if @match.match_date.to_date > Date.today || 
-              @match.match_date > Time.now %>
-          <% if current_user.fight_bucks > 0 %>
-            <% if !current_user.fighting_in?(@match) %>
-              <% unless current_user.betting_on?(@match) %>
-                <%= render 'p2_bet' %>
-              <% end %>
-            <% else %>
-              <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                       disabled: true %>
-            <% end %>
-          <% end %>
-        <% else %>
-          <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                   disabled: true %>
-        <% end %>
-      <% else %>
-        <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                 disabled: true %>
-      <% end %>
-    </div>
-
+      </p>
+    <% end %>
   </div>
+
+  <!-- Match Info -->
+  <div class="col-md-4 col-xs-4">
+    <p><%= @league.name %> - Round <%= @match.round_number %></p>
+    <% if @match.match_date == nil %>
+      <p>Match Time: TBD</p>
+    <% else %>
+      <p><%= @match.match_date %></p>
+    <% end %>
+    
+    <%= @match.p1_score %> : <%= @match.p2_score %></p>
+  </div>
+
+  <!-- Player 2 -->
+  <div class="col-md-4 col-xs-4">
+    <p><%= link_to @match.p2.alias, @match.p2 %></p>
+    <p>W-L: <%= WL_record(@match.p2, 
+                  @match.p2.p1_matches.where("league_id = ?", @match.league_id) + 
+                  @match.p2.p2_matches.where("league_id = ?", @match.league_id)) %></p>
+    <p>League Rank: </p>
+    <% unless @match.p2_characters.empty? %>
+      <p>
+        Character: 
+        <% @match.p2_characters.each do |character| %>
+          <%= Character.find(character).name %>
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+  
+</div>
+
+<hr>
+
+<!-- Bet Buttons & Match Score -->
+<div class="row">
+  
+  <!-- Player 1 Bet -->
+  <div class="col-md-4 col-xs-4">
+    <% if @match.match_date != nil %>
+      <% if @match.match_date.to_date > Date.today || 
+            @match.match_date > Time.now %>
+        <% if current_user.fight_bucks > 0 %>
+          <% if !current_user.fighting_in?(@match) %>
+            <% unless current_user.betting_on?(@match) %>
+              <%= render 'p1_bet' %>
+            <% end %>
+          <% else %>
+            <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                                     disabled: true %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                                 disabled: true %>
+      <% end %>
+    <% else %>
+      <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                               disabled: true %>
+    <% end %>
+  </div>
+
+  <!-- Bet Info -->
+  <div class="col-md-4 col-xs-4">
+    <p><%= match_bet_info(@match) %></p>
+  </div>
+
+  <!-- Player 2 Bet -->
+  <div class="col-md-4 col-xs-4">
+    <% if @match.match_date != nil %>
+      <% if @match.match_date.to_date > Date.today || 
+            @match.match_date > Time.now %>
+        <% if current_user.fight_bucks > 0 %>
+          <% if !current_user.fighting_in?(@match) %>
+            <% unless current_user.betting_on?(@match) %>
+              <%= render 'p2_bet' %>
+            <% end %>
+          <% else %>
+            <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                                     disabled: true %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                                 disabled: true %>
+      <% end %>
+    <% else %>
+      <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                               disabled: true %>
+    <% end %>
+  </div>
+
 </div>

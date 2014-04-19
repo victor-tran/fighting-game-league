@@ -12,6 +12,9 @@
         <h6>Fight Bucks: <%= current_user.fight_bucks %></h6>
         <h6><%= link_to "Buy More", fight_bucks_path %></h6>
       </section>
+      <section>
+        <%= render 'shared/stats' %>
+      </section>
 
       <!-- Useful Links -->
       <section>
@@ -42,7 +45,8 @@
 
     <!-- My Matches -->
     <div class="col-md-6">
-      <%= render 'my_current_matches' %>
+      <h3>FGL Activity</h3>
+      <%= render 'feed' %>
     </div> 
 
     <!-- Right Sidebar -->

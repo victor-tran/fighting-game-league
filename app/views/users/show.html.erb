@@ -1,96 +1,93 @@
-<div class="container">
+<% provide(:title, @user.alias) %>
+<div class="row">
   
-  <div class="row">
+  <!-- User Portrait and Current League List-->
+  <div class="col-md-4">
+    <%= image_tag @user.avatar.url(:medium) %>
     
-    <!-- User Portrait and Current League List-->
-    <div class="col-md-4">
-      <% unless @user.avatar.url == "/images/original/missing.png" %>
-        <%= image_tag @user.avatar.url(:medium) %>
+    <ul class="list-unstyled">
+      <p>Current Leagues</p>
+      <% if !@user.leagues.empty? %>
+        <% @user.leagues.each do |league| %>
+          <li><%=link_to league.name, league %></li>
+        <% end %>
+
+      <% else %>
+        <li>None.</li>
       <% end %>
+    </ul>
+
+  </div>
+
+  <!-- User Info and Achievements -->
+  <div class="col-md-8">
+    <h1>
+      <%= @user.alias %>
+      <%= render 'follow_form' if signed_in? %>
+      <%= render 'shared/stats' %>
+      <% if @user.facebook_account == nil %>
+        <%= link_to image_tag("facebook.png", size: "40"), '#' %>
+      <% else %>
+        <%= link_to image_tag("facebook.png", size: "40"), 
+                              "https://www.facebook.com/" + 
+                              @user.facebook_account %>
+      <% end %>
+
+      <% if @user.twitter_account == nil %>
+        <%= link_to image_tag("twitter.png", size: "40"), '#' %>
+      <% else %>
+      <%= link_to image_tag("twitter.png", size: "40"), 
+                            "https://www.twitter.com/" + 
+                            @user.twitter_account %>
+      <% end %>
+
+      <% if @user.twitch_account == nil %>
+        <%= link_to image_tag("twitch.png", size: "40"), '#' %>
+      <% else %>                      
+      <%= link_to image_tag("twitch.png", size: "40"), 
+                            "http://www.twitch.tv/" + 
+                            @user.twitch_account %>
+      <% end %>
+    </h1>
+
+    <h2>
+      W-L: <%= WL_record(@user, @user.matches) %>
+    </h2>
+    
+    <hr>
+
+    <!-- User Info -->
+    <p>Full name: <%= @user.first_name + " " + @user.last_name %></p>      
+    <p>Tagline: <%= @user.tagline %></p>
+    <p>Bio: <%= @user.bio %></p>
+
+    <hr>
+
+    <!-- Acheivements -->
+    <div class="panel panel-default">
+      <div class="panel-heading">Achievements</div>
       
-      <ul class="list-unstyled">
-        <p>Current Leagues</p>
-        <% if !@user.leagues.empty? %>
-          <% @user.leagues.each do |league| %>
-            <li><%=link_to league.name, league %></li>
-          <% end %>
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <tr>
+            <th>Type</th>
+            <th>Event</th>
+            <th>Game</th>
+            <th>Placement</th>
+            <th>Year</th>
+          </tr>
+          
+          <tr>
+            <td>League</td>
+            <td>FGL Invite</td>
+            <td>SSF4:AE</td>
+            <td>1st</td>
+            <td>2014</td>
+          </tr>
 
-        <% else %>
-          <li>None.</li>
-        <% end %>
-      </ul>
-
-    </div>
-
-    <!-- User Info and Achievements -->
-    <div class="col-md-8">
-      <h1>
-        <%= @user.alias %>
-        <% if @user.facebook_account == nil %>
-          <%= link_to image_tag("facebook.png", size: "40"), '#' %>
-        <% else %>
-          <%= link_to image_tag("facebook.png", size: "40"), 
-                                "https://www.facebook.com/" + 
-                                @user.facebook_account %>
-        <% end %>
-
-        <% if @user.twitter_account == nil %>
-          <%= link_to image_tag("twitter.png", size: "40"), '#' %>
-        <% else %>
-        <%= link_to image_tag("twitter.png", size: "40"), 
-                              "https://www.twitter.com/" + 
-                              @user.twitter_account %>
-        <% end %>
-
-        <% if @user.twitch_account == nil %>
-          <%= link_to image_tag("twitch.png", size: "40"), '#' %>
-        <% else %>                      
-        <%= link_to image_tag("twitch.png", size: "40"), 
-                              "http://www.twitch.tv/" + 
-                              @user.twitch_account %>
-        <% end %>
-      </h1>
-
-      <h2>
-        W-L: <%= WL_record(current_user, current_user.matches) %>
-      </h2>
-      
-      <hr>
-
-      <!-- User Info -->
-      <p>Full name: <%= @user.first_name + " " + @user.last_name %></p>      
-      <p>Tagline: <%= @user.tagline %></p>
-      <p>Bio: <%= @user.bio %></p>
-
-      <hr>
-
-      <!-- Acheivements -->
-      <div class="panel panel-default">
-        <div class="panel-heading">Achievements</div>
-        
-        <!-- Table -->
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <tr>
-              <th>Type</th>
-              <th>Event</th>
-              <th>Game</th>
-              <th>Placement</th>
-              <th>Year</th>
-            </tr>
-            
-            <tr>
-              <td>League</td>
-              <td>FGL Invite</td>
-              <td>SSF4:AE</td>
-              <td>1st</td>
-              <td>2014</td>
-            </tr>
-
-          </table>
-        </div>
+        </table>
       </div>
-
     </div>
 
   </div>

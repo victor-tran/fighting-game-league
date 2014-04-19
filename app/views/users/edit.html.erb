@@ -6,7 +6,7 @@
 
       <%= render 'shared/error_messages', object: f.object %>
 
-      <h2>Profile Content</h2>
+      <h2>FGL Profile Content</h2>
       <p>Profile picture</p>
       <% unless @user.avatar.url == "/images/original/missing.png" %>
         <%= image_tag current_user.avatar.url(:medium) %>

@@ -35,6 +35,11 @@ describe User do
   it { should respond_to(:uuid) }
   it { should respond_to(:confirmed) }
   it { should respond_to(:orders) }
+  it { should respond_to(:relationships) }
+  it { should respond_to(:followed_users) }
+  it { should respond_to(:reverse_relationships) }
+  it { should respond_to(:followers) }
+  it { should respond_to(:posts) }
 
   # User method checks.
   it { should respond_to(:authenticate) }
@@ -50,6 +55,9 @@ describe User do
   it { should respond_to(:longest_win_streak_ever) }
   it { should respond_to(:pending_matches) }
   it { should respond_to(:league_disputes) }
+  it { should respond_to(:feed) }
+  it { should respond_to(:following?) }
+  it { should respond_to(:follow!) }
 
   # Check to see that subject user is valid.
   it { should be_valid }
@@ -989,7 +997,51 @@ describe User do
     end
   end
 
-  describe "purchase_fight_bucks" do
-    it "is a pending example"
+  describe "following" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it { should be_following(other_user) }
+    its(:followed_users) { should include(other_user) }
+
+    describe "followed user" do
+      subject { other_user }
+      its(:followers) { should include(@user) }
+    end
+
+    describe "and unfollowing" do
+      before { @user.unfollow!(other_user) }
+
+      it { should_not be_following(other_user) }
+      its(:followed_users) { should_not include(other_user) }
+    end
   end
+
+  describe "user_post associations" do
+
+    before { @user.save }
+    let!(:older_post) do
+      FactoryGirl.create(:user_post, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_post) do
+      FactoryGirl.create(:user_post, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right posts in the right order" do
+      expect(@user.posts.to_a).to eq [newer_post, older_post]
+    end
+
+    it "should destroy associated posts" do
+      posts = @user.posts.to_a
+      @user.destroy
+      expect(posts).not_to be_empty
+      posts.each do |post|
+        expect(UserPost.where(id: post.id)).to be_empty
+      end
+    end
+  end
+
 end
