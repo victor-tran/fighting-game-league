@@ -62,6 +62,7 @@ class LeaguesController < ApplicationController
   def start
     if @league.update_attributes(start_league_params)
       @league.generate_matches
+      @league.posts.create!(action: 'started')
       flash[:notice] = "League successfully started!"
     end
     redirect_to @league
@@ -69,6 +70,7 @@ class LeaguesController < ApplicationController
 
   def next_round
     @league.update_attribute(:current_round, @league.current_round + 1)
+    @league.posts.create!(action: 'next_round')
     flash[:notice] = "Round " + @league.current_round.to_s + " started."
     redirect_to @league
   end
@@ -76,18 +78,21 @@ class LeaguesController < ApplicationController
   def start_playoffs
     @league.update_attribute(:playoffs_started, true)
     @league.start_playoffs
+    @league.posts.create!(action: 'playoffs_started')
     flash[:notice] = "Playoffs started!"
     redirect_to @league
   end
 
   def end_playoffs
     @league.end_playoffs
+    @league.posts.create!(action: 'playoffs_ended')
     flash[:notice] = "Playoffs complete!"
     redirect_to @league
   end
 
   def end_season
     if @league.update_attributes(end_season_params)
+      @league.posts.create!(action: 'season_ended')
       flash[:notice] = "Season " + @league.current_season_number.to_s +
                        " complete!"
     end

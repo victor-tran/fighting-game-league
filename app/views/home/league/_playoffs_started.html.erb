@@ -1,0 +1,12 @@
+<% league = League.find(post.postable_id) %>
+<div class="media">
+  <%= image_tag league.banner.url(:thumb) %>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= link_to league.name, league %> Playoffs for Season 
+      <%= league.current_season_number %> has begun!
+    </h4>
+    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
+  </div>
+</div>
+<hr />

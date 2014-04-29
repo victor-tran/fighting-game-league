@@ -82,7 +82,18 @@
   
   <!-- Player 1 Bet -->
   <div class="col-md-4 col-xs-4">
-    <% if @match.match_date != nil %>
+    <% if @match.match_date == nil %>
+      <% if current_user.fight_bucks > 0 %>
+        <% if !current_user.fighting_in?(@match) %>
+          <% unless current_user.betting_on?(@match) %>
+            <%= render 'p2_bet' %>
+          <% end %>
+        <% else %>
+          <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                                   disabled: true %>
+        <% end %>
+      <% end %>
+    <% else %>
       <% if @match.match_date.to_date > Date.today || 
             @match.match_date > Time.now %>
         <% if current_user.fight_bucks > 0 %>
@@ -99,9 +110,6 @@
         <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
                                  disabled: true %>
       <% end %>
-    <% else %>
-      <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                               disabled: true %>
     <% end %>
   </div>
 
@@ -112,7 +120,18 @@
 
   <!-- Player 2 Bet -->
   <div class="col-md-4 col-xs-4">
-    <% if @match.match_date != nil %>
+    <% if @match.match_date == nil %>
+      <% if current_user.fight_bucks > 0 %>
+        <% if !current_user.fighting_in?(@match) %>
+          <% unless current_user.betting_on?(@match) %>
+            <%= render 'p2_bet' %>
+          <% end %>
+        <% else %>
+          <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                                   disabled: true %>
+        <% end %>
+      <% end %>
+    <% else %>
       <% if @match.match_date.to_date > Date.today || 
             @match.match_date > Time.now %>
         <% if current_user.fight_bucks > 0 %>
@@ -129,9 +148,6 @@
         <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
                                  disabled: true %>
       <% end %>
-    <% else %>
-      <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                               disabled: true %>
     <% end %>
   </div>
 

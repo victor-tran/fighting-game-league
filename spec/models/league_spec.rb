@@ -34,6 +34,9 @@ describe League do
   it { should respond_to(:matches) }
   it { should respond_to(:game) }
   it { should respond_to(:tournaments) }
+  it { should respond_to(:relationships) }
+  it { should respond_to(:followers) }
+  it { should respond_to(:posts) }
 
   # League method checks.
   it { should respond_to(:authenticate) }
@@ -304,5 +307,38 @@ describe League do
 
   describe "awaiting_review?" do
     it "is a pending example"
+  end
+
+  describe "followers" do
+    before do
+      @league.save
+      @user = FactoryGirl.create(:user)
+      @user.follow_league!(@league)
+    end
+    its(:followers) { should include(@user) }
+  end
+
+  describe "post associations" do
+
+    before { @league.save }
+    let!(:older_post) do
+      FactoryGirl.create(:post, league: @league, created_at: 1.day.ago)
+    end
+    let!(:newer_post) do
+      FactoryGirl.create(:post, league: @league, created_at: 1.hour.ago)
+    end
+
+    it "should have the right posts in the right order" do
+      expect(@league.posts.to_a).to eq [newer_post, older_post]
+    end
+
+    it "should destroy associated microposts" do
+      posts = @league.posts.to_a
+      @league.destroy
+      expect(posts).not_to be_empty
+      posts.each do |post|
+        expect(Post.where(id: post.id)).to be_empty
+      end
+    end
   end
 end

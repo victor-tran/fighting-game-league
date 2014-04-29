@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419012854) do
+ActiveRecord::Schema.define(version: 20140429154210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,26 @@ ActiveRecord::Schema.define(version: 20140419012854) do
     t.datetime "updated_at"
     t.string   "logo"
   end
+
+  create_table "league_posts", force: true do |t|
+    t.string   "content"
+    t.integer  "league_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "league_posts", ["league_id", "created_at"], name: "index_league_posts_on_league_id_and_created_at", using: :btree
+
+  create_table "league_relationships", force: true do |t|
+    t.integer  "league_id"
+    t.integer  "follower_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "league_relationships", ["follower_id"], name: "index_league_relationships_on_follower_id", using: :btree
+  add_index "league_relationships", ["league_id", "follower_id"], name: "index_league_relationships_on_league_id_and_follower_id", unique: true, using: :btree
+  add_index "league_relationships", ["league_id"], name: "index_league_relationships_on_league_id", using: :btree
 
   create_table "leagues", force: true do |t|
     t.string   "name"
@@ -100,6 +120,16 @@ ActiveRecord::Schema.define(version: 20140419012854) do
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "posts", force: true do |t|
+    t.string   "action"
+    t.integer  "postable_id"
+    t.string   "postable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["postable_id", "postable_type"], name: "index_posts_on_postable_id_and_postable_type", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"

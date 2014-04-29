@@ -10,7 +10,10 @@
           <%= link_to '', edit_league_path(@league), class: "glyphicon glyphicon-cog" %>
         </h1>
       <% else %>
-        <h1><%= @league.name %></h1>
+        <h1>
+          <%= @league.name %>
+          <%= render 'follow_form' unless current_user.member_of?(@league) %>
+        </h1>
       <% end %>
       <p>Commissioner: <%= link_to @league.commissioner.full_name, @league.commissioner %></p>
       <p>Game: <%= @league.game.name %></p>

@@ -41,8 +41,9 @@ FactoryGirl.define do
     game_id       1
   end
 
-  factory :user_post do
+  factory :post do
     content "Lorem ipsum"
     user
+    league
   end
 end

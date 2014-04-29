@@ -1,0 +1,20 @@
+<% match = Match.find(post.postable_id) %>
+<div class="media">
+  <%= image_tag match.league.banner.url(:thumb) %>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= link_to match.league.name, match.league %>
+    </h4>
+    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
+    <p class="content">
+      <% if match.winner_id == match.p1_id %>
+        <%= match.p1.alias %> defeated <%= match.p2.alias %>
+        <%= link_to match.p1_score + '-' + match.p2_score, match %>.
+      <% else %>
+        <%= match.p2.alias %> defeated <%= match.p2.alias %>
+        <%= link_to match.p1_score + '-' + match.p2_score, match %>.
+      <% end %>
+    </p>
+  </div>
+</div>
+<hr />

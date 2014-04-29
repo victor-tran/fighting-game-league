@@ -5,7 +5,11 @@ class League < ActiveRecord::Base
   has_many :tournaments
   belongs_to :game
   belongs_to :commissioner, class_name: "User"
-
+  has_many :relationships, foreign_key: "league_id",
+                           class_name: "LeagueRelationship",
+                           dependent: :destroy
+  has_many :followers, through: :relationships
+  has_many :posts, as: :postable, dependent: :destroy
   # Accessors
   attr_accessor :password_confirmation
 
@@ -45,16 +49,15 @@ class League < ActiveRecord::Base
   # Banner stuff.
   has_attached_file :banner, 
     styles: {
-      small: '100x100>',
-      medium: '400x125',
+      thumb: '80x80#',
       large: '1140x275#'
     }, 
-    :default_url => "http://www.screenslam.com/blog/wp-content/uploads/2012/05/missing-ashley-judd-banner.jpg"
+    default_url: "/assets/league/banner/:style/missing.png"
 
   # Validates that the attached image is jpg or png.
   validates_attachment :banner,
-    :content_type => { :content_type => ["image/jpg", "image/png",
-                                         "image/jpeg", "image/gif"] }
+    content_type: { content_type: ["image/jpg", "image/png",
+                                   "image/jpeg", "image/gif"] }
 
   # Search stuff.
   def self.text_search(query)
@@ -168,62 +171,6 @@ class League < ActiveRecord::Base
         match_array.delete(match)
       end
     end
-  end
-
-  # Swap the second quarter of an array with the last quarter
-  def swap_interleaved(a)
-    n = a.size >> 2
-    a[n..2*n-1],a[3*n..4*n-1] = a[3*n..4*n-1],a[n..2*n-1]
-  end
-
-  # Swap the third quarter of an array with the last quarter
-  def swap(a)
-    n = a.size >> 2
-    a[2*n..3*n-1],a[3*n..4*n-1] = a[3*n..4*n-1],a[2*n..3*n-1]
-  end
-
-  # For the given array, swap_interleaved, then swap
-  # if level is not reached, split array in half and recurse for both halves
-  def rec(a, level)
-    swap_interleaved a
-    swap(a)
-    if (level>0)
-      a[0..a.size/2-1] = rec(a[0..a.size/2-1], level-1)
-      a[a.size/2..-1] = rec(a[a.size/2..-1], level-1)
-    end
-    a
-  end
-
-  # Generate the matchups for a single elimination tournament.
-  def generate_single_elimination_tournament_matchups(user_array)
-    # Match up first-round pairings
-    num_players = user_array.length
-    n = (Math.log(num_players-1)/Math.log(2)).to_i+1
-
-    # New array (2**n in size)
-    a = Array.new(2**n)
-
-    # add players
-    a[0..num_players-1] = user_array
-
-    # make first-round pairings
-    a = a[0..a.size/2-1].zip(a[a.size/2..-1].reverse)
-
-    # recurse
-    (n-3).downto(0) do |l|
-      rec(a,l)
-    end
-
-    # remove double byes
-    result = []
-    a.each_slice(2) do |a,b|
-      if a[1] || b[1]
-        result << a << b
-      else
-        result << [a[0],b[0]]
-      end
-    end
-    result
   end
 
   # Returns an array sorted by Wins that contains each user's W-L-MP.

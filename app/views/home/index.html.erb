@@ -21,7 +21,7 @@
         <ul class="list-unstyled">
           <li><%= link_to " Home", root_path, class: "glyphicon glyphicon-home" %></li>
           <li><%= link_to " Find a League", leagues_path, class: "glyphicon glyphicon-search" %></li>
-          <li><%= link_to " Create New league", new_league_path, class: "glyphicon glyphicon-plus" %></li>
+          <li><%= link_to " Create New League", new_league_path, class: "glyphicon glyphicon-plus" %></li>
           <li>
             <%= link_to " Pending Matches", matches_path, class: "glyphicon glyphicon-tower" %>
             <span class="badge pull-right"><%= current_user.pending_matches.count + current_user.league_disputes.count %></span>

@@ -1,0 +1,2 @@
+module LeagueRelationshipsHelper
+end

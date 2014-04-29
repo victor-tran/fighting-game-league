@@ -6,6 +6,7 @@ class Match < ActiveRecord::Base
   belongs_to :p2, class_name: "User"
   belongs_to :game
   has_many :bets, dependent: :destroy
+  has_many :posts, as: :postable, dependent: :destroy
 
   # Validations
   validates :round_number, presence: true
@@ -84,6 +85,13 @@ class Match < ActiveRecord::Base
       if bet.favorite_id == winning_id
         user = User.find(bet.better_id)
         user.update_attribute(:fight_bucks, bet.wager_amount * 2)
+
+=begin
+        # Post to user feed based on user's current betting streak.
+        if user.current_betting_streak == 5
+          user.posts.create!(action: "3_bet_streak")
+        end
+=end
       end
     end
     

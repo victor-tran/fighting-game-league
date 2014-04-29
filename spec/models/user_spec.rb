@@ -40,6 +40,8 @@ describe User do
   it { should respond_to(:reverse_relationships) }
   it { should respond_to(:followers) }
   it { should respond_to(:posts) }
+  it { should respond_to(:league_relationships) }
+  it { should respond_to(:followed_leagues) }
 
   # User method checks.
   it { should respond_to(:authenticate) }
@@ -58,6 +60,9 @@ describe User do
   it { should respond_to(:feed) }
   it { should respond_to(:following?) }
   it { should respond_to(:follow!) }
+  it { should respond_to(:following_league?) }
+  it { should respond_to(:follow_league!) }
+  it { should respond_to(:unfollow_league!) }
 
   # Check to see that subject user is valid.
   it { should be_valid }
@@ -1020,14 +1025,14 @@ describe User do
     end
   end
 
-  describe "user_post associations" do
+  describe "post associations" do
 
     before { @user.save }
     let!(:older_post) do
-      FactoryGirl.create(:user_post, user: @user, created_at: 1.day.ago)
+      FactoryGirl.create(:post, user: @user, created_at: 1.day.ago)
     end
     let!(:newer_post) do
-      FactoryGirl.create(:user_post, user: @user, created_at: 1.hour.ago)
+      FactoryGirl.create(:post, user: @user, created_at: 1.hour.ago)
     end
 
     it "should have the right posts in the right order" do
@@ -1039,8 +1044,26 @@ describe User do
       @user.destroy
       expect(posts).not_to be_empty
       posts.each do |post|
-        expect(UserPost.where(id: post.id)).to be_empty
+        expect(Post.where(id: post.id)).to be_empty
       end
+    end
+  end
+
+  describe "following leagues" do
+    let(:league) { FactoryGirl.create(:league) }
+    before do
+      @user.save
+      @user.follow_league!(league)
+    end
+
+    it { should be_following_league(league) }
+    its(:followed_leagues) { should include(league) }
+
+    describe "and unfollowing" do
+      before { @user.unfollow_league!(league) }
+
+      it { should_not be_following(league) }
+      its(:followed_leagues) { should_not include(league) }
     end
   end
 

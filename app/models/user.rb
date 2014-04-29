@@ -14,7 +14,9 @@ class User < ActiveRecord::Base
                                    class_name: "Relationship",
                                    dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
-  has_many :posts, class_name: 'UserPost', dependent: :destroy
+  has_many :league_relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_leagues, through: :league_relationships, source: :league
+  has_many :posts, as: :postable, dependent: :destroy
 
   before_save { self.email = email.downcase }
   
@@ -33,7 +35,7 @@ class User < ActiveRecord::Base
       medium: '300x300>',
       large: '500x500>'
     },
-    default_url: "/assets/avatar/:style/missing.png"
+    default_url: "/assets/user/avatar/:style/missing.png"
 
   # Validates that the attached image is jpg or png.
   validates_attachment :avatar,
@@ -67,12 +69,16 @@ class User < ActiveRecord::Base
   
   # Adds league to current user's list of leagues.
   def join!(league)
+    posts.create!(content: self.alias + " joined " + league.name + ".")
     memberships.create!(league_id: league.id)
+    follow_league!(league)
   end
   
   # Removes league from current user's list of leagues.
   def leave!(league)
+    posts.create!(content: self.alias + " left " + league.name + ".")
     memberships.find_by(league_id: league.id).destroy!
+    unfollow_league!(league)
   end
 
   # Returns true if current user bet on match.
@@ -82,8 +88,9 @@ class User < ActiveRecord::Base
 
   # Adds bet to current_user.bets
   def bet!(match, favorite, wager)
-    self.bets.create!(match_id: match.id, favorite_id: favorite.id, wager_amount: wager)
+    bet = self.bets.create!(match_id: match.id, favorite_id: favorite.id, wager_amount: wager)
     self.update_attribute(:fight_bucks, self.fight_bucks - (wager))
+    bet
   end
 
   # Returns true if current user is fighting in match.
@@ -294,7 +301,19 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    UserPost.from_users_followed_by(self)
+    Post.from_users_followed_by(self)
+  end
+
+  def following_league?(league)
+    league_relationships.find_by(league_id: league.id)
+  end
+
+  def follow_league!(league)
+    league_relationships.create!(league_id: league.id)
+  end
+
+  def unfollow_league!(league)
+    league_relationships.find_by(league_id: league.id).destroy
   end
 
   def User.new_remember_token
