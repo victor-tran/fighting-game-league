@@ -6,7 +6,6 @@ class Match < ActiveRecord::Base
   belongs_to :p2, class_name: "User"
   belongs_to :game
   has_many :bets, dependent: :destroy
-  has_many :posts, as: :postable, dependent: :destroy
 
   # Validations
   validates :round_number, presence: true

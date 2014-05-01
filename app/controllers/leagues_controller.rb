@@ -34,7 +34,7 @@ class LeaguesController < ApplicationController
     @league = League.new(create_league_params)
     @league.password_confirmation = params[:league][:password_confirmation]
     if @league.save
-      # User will join their own league.
+      # Commissioner will join their own league.
       current_user.memberships.build(league_id: @league.id)
       current_user.join!(@league)
       flash[:notice] = "League created!"

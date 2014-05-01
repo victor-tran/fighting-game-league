@@ -69,14 +69,17 @@ class User < ActiveRecord::Base
   
   # Adds league to current user's list of leagues.
   def join!(league)
-    posts.create!(content: self.alias + " joined " + league.name + ".")
     memberships.create!(league_id: league.id)
+    if league.commissioner == self
+      posts.create!(action: 'created_league', league_id: league.id)
+    else
+      posts.create!(action: 'joined_league', league_id: league.id)
+    end
     follow_league!(league)
   end
   
   # Removes league from current user's list of leagues.
   def leave!(league)
-    posts.create!(content: self.alias + " left " + league.name + ".")
     memberships.find_by(league_id: league.id).destroy!
     unfollow_league!(league)
   end

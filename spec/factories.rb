@@ -40,10 +40,4 @@ FactoryGirl.define do
     p2_accepted   false
     game_id       1
   end
-
-  factory :post do
-    content "Lorem ipsum"
-    user
-    league
-  end
 end

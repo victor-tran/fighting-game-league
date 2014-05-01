@@ -1,0 +1,13 @@
+<% user = User.find(post.postable_id) %>
+<% league = post.league %>
+<div class="media">
+  <%= image_tag user.avatar.url(:thumb) %>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= link_to user.alias, user %> created the
+      <%= link_to league.name, league %> league.
+    </h4>
+    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
+  </div>
+</div>
+<hr />

@@ -2,7 +2,6 @@ class Bet < ActiveRecord::Base
   belongs_to :match
   belongs_to :better, class_name: 'User'
   belongs_to :favorite, class_name: 'User'
-  has_many :posts, as: :postable, dependent: :destroy
 
   validates :match_id, presence: true
   validates :better_id, presence: true

@@ -4,12 +4,9 @@ class HomeController < ApplicationController
 
       user_ids = current_user.followed_user_ids.push(current_user.id)
       league_ids = current_user.followed_league_ids
-      bet_ids = current_user.bet_ids
 
       @posts = Post.where("postable_id in (?) AND postable_type = ?", user_ids, 'User') +
-               Post.where("postable_id in (?) AND postable_type = ?", league_ids, 'League') +
-               Post.where("postable_id in (?) AND postable_type = ?", bet_ids, 'Bet') +
-               Post.where("postable_id in (?) AND postable_type = ?", bet_ids, 'Match')
+               Post.where("postable_id in (?) AND postable_type = ?", league_ids, 'League')
       @posts.sort! { |x,y| y.created_at <=> x.created_at }
     end
   end

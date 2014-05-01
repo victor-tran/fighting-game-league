@@ -13,9 +13,9 @@ class BetsController < ApplicationController
 
       # Create a betting post to display on user feeds.
       if @fav_user == @match.p1
-        bet.posts.create!(action: 'bet_on_p1')
+        current_user.posts.create!(action: 'bet_on_p1', bet_id: bet.id)
       else
-        bet.posts.create!(action: 'bet_on_p2')
+        current_user.posts.create!(action: 'bet_on_p2', bet_id: bet.id)
       end
     end
     redirect_to match_path(@match)
