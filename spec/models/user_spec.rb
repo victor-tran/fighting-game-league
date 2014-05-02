@@ -42,6 +42,7 @@ describe User do
   it { should respond_to(:posts) }
   it { should respond_to(:league_relationships) }
   it { should respond_to(:followed_leagues) }
+  it { should respond_to(:liked_posts) }
 
   # User method checks.
   it { should respond_to(:authenticate) }
@@ -63,6 +64,9 @@ describe User do
   it { should respond_to(:following_league?) }
   it { should respond_to(:follow_league!) }
   it { should respond_to(:unfollow_league!) }
+  it { should respond_to(:liked_post?) }
+  it { should respond_to(:like_post!) }
+  it { should respond_to(:unlike_post!) }
 
   # Check to see that subject user is valid.
   it { should be_valid }

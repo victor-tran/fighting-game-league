@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :league_relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followed_leagues, through: :league_relationships, source: :league
   has_many :posts, as: :postable, dependent: :destroy
+  has_many :liked_posts, class_name: 'Like', dependent: :destroy
 
   before_save { self.email = email.downcase }
   
@@ -317,6 +318,18 @@ class User < ActiveRecord::Base
 
   def unfollow_league!(league)
     league_relationships.find_by(league_id: league.id).destroy
+  end
+
+  def liked_post?(post)
+    liked_posts.find_by(post_id: post.id)
+  end
+
+  def like_post!(post)
+    liked_posts.create!(post_id: post.id)
+  end
+
+  def unlike_post!(post)
+    liked_posts.find_by!(post_id: post.id).destroy
   end
 
   def User.new_remember_token

@@ -1,16 +1,16 @@
-<% league = League.find(post.postable_id) %>
+<% user = User.find(post.postable_id) %>
+<% league = post.league %>
 <div class="media">
-  <%= image_tag league.banner.url(:thumb) %>
+  <%= image_tag user.avatar.url(:thumb) %>
   <div class="media-body">
     <h4 class="media-heading">
-      <%= link_to league.name, league %> Round
-      <%= league.current_round %> has begun!
+      <%= render partial: "home/#{post.postable_type.underscore}/#{post.action}",
+                 locals: { post: post, match: post.match } %>
     </h4>
     <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
   </div>
   <div class="like-comment-section">
     <%= render partial: 'like_form', locals: { post: post }  %>
-    <div id="like_count"><%= post.likes.count %> likes.</div>
   </div>
 </div>
 <hr />

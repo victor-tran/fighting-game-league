@@ -9,9 +9,10 @@
       fight bucks on <%= link_to match.p2.alias, match.p2 %> to win against
       <%= link_to match.p1.alias, match.p1 %>.
     </h4>
-    <small class="timestamp">
-      <%= time_ago_in_words(post.created_at) %> ago.
-    </small>
+    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
+  </div>
+  <div class="like-comment-section">
+    <%= render partial: 'like_form', locals: { post: post }  %>
   </div>
 </div>
 <hr />

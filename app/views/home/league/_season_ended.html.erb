@@ -8,5 +8,9 @@
     </h4>
     <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
   </div>
+  <div class="like-comment-section">
+    <%= render partial: 'like_form', locals: { post: post }  %>
+    <div id="like_count"><%= post.likes.count %> likes.</div>
+  </div>
 </div>
 <hr />

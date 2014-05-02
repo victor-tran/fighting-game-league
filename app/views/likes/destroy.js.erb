@@ -1,0 +1,2 @@
+$("#like_post_form_"+"<%== escape_javascript(@post.id.to_s) %>").html("<%= escape_javascript(render(partial: 'home/like', locals: { post: @post })) %>")
+$("#like_count_"+"<%== escape_javascript(@post.id.to_s) %>").html('<%= pluralize(@post.likes.count, "like") %>')
