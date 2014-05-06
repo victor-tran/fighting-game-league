@@ -3,7 +3,7 @@ FightingGameLeague::Application.routes.draw do
     member do
       get :following, :followers
     end
-    resources :posts, only: [:index]
+    resources :posts, only: [:show]
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :leagues do
@@ -12,7 +12,7 @@ FightingGameLeague::Application.routes.draw do
       patch :start, :next_round, :end_season, :start_playoffs,
             :end_playoffs
     end
-    resources :posts
+    resources :posts, only: [:show]
   end
   resources :memberships, only: [:create, :destroy]
   resources :matches do
