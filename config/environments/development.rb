@@ -58,8 +58,4 @@ FightingGameLeague::Application.configure do
   }
 
   Rails.application.routes.default_url_options[:host] = 'localhost:3000'
-
-  Pusher.app_id = '73728'
-  Pusher.key = '4f019a37610d0978c340'
-  Pusher.secret = 'b11b79d75e6ae7501d5a'
 end

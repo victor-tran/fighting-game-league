@@ -37,7 +37,7 @@
           channel.bind('new_notification', function(data) {
             // Add notification to notification list.
             $("#notifications ul").append(
-              "<li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post. TEST</a></li>");
+              "<li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post.</a></li>");
 
             // Update unread notifications count.
             $(".notification_badge").html(data.unread_count);
