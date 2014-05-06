@@ -14,9 +14,10 @@ class LikesController < ApplicationController
                                targetable_type: 'Post',
                                read: false)
 
-      # Heroku code
+      # Send a push notification via Pusher API to OP.
       Pusher['private-user-'+op.id.to_s].trigger('new_notification',
-                                                 { notification_id: n.id })
+                                                 { notification_id: n.id,
+                                                   unread_count: current_user.notifications.unread.count })
     
     # Send a notification to OP that current user liked their post.
     else
@@ -26,8 +27,10 @@ class LikesController < ApplicationController
                                targetable_id: @post.id,
                                targetable_type: 'Post',
                                read: false)
+      # Send a push notification via Pusher API to OP.
       Pusher['private-user-'+op.id.to_s].trigger('new_notification',
-                                                 { notification_id: n.id })
+                                                 { notification_id: n.id,
+                                                   unread_count: current_user.notifications.unread.count })
     end
     respond_to do |format|
       format.html { redirect_to root_url }

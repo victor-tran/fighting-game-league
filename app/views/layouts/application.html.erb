@@ -35,13 +35,10 @@
             alert(data.message);
           });
           channel.bind('new_notification', function(data) {
-            //$('#notify').append(msg);
-
             alert("new notification")
-            //msg = data.from + ' has sent you message: ' + data.subject;
-          });
-          channel.bind('new-notification', function(message) {
-            $("#notifications ul").append(message);
+
+            // Update unread notifications count.
+            $(".notification_badge").html(data.unread_count);
           });
         });
     </script>

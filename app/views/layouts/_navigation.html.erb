@@ -20,8 +20,15 @@
             <li><%= link_to "About", about_path %></li>
             <% if signed_in? %>
               <!-- Notification list -->
-              <li class="dropdown notification-icon">
-                <a href="#" class="glyphicon glyphicon-exclamation-sign dropdown-toggle" data-toggle="dropdown"><span class="badge unread-notifications">10</span></a>
+              <li class="dropdown notification_icon">
+                <a href="#" class="glyphicon glyphicon-exclamation-sign dropdown-toggle" data-toggle="dropdown">
+                  <span class="badge notification_badge">
+                    <% unread_count = current_user.notifications.unread.count %>
+                    <% unless unread_count == 0 %>
+                      <%= unread_count %>
+                    <% end %>
+                  </span>
+                </a>
                 <ul class="dropdown-menu scrollable-menu">
                   <%= render partial: 'home/notification_feed' %>
                 </ul>
