@@ -40,6 +40,12 @@
             // Update unread notifications count.
             $(".notification_badge").html(data.unread_count);
           });
+          channel.bind('delete_notification', function(data) {
+            alert("deleting a notification")
+
+            // Update unread notifications count.
+            $(".notification_badge").html(data.unread_count);
+          });
         });
     </script>
     <% end %>
