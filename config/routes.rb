@@ -56,4 +56,5 @@ FightingGameLeague::Application.routes.draw do
   match "/fight_bucks", to: 'home#fight_bucks', via: 'get'
   match '/users/:uuid/confirmation' => 'users#confirmation', via: 'get',
                                         as: 'confirmation'
+  post 'pusher/auth'
 end

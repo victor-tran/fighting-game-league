@@ -43,6 +43,7 @@ describe User do
   it { should respond_to(:league_relationships) }
   it { should respond_to(:followed_leagues) }
   it { should respond_to(:liked_posts) }
+  it { should respond_to(:notifications) }
 
   # User method checks.
   it { should respond_to(:authenticate) }

@@ -1,0 +1,7 @@
+<div id="notifications">
+  <ul>
+    <% current_user.notifications.each do |notification| %>
+      <%= render partial: 'home/notification', locals: { notification: notification } %>
+    <% end %>
+  </ul>
+</div>

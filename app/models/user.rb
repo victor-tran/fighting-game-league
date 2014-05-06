@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :followed_leagues, through: :league_relationships, source: :league
   has_many :posts, as: :postable, dependent: :destroy
   has_many :liked_posts, class_name: 'Like', dependent: :destroy
+  has_many :notifications, foreign_key: "receiver_id", dependent: :destroy
 
   before_save { self.email = email.downcase }
   

@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   def index
     if signed_in?
-
       user_ids = current_user.followed_user_ids.push(current_user.id)
       league_ids = current_user.followed_league_ids
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501144110) do
+ActiveRecord::Schema.define(version: 20140506132355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,15 +38,6 @@ ActiveRecord::Schema.define(version: 20140501144110) do
     t.datetime "updated_at"
     t.string   "logo"
   end
-
-  create_table "league_posts", force: true do |t|
-    t.string   "content"
-    t.integer  "league_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "league_posts", ["league_id", "created_at"], name: "index_league_posts_on_league_id_and_created_at", using: :btree
 
   create_table "league_relationships", force: true do |t|
     t.integer  "league_id"
@@ -120,6 +111,23 @@ ActiveRecord::Schema.define(version: 20140501144110) do
     t.datetime "updated_at"
   end
 
+  create_table "notifications", force: true do |t|
+    t.integer  "sendable_id"
+    t.string   "sendable_type"
+    t.integer  "receiver_id"
+    t.integer  "targetable_id"
+    t.string   "targetable_type"
+    t.string   "action"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "read"
+  end
+
+  add_index "notifications", ["read"], name: "index_notifications_on_read", using: :btree
+  add_index "notifications", ["receiver_id"], name: "index_notifications_on_receiver_id", using: :btree
+  add_index "notifications", ["sendable_id", "sendable_type"], name: "index_notifications_on_sendable_id_and_sendable_type", using: :btree
+  add_index "notifications", ["targetable_id", "targetable_type"], name: "index_notifications_on_targetable_id_and_targetable_type", using: :btree
+
   create_table "orders", force: true do |t|
     t.integer  "user_id"
     t.string   "payment_id"
@@ -131,16 +139,6 @@ ActiveRecord::Schema.define(version: 20140501144110) do
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
-
-  create_table "payment_notifications", force: true do |t|
-    t.text     "params"
-    t.integer  "user_id"
-    t.string   "status"
-    t.string   "transaction_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "amount"
-  end
 
   create_table "posts", force: true do |t|
     t.string   "action"
@@ -181,15 +179,6 @@ ActiveRecord::Schema.define(version: 20140501144110) do
     t.string   "full_challonge_url"
     t.integer  "game_id"
   end
-
-  create_table "user_posts", force: true do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_posts", ["user_id", "created_at"], name: "index_user_posts_on_user_id_and_created_at", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"

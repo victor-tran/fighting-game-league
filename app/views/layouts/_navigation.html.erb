@@ -19,6 +19,14 @@
             <li><%= link_to "FGL Stats", stats_path %></li>
             <li><%= link_to "About", about_path %></li>
             <% if signed_in? %>
+              <!-- Notification list -->
+              <li class="dropdown notification-icon">
+                <a href="#" class="glyphicon glyphicon-exclamation-sign dropdown-toggle" data-toggle="dropdown"><span class="badge unread-notifications">10</span></a>
+                <ul class="dropdown-menu scrollable-menu">
+                  <%= render partial: 'home/notification_feed' %>
+                </ul>
+              </li>
+              <!-- Settings list -->
               <li class="dropdown">
                 <a href="#" class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
                 <ul class="dropdown-menu">
