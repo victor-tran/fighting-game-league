@@ -21,14 +21,7 @@
             <% if signed_in? %>
               <!-- Notification list -->
               <li class="dropdown notification_icon">
-                <a href="#" class="glyphicon glyphicon-exclamation-sign dropdown-toggle" data-toggle="dropdown">
-                  <span class="badge notification_badge">
-                    <% unread_count = current_user.notifications.unread.count %>
-                    <% unless unread_count == 0 %>
-                      <%= unread_count %>
-                    <% end %>
-                  </span>
-                </a>
+                <a href="#" class="glyphicon glyphicon-exclamation-sign dropdown-toggle" data-toggle="dropdown"><span class="badge notification_badge"><% unread_count = current_user.notifications.unread.count %><% unless unread_count == 0 %><%= unread_count %><% end %></span></a>
                 <ul class="dropdown-menu scrollable-menu">
                   <%= render partial: 'home/notification_feed' %>
                 </ul>
@@ -51,3 +44,12 @@
 
   </div>
 </div>
+
+<script>
+$(".notification_icon").click(function(){
+  // Mark all notifications as read.
+  "<% current_user.notifications.unread.update_all(read: true) %>"
+  // Set unread count badge to blank.
+  $(".notification_badge").html('')
+});
+</script>
