@@ -41,6 +41,8 @@ FightingGameLeague::Application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :league_relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
+
   root to: "home#index"
 
   get "home/stats"

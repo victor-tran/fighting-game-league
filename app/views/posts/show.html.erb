@@ -1,2 +1,30 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<h1>Post id: <%= @post.id%></h1>
+
+<% like_count_id = "like_count_#{@post.id}" %>
+<% comment_count_id = "comment_count_#{@post.id}" %>
+
+<div id="<%= like_count_id %>">
+  <p><%= pluralize(@post.likes.count, "like") %></p>
+</div>
+<div id="<%= comment_count_id %>">
+  <p><%= pluralize(@post.comments.count, "comment") %></p>
+</div>
+<hr>
+<div class="comment-section">
+  <!-- Comment form -->
+  <% if signed_in? %>
+    <%= render 'shared/comment_form' %>
+  <% end %>
+
+  <!-- Comment list -->
+  <% @post.comments.each do |comment| %>
+    <% unless comment.user == nil %>
+      <%= image_tag comment.user.avatar.url(:thumb) %>
+      <%= link_to comment.user.alias, comment.user %>
+      <small class="timestamp">
+        <%= time_ago_in_words(comment.created_at) %> ago.
+      </small>
+      <%= comment.content %>
+    <% end %>
+  <% end %>
+</div>
