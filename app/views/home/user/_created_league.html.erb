@@ -1,5 +1,5 @@
 <% user = User.find(post.postable_id) %>
-<% league = post.league %>
+<% league = post.subjectable %>
 <div class="media">
   <%= image_tag user.avatar.url(:thumb) %>
   <div class="media-body">
@@ -10,7 +10,9 @@
     <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
   </div>
   <div class="like-comment-section">
-    <%= render partial: 'like_form', locals: { post: post }  %>
+    <% if signed_in? %>
+      <%= render partial: 'like_form', locals: { post: post }  %>
+    <% end %>
   </div>
 </div>
 <hr />

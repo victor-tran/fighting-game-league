@@ -73,9 +73,13 @@ class User < ActiveRecord::Base
   def join!(league)
     memberships.create!(league_id: league.id)
     if league.commissioner == self
-      posts.create!(action: 'created_league', league_id: league.id)
+      posts.create!(action: 'created_league',
+                    subjectable_id: league.id,
+                    subjectable_type: 'League')
     else
-      posts.create!(action: 'joined_league', league_id: league.id)
+      posts.create!(action: 'joined_league',
+                    subjectable_id: league.id,
+                    subjectable_type: 'League')
     end
     follow_league!(league)
   end

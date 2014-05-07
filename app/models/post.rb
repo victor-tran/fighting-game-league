@@ -1,9 +1,7 @@
 class Post < ActiveRecord::Base
   default_scope -> { order('created_at DESC') }
   belongs_to :postable, polymorphic: true
-  belongs_to :league
-  belongs_to :match
-  belongs_to :bet
+  belongs_to :subjectable, polymorphic: true
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   validates :action, presence: true

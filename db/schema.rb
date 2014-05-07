@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140507153409) do
+ActiveRecord::Schema.define(version: 20140507181940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,15 +160,12 @@ ActiveRecord::Schema.define(version: 20140507153409) do
     t.string   "postable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "league_id"
-    t.integer  "match_id"
-    t.integer  "bet_id"
+    t.integer  "subjectable_id"
+    t.string   "subjectable_type"
   end
 
-  add_index "posts", ["bet_id"], name: "index_posts_on_bet_id", using: :btree
-  add_index "posts", ["league_id"], name: "index_posts_on_league_id", using: :btree
-  add_index "posts", ["match_id"], name: "index_posts_on_match_id", using: :btree
   add_index "posts", ["postable_id", "postable_type"], name: "index_posts_on_postable_id_and_postable_type", using: :btree
+  add_index "posts", ["subjectable_id", "subjectable_type"], name: "index_posts_on_subjectable_id_and_subjectable_type", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"

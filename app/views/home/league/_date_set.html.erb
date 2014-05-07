@@ -1,5 +1,5 @@
-<% league = League.find(post.postable_id) %>
-<% match = post.match %>
+<% league = post.postable %>
+<% match = post.subjectable %>
 <div class="media">
   <%= image_tag league.banner.url(:thumb) %>
   <div class="media-body">

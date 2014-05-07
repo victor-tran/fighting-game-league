@@ -52,7 +52,9 @@ class MatchesController < ApplicationController
 
 	def set_date
     if @match.update_attributes(set_date_params)
-      @match.league.posts.create!(action: "date_set", match_id: @match.id)
+      @match.league.posts.create!(action: "date_set",
+                                  subjectable_id: @match.id,
+                                  subjectable_type: 'Match')
       flash[:notice] = "Match date/time updated."
       redirect_to matches_path
     else
@@ -91,7 +93,9 @@ class MatchesController < ApplicationController
   def accept_score
     if @match.update_attributes(p1_accepted: true, p2_accepted: true,
                                 finalized_date: Time.now)
-      @match.league.posts.create!(action: "score_set", match_id: @match.id)
+      @match.league.posts.create!(action: "score_set",
+                                  subjectable_id: @match.id,
+                                  subjectable_type: 'Match')
       @match.pay_winning_betters
       flash[:notice] = "Match score accepted."
     end
@@ -146,7 +150,9 @@ class MatchesController < ApplicationController
 
   def resolve
     if @match.update_attributes(resolve_params)
-      @match.league.posts.create!(action: "score_set", match_id: @match.id)
+      @match.league.posts.create!(action: "score_set",
+                                  subjectable_id: @match.id,
+                                  subjectable_type: 'Match')
       flash[:notice] = "Dispute resolved."
       redirect_to matches_path
     end
