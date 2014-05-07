@@ -17,8 +17,8 @@ class LikesController < ApplicationController
                                read: false)
       # Send a push notification via Pusher API to OP.
       Pusher['private-user-'+op.id.to_s].trigger('new_notification',
-                                                 { op_id: op.id,
-                                                   op_type: op.class.name.underscore.pluralize,
+                                                 { op_id: @post.postable_id,
+                                                   op_type: @post.postable_type.underscore.pluralize,
                                                    targetable_id: n.targetable_id,
                                                    targetable_type: n.targetable_type.underscore.pluralize,
                                                    sender_name: current_user.alias,
@@ -36,8 +36,8 @@ class LikesController < ApplicationController
                                read: false)
       # Send a push notification via Pusher API to OP.
       Pusher['private-user-'+op.id.to_s].trigger('new_notification',
-                                                 { op_id: op.id,
-                                                   op_type: op.class.name.underscore.pluralize,
+                                                 { op_id: @post.postable_id,
+                                                   op_type: @post.postable_type.underscore.pluralize,
                                                    targetable_id: n.targetable_id,
                                                    targetable_type: n.targetable_type.underscore.pluralize,
                                                    sender_name: current_user.alias,
