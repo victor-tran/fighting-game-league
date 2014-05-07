@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
       flash[:notice] = "Comment posted!"
     end
     
-    render @post
+    redirect_to polymorphic_path([@post.postable, @post])
   end
 
   def destroy
