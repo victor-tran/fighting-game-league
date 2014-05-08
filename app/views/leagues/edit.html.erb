@@ -1,23 +1,25 @@
 <% provide(:title, 'League Settings') %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <h1>League Settings</h1>
     <%= simple_form_for @league, html: { multipart: true } do |f| %>
       <%= render 'shared/error_messages', object: f.object  %>
-      <br>
-      <p>League Banner</p>
-      <% unless @league.banner.url == "/images/original/missing.png" %>
-        <%= image_tag @league.banner.url(:medium) %>
-      <% end %>
-      <%= f.file_field :banner %>
-      <br>
-      <%= f.input :name %>
-      <%= f.input :match_count, collection: [1, 2, 3, 4, 5, 7, 10, 15, 20],
-                  label: "Number of Games for Win", hint: "Ex. First-to-5" %>
-      <%= f.input :info, label: "League Info", as: :text, input_html: { rows: 5 },
-            hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
 
-      <%= f.button :submit, "Save changes", class: "btn-lg btn-primary" %>
+      <fieldset>
+        <legend>League Banner</legend>
+        <%= image_tag @league.banner.url(:thumb) %>
+        <%= f.file_field :banner %>
+      </fieldset>
+
+      <fieldset>
+        <legend>League Information</legend>
+        <%= f.input :name %>
+        <%= f.input :match_count, collection: [1, 2, 3, 4, 5, 7, 10, 15, 20],
+                    label: "Number of Games for Win", hint: "Ex. First-to-5" %>
+        <%= f.input :info, label: "League Info", as: :text, input_html: { rows: 5 },
+              hint: "i.e Where your league is located, what you represent, additional league rules, etc." %>
+
+        <%= f.button :submit, "Save changes", class: "btn-lg btn-primary" %>
+      </fieldset>
     <% end %>
   </div>
 </div>

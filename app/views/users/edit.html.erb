@@ -1,33 +1,41 @@
-<% provide(:title, "Edit user") %>
-
+<% provide(:title, "Edit User") %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= simple_form_for @user, html: { multipart: true } do |f| %>
 
       <%= render 'shared/error_messages', object: f.object %>
 
-      <h2>FGL Profile Content</h2>
-      <p>Profile picture</p>
-      <% unless @user.avatar.url == "/images/original/missing.png" %>
-        <%= image_tag current_user.avatar.url(:medium) %>
-      <% end %>
-      <%= f.file_field :avatar %>
-      <%= f.input :facebook_account %>
-      <%= f.input :twitter_account %>
-      <%= f.input :twitch_account %>
-      <%= f.input :tagline, hint: "Short punchline or motto. 60 chars max." %>
-      <%= f.input :bio, as: :text %>
-      <hr>
-      <h2>Personal Information</h2>
-      <%= f.input :first_name %>
-      <%= f.input :last_name %>
-      <%= f.input :alias %>
-      <%= f.input :email %>
-      <hr>
-      <h2>Confirm Changes</h2>
-      <%= f.input :password %>
-      <%= f.input :password_confirmation, label: "Confirm password" %>
-      <%= f.button :submit, "Save changes", class: "btn-lg btn-primary" %>
+      <fieldset>
+        <legend>Profile Picture</legend>
+        <% unless @user.avatar.url == "/images/original/missing.png" %>
+          <%= image_tag current_user.avatar.url(:medium) %>
+        <% end %>
+        <%= f.file_field :avatar %>
+      </fieldset>
+
+      <fieldset>
+        <legend>FGL Profile Content</legend>
+        <%= f.input :facebook_account %>
+        <%= f.input :twitter_account %>
+        <%= f.input :twitch_account %>
+        <%= f.input :tagline, hint: "Short punchline or motto. 60 chars max." %>
+        <%= f.input :bio, as: :text %>
+      </fieldset>
+      
+      <fieldset>
+        <legend>Personal Information</legend>
+        <%= f.input :first_name %>
+        <%= f.input :last_name %>
+        <%= f.input :alias %>
+        <%= f.input :email %>
+      </fieldset>
+     
+      <fieldset>
+        <legend>Confirm Changes</legend>
+        <%= f.input :password %>
+        <%= f.input :password_confirmation, label: "Confirm password" %>
+        <%= f.button :submit, "Save changes", class: "btn-lg btn-primary" %>
+      </fieldset>
     <% end %>
   </div>
 </div>
