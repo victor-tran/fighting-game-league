@@ -1,20 +1,3 @@
-<% league = post.postable %>
-<% match = post.subjectable %>
-<div class="media">
-  <%= image_tag league.banner.url(:thumb) %>
-  <div class="media-body">
-    <h4 class="media-heading">
-      <%= link_to league.name, league %>
-    </h4>
-    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
-    <p class="content">
-      The date for the
-      <%= link_to match.p1.alias + " vs. " + match.p2.alias, match %> match
-      has been set for <%= match.match_date %>.
-    </p>
-  </div>
-  <div class="like-comment-section">
-    <%= render partial: 'like_form', locals: { post: post }  %>
-  </div>
-</div>
-<hr />
+The date for the
+<%= link_to match.p1.alias + " vs. " + match.p2.alias, match %> match
+has been set for <%= match.match_date %>.

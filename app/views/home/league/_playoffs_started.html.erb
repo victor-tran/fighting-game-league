@@ -1,16 +1,2 @@
-<% league = post.postable %>
-<div class="media">
-  <%= image_tag league.banner.url(:thumb) %>
-  <div class="media-body">
-    <h4 class="media-heading">
-      <%= link_to league.name, league %> Playoffs for Season 
-      <%= league.current_season_number %> has begun!
-    </h4>
-    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
-  </div>
-  <div class="like-comment-section">
-    <%= render partial: 'like_form', locals: { post: post }  %>
-    <div id="like_count"><%= post.likes.count %> likes.</div>
-  </div>
-</div>
-<hr />
+<%= link_to league.name, league %> Playoffs for Season 
+<%= league.current_season_number %> has begun!

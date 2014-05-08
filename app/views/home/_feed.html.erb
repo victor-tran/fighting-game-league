@@ -1,4 +1,9 @@
 <% @posts.each do |post| %>
-  <%= render partial: "home/#{post.postable_type.underscore}/#{post.action}",
+  <% if post.postable_type == 'League' && post.subjectable != nil %>
+    <%= render partial: "home/#{post.postable_type.underscore}/#{post.postable_type.underscore}_match_post",
              locals: { post: post } %>
+  <% else %>
+    <%= render partial: "home/#{post.postable_type.underscore}/#{post.postable_type.underscore}_post",
+             locals: { post: post } %>
+  <% end %>
 <% end %>

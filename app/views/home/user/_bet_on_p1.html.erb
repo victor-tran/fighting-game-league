@@ -1,18 +1,6 @@
 <% bet = post.subjectable %>
 <% user = bet.better %>
 <% match = bet.match %>
-<div class="media">
-  <%= image_tag user.avatar.url(:thumb) %>
-  <div class="media-body">
-    <h4 class="media-heading">
-      <%= link_to user.alias, user %> bet <%= bet.wager_amount.to_s %>
-      fight bucks on <%= link_to match.p1.alias, match.p1 %> to win against
-      <%= link_to match.p2.alias, match.p1 %>.
-    </h4>
-    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
-  </div>
-  <div class="like-comment-section">
-    <%= render partial: 'like_form', locals: { post: post }  %>
-  </div>
-</div>
-<hr />
+<%= link_to user.alias, user %> bet <%= bet.wager_amount.to_s %>
+fight bucks on <%= link_to match.p1.alias, match.p1 %> to win against
+<%= link_to match.p2.alias, match.p1 %>.
