@@ -5,35 +5,25 @@ class LikesController < ApplicationController
     @post = Post.find(params[:like][:post_id])
     current_user.like_post!(@post)
 
-    # Send a notification to commissioner for a league_post.
-    if @post.postable_type == 'League'
-      op = @post.postable.commissioner
+    # Create a notification for current user,
+    # unless they are liking their own post.
+    op = User.new
 
+    if @post.postable_type == 'League'
+      # Send a notification to commissioner for a league_post.
+      op = @post.postable.commissioner
+    else
+      # Send a notification to OP that current user liked their post.
+      op = @post.postable
+    end
+
+    unless current_user?(op)
       # Create a notification on the backend.
       n = op.notifications.create!(sendable_id: current_user.id,
-                               sendable_type: 'User',
-                               targetable_id: @post.id,
-                               targetable_type: 'Post',
-                               read: false)
-      # Send a push notification via Pusher API to OP.
-      Pusher['private-user-'+op.id.to_s].trigger('new_notification',
-                                                 { op_id: @post.postable_id,
-                                                   op_type: @post.postable_type.underscore.pluralize,
-                                                   targetable_id: n.targetable_id,
-                                                   targetable_type: n.targetable_type.underscore.pluralize,
-                                                   sender_name: current_user.alias,
-                                                   unread_count: op.notifications.unread.count })
-    
-    # Send a notification to OP that current user liked their post.
-    else
-      op = @post.postable
-
-      # Create a notifiation on the backend.
-      n = op.notifications.create!(sendable_id: current_user.id,
-                               sendable_type: 'User',
-                               targetable_id: @post.id,
-                               targetable_type: 'Post',
-                               read: false)
+                                   sendable_type: 'User',
+                                   targetable_id: @post.id,
+                                   targetable_type: 'Post',
+                                   read: false)
       # Send a push notification via Pusher API to OP.
       Pusher['private-user-'+op.id.to_s].trigger('new_notification',
                                                  { op_id: @post.postable_id,
@@ -53,21 +43,19 @@ class LikesController < ApplicationController
     @post = Like.find(params[:id]).post
     current_user.unlike_post!(@post)
 
-    # Delete the notification sent to commissioner for a league_post.
+    # Delete a notification for current user, unless they are unliking their
+    # own post. In that case, there wasn't a notification created.
+    op = User.new
+
     if @post.postable_type == 'League'
+      # Delete the notification sent to commissioner for a league_post.
       op = @post.postable.commissioner
-
-      # Delete OP's notification on the backend.
-      n = op.notifications.find_by(sendable_id: current_user.id,
-                                   sendable_type: 'User',
-                                   targetable_id: @post.id,
-                                   targetable_type: 'Post').destroy
-      # Send a push notification via Pusher API to OP.
-      Pusher['private-user-'+op.id.to_s].trigger('delete_notification',
-                                                 { unread_count: op.notifications.unread.count })
     else
+      # Delete the notification sent to OP from current user.
       op = @post.postable
+    end
 
+    unless current_user?(op)
       # Delete OP's notification on the backend.
       n = op.notifications.find_by(sendable_id: current_user.id,
                                    sendable_type: 'User',
@@ -82,4 +70,14 @@ class LikesController < ApplicationController
       format.js { @post }
     end
   end
+
+  private
+    # Before filters
+
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+      end
+    end
 end

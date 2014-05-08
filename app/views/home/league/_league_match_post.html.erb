@@ -16,9 +16,8 @@
   </div>
   <div class="like-comment-section">
     <%= render partial: 'home/like_form', locals: { post: post }  %>
-    <% unless post_show_page == true %>
-      <%= render partial: 'home/comment_form', locals: { post: post }  %>
-    <% end %>
+    <%= render partial: 'home/comment_form', locals: { post: post,
+                                                       post_show_page: post_show_page }  %>
   </div>
 </div>
 <hr />
