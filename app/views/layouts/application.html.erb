@@ -50,6 +50,14 @@
               $(".notification_badge").html('');
             }
           });
+          channel.bind('new_comment_notification', function(data) {
+            // Add comment notification to notification list.
+            $("#notifications ul").prepend(
+              "<li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post.</a></li>");
+
+            // Update unread notifications count.
+            $(".notification_badge").html(data.unread_count);
+          });
         });
     </script>
     <% end %>
