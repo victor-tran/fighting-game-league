@@ -44,7 +44,11 @@
           });
           channel.bind('delete_notification', function(data) {
             // Update unread notifications count.
-            $(".notification_badge").html(data.unread_count);
+            if (data.unread_count > 0) {
+              $(".notification_badge").html(data.unread_count);
+            } else {
+              $(".notification_badge").html('');
+            }
           });
         });
     </script>

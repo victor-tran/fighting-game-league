@@ -59,4 +59,6 @@ FightingGameLeague::Application.routes.draw do
   match '/users/:uuid/confirmation' => 'users#confirmation', via: 'get',
                                         as: 'confirmation'
   post 'pusher/auth'
+  match '/read', to: 'home#read_notifications', as: 'read_notifications',
+                 via: 'post'
 end

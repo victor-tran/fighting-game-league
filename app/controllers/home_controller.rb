@@ -14,4 +14,10 @@ class HomeController < ApplicationController
     approval_url = current_user.purchase_fight_bucks(5)
     redirect_to approval_url
   end
+
+  def read_notifications
+    respond_to do |format|
+      format.js
+    end
+  end
 end
