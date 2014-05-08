@@ -34,7 +34,7 @@
           channel.bind('my_event', function(data) {
             alert(data.message);
           });
-          channel.bind('new_notification', function(data) {
+          channel.bind('new_like_notification', function(data) {
             // Add notification to notification list.
             $("#notifications ul").prepend(
               "<li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post.</a></li>");
@@ -42,7 +42,7 @@
             // Update unread notifications count.
             $(".notification_badge").html(data.unread_count);
           });
-          channel.bind('delete_notification', function(data) {
+          channel.bind('delete_like_notification', function(data) {
             // Update unread notifications count.
             if (data.unread_count > 0) {
               $(".notification_badge").html(data.unread_count);

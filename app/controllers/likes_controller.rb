@@ -25,7 +25,7 @@ class LikesController < ApplicationController
                                    targetable_type: 'Post',
                                    read: false)
       # Send a push notification via Pusher API to OP.
-      Pusher['private-user-'+op.id.to_s].trigger('new_notification',
+      Pusher['private-user-'+op.id.to_s].trigger('new_like_notification',
                                                  { op_id: @post.postable_id,
                                                    op_type: @post.postable_type.underscore.pluralize,
                                                    targetable_id: n.targetable_id,
@@ -62,7 +62,7 @@ class LikesController < ApplicationController
                                    targetable_id: @post.id,
                                    targetable_type: 'Post').destroy
       # Send a push notification via Pusher API to OP.
-      Pusher['private-user-'+op.id.to_s].trigger('delete_notification',
+      Pusher['private-user-'+op.id.to_s].trigger('delete_like_notification',
                                                  { unread_count: op.notifications.unread.count })
     end
     respond_to do |format|
