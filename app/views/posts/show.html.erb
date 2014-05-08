@@ -1,15 +1,11 @@
-<h1>Post id: <%= @post.id%></h1>
+<% if @post.postable_type == 'League' && @post.subjectable != nil %>
+  <%= render partial: "home/#{@post.postable_type.underscore}/#{@post.postable_type.underscore}_match_post",
+             locals: { post: @post, post_show_page: true } %>
+<% else %>
+  <%= render partial: "home/#{@post.postable_type.underscore}/#{@post.postable_type.underscore}_post",
+             locals: { post: @post, post_show_page: true } %>
+<% end %>
 
-<% like_count_id = "like_count_#{@post.id}" %>
-<% comment_count_id = "comment_count_#{@post.id}" %>
-
-<div id="<%= like_count_id %>">
-  <p><%= pluralize(@post.likes.count, "like") %></p>
-</div>
-<div id="<%= comment_count_id %>">
-  <p><%= pluralize(@post.comments.count, "comment") %></p>
-</div>
-<hr>
 <div class="comment-section">
   <!-- Comment form -->
   <% if signed_in? %>

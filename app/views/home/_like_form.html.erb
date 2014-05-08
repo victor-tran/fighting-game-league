@@ -1,10 +1,10 @@
-<% div_id = "like_post_form_#{post.id}" %>
-<div id="<%= div_id %>">
+<% like_post_form_id = "like_post_form_#{post.id}" %>
+<% like_count_id = "like_count_#{post.id}" %>
+<div id="<%= like_post_form_id %>">
   <% if current_user.liked_post?(post) %>
-    <%= render partial: 'unlike', locals: { post: post } %>
+    <%= render partial: 'home/unlike', locals: { post: post } %>
   <% else %>
-    <%= render partial: 'like', locals: { post: post } %>
+    <%= render partial: 'home/like', locals: { post: post } %>
   <% end %>
 </div>
-<% like_count_id = "like_count_#{post.id}" %>
 <div id="<%= like_count_id %>"><%= pluralize(post.likes.count, "like") %></div>

@@ -6,10 +6,15 @@
       <%= render partial: "home/#{post.postable_type.underscore}/#{post.action}",
              locals: { post: post, league: league } %>
     </h4>
-    <small class="timestamp"><%= time_ago_in_words(post.created_at) %> ago.</small>
+    <small class="timestamp">
+      <%= time_ago_in_words(post.created_at) %> ago.
+    </small>
   </div>
   <div class="like-comment-section">
-    <%= render partial: 'like_form', locals: { post: post }  %>
+    <%= render partial: 'home/like_form', locals: { post: post }  %>
+    <% unless post_show_page == true %>
+      <%= render partial: 'home/comment_form', locals: { post: post }  %>
+    <% end %>
   </div>
 </div>
 <hr />

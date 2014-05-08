@@ -3,5 +3,5 @@
   <%= f.hidden_field :post_id, value: @post.id %>
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.input :content, label: false, placeholder: "Add your comment..." %>
-  <%= f.submit "Post", class: "btn btn-lg btn-primary" %>
+  <%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>
