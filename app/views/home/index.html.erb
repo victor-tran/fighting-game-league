@@ -53,18 +53,8 @@
     <div class="col-md-3">
 
       <!-- My Leagues -->
-      <ul class="list-unstyled">
-        <%= link_to " My Leagues", '#' %>
-        <% if !current_user.leagues.empty? %>
-          
-          <% current_user.leagues.each do |league| %>
-            <li><%=link_to league.name, league %></li>
-          <% end %>
-
-        <% else %>
-          <li>No leagues yet.</li>
-        <% end %>
-      </ul>
+      <%= render partial: 'shared/user_leagues_list',
+                 locals: { user: current_user } %>
 
       <hr> 
 

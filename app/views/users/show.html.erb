@@ -4,27 +4,19 @@
   <!-- User Portrait and Current League List-->
   <div class="col-md-4">
     <%= image_tag @user.avatar.url(:medium) %>
-    
-    <ul class="list-unstyled">
-      <p>Current Leagues</p>
-      <% if !@user.leagues.empty? %>
-        <% @user.leagues.each do |league| %>
-          <li><%=link_to league.name, league %></li>
-        <% end %>
-
-      <% else %>
-        <li>None.</li>
-      <% end %>
-    </ul>
-
+    <%= render partial: 'shared/user_leagues_list',
+               locals: { user: @user } %>
   </div>
 
   <!-- User Info and Achievements -->
   <div class="col-md-8">
     <h1>
       <%= @user.alias %>
-      <%= render 'follow_form' if signed_in? %>
-      <%= render 'shared/stats' %>
+    </h1>
+    <%= render 'follow_form' if signed_in? %>
+    <%= render 'shared/stats' %>
+
+    <div class="social-media-icons">
       <% if @user.facebook_account == nil %>
         <%= link_to image_tag("facebook.png", size: "40"), '#' %>
       <% else %>
@@ -48,7 +40,7 @@
                             "http://www.twitch.tv/" + 
                             @user.twitch_account %>
       <% end %>
-    </h1>
+    </div>
 
     <h2>
       W-L: <%= WL_record(@user, @user.matches) %>

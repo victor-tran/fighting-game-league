@@ -194,3 +194,18 @@ footer ul li {
   float: left;
   margin-left: 10px;
 }
+
+/* User's league list */
+.user-leagues-list {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+  white-space: nowrap;
+  // Doesn't fucking work -- text-overflow: ellipsis;
+  li {
+    img {
+      float: left;
+    }
+    padding-bottom: 5px;
+  }
+}

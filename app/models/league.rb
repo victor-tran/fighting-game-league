@@ -49,6 +49,7 @@ class League < ActiveRecord::Base
   # Banner stuff.
   has_attached_file :banner, 
     styles: {
+      tiny:  '20x20#', 
       thumb: '80x80#',
       large: '1140x275#'
     }, 

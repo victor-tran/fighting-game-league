@@ -1,0 +1,14 @@
+<ul class="list-unstyled user-leagues-list scrollable-menu">
+  <p>Current Leagues</p>
+  <% if !user.leagues.empty? %>
+    <% user.leagues.each do |league| %>
+      <li>
+        <%= image_tag league.game.logo, size: "22x22" %>
+        <%= link_to league.name, league %>
+      </li>
+    <% end %>
+
+  <% else %>
+    <li>None.</li>
+  <% end %>
+</ul>
