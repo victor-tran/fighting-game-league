@@ -132,7 +132,7 @@ section {
 .user-post-content {
   font-size: 20px;
   padding-left: 15px;
-  display: block;
+  //display: block;
 }
 .league-post-content {
   padding-left: 15px;
@@ -227,7 +227,9 @@ footer ul li {
   }
 }
 
-.like-comment-section {
+.like-btn, .comment-btn {
+  padding-right: 5px;
+  display: inline-block;
 }
 
 .op-name {

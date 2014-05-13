@@ -1,8 +1,6 @@
 <% like_count_id = "like_count_#{post.id}" %>
 <% comment_count_id = "comment_count_#{post.id}" %>
-<div id="<%= like_count_id %>">
-  <%= pluralize(post.likes.count, "like") %>
-</div>
-<div id="<%= comment_count_id %>">
-  <%= pluralize(post.comments.count, "comment") %>
-</div>
+<span class="like_and_comment_count">
+  <span id="<%= like_count_id %>"><%= pluralize(post.likes.count, "like") %></span>
+  <span id="<%= comment_count_id %>"><%= pluralize(post.comments.count, "comment") %></span>
+</span>

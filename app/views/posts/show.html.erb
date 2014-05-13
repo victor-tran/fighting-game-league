@@ -1,10 +1,5 @@
-<% if @post.postable_type == 'League' && @post.subjectable != nil %>
-  <%= render partial: "home/#{@post.postable_type.underscore}/#{@post.postable_type.underscore}_match_post",
-             locals: { post: @post, post_show_page: true } %>
-<% else %>
-  <%= render partial: "home/#{@post.postable_type.underscore}/#{@post.postable_type.underscore}_post",
-             locals: { post: @post, post_show_page: true } %>
-<% end %>
+<%= render partial: "home/#{@post.postable_type.underscore}/#{@post.postable_type.underscore}_post",
+           locals: { post: @post, post_show_page: true } %>
 
 <div class="comment-section">
   <!-- Comment form -->
