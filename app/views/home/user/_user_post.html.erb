@@ -1,19 +1,21 @@
 <% user = User.find(post.postable_id) %>
-<div class="media">
-  <%= image_tag user.avatar.url(:thumb) %>
-  <div class="media-body">
-    <h4 class="media-heading">
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= image_tag user.avatar.url(:post), class: "pull-left post-img" %>
+    <div class="user-post-content"
       <%= render partial: "home/#{post.postable_type.underscore}/#{post.action}",
-             locals: { post: post, user: user } %>
-    </h4>
+                 locals: { post: post, user: user } %>
+    </div>
     <small class="timestamp">
       <%= time_ago_in_words(post.created_at) %> ago.
     </small>
-  </div>
-  <div class="like-comment-section">
-    <%= render partial: 'home/like_form', locals: { post: post }  %>
-    <%= render partial: 'home/comment_form', locals: { post: post,
-                                                       post_show_page: post_show_page }  %>
-  </div>
+  </div>               
+  <ul class="list-group like-comment-section">
+    <li class="list-group-item">
+      <%= render partial: 'home/like_form', locals: { post: post }  %>
+      <%= render partial: 'home/comment_form', locals: { post: post,
+                                                         post_show_page: post_show_page }  %>
+      <%= render partial: 'home/like_and_comment_count', locals: { post: post }  %>
+    </li>
+  </ul>
 </div>
-<hr />

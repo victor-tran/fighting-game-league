@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   # Paperclip image stuff.
   has_attached_file :avatar, 
     styles: {
+      post:  '44x44#',
       thumb: '80x80#',
       square: '160x160#',
       medium: '300x300>',

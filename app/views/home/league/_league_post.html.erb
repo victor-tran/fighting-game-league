@@ -1,19 +1,28 @@
 <% league = post.postable %>
-<div class="media">
-  <%= image_tag league.banner.url(:thumb) %>
-  <div class="media-body">
-    <h4 class="media-heading">
-      <%= render partial: "home/#{post.postable_type.underscore}/#{post.action}",
-             locals: { post: post, league: league } %>
-    </h4>
+<% match = post.subjectable %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= image_tag league.banner.url(:post), class: "pull-left post-img" %>
+    <div class="op-name"><%= link_to league.name, league %></div>
     <small class="timestamp">
       <%= time_ago_in_words(post.created_at) %> ago.
     </small>
   </div>
-  <div class="like-comment-section">
-    <%= render partial: 'home/like_form', locals: { post: post }  %>
-    <%= render partial: 'home/comment_form', locals: { post: post,
-                                                       post_show_page: post_show_page }  %>
+  <div class="league-post-content">
+    <% if match == nil %>
+      <%= render partial: "home/#{post.postable_type.underscore}/#{post.action}",
+                 locals: { post: post, league: league } %>
+    <% else %>
+      <%= render partial: "home/#{post.postable_type.underscore}/#{post.action}",
+                 locals: { match: match } %>
+    <% end %>
   </div>
-</div>
-<hr />
+  <ul class="list-group like-comment-section">
+    <li class="list-group-item">
+      <%= render partial: 'home/like_form', locals: { post: post }  %>
+      <%= render partial: 'home/comment_form', locals: { post: post,
+                                                         post_show_page: post_show_page }  %>
+      <%= render partial: 'home/like_and_comment_count', locals: { post: post }  %>
+    </li>
+  </ul>
+</div> 

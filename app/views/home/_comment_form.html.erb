@@ -1,9 +1,4 @@
-<% comment_count_id = "comment_count_#{post.id}" %>
-
 <% unless post_show_page == true %>
   <%= link_to 'Comment', polymorphic_path([post.postable, post]),
                        class: 'btn btn-primary' %>
 <% end %>
-<div id="<%= comment_count_id %>">
-  <%= pluralize(post.comments.count, "comment") %>
-</div>

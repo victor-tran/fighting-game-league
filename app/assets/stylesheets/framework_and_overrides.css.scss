@@ -37,7 +37,8 @@ main {
   @extend .container;
   padding-bottom: 80px;
   width: 100%;
-  margin-top: 60px; // accommodate the navbar
+  margin-top: 51px; // accommodate the navbar
+  background-color: #ededed;
 }
 
 /* Flash messages */
@@ -126,10 +127,18 @@ section {
     border-top: 1px solid #e8e8e8;
   }
 }
-.content {
+.user-post-content {
+  font-size: 20px;
+  padding-left: 15px;
+  display: block;
+}
+.league-post-content {
+  padding-left: 15px;
+  padding-bottom: 15px;
   display: block;
 }
 .timestamp {
+  display: block;
   color: lightGray;
 }
 
@@ -208,4 +217,22 @@ footer ul li {
     }
     padding-bottom: 5px;
   }
+}
+
+.social-media-icons {
+  img {
+    display: inline-block; 
+  }
+}
+
+.like-comment-section {
+}
+
+.op-name {
+  font-size: 25px;
+}
+
+.post-img {
+  padding-top: 5px;
+  padding-right: 5px;
 }

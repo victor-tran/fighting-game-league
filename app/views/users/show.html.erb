@@ -11,36 +11,36 @@
   <!-- User Info and Achievements -->
   <div class="col-md-8">
     <h1>
-      <%= @user.alias %>
+      <div class="social-media-icons">
+        <%= @user.alias %>
+        
+        <% if @user.facebook_account == nil %>
+          <%= link_to image_tag("facebook.png", size: "40"), '#' %>
+        <% else %>
+          <%= link_to image_tag("facebook.png", size: "40"), 
+                                "https://www.facebook.com/" + 
+                                @user.facebook_account %>
+        <% end %>
+
+        <% if @user.twitter_account == nil %>
+          <%= link_to image_tag("twitter.png", size: "40"), '#' %>
+        <% else %>
+        <%= link_to image_tag("twitter.png", size: "40"), 
+                              "https://www.twitter.com/" + 
+                              @user.twitter_account %>
+        <% end %>
+
+        <% if @user.twitch_account == nil %>
+          <%= link_to image_tag("twitch.png", size: "40"), '#' %>
+        <% else %>                      
+        <%= link_to image_tag("twitch.png", size: "40"), 
+                              "http://www.twitch.tv/" + 
+                              @user.twitch_account %>
+        <% end %>
+      </div>
     </h1>
     <%= render 'follow_form' if signed_in? %>
     <%= render 'shared/stats' %>
-
-    <div class="social-media-icons">
-      <% if @user.facebook_account == nil %>
-        <%= link_to image_tag("facebook.png", size: "40"), '#' %>
-      <% else %>
-        <%= link_to image_tag("facebook.png", size: "40"), 
-                              "https://www.facebook.com/" + 
-                              @user.facebook_account %>
-      <% end %>
-
-      <% if @user.twitter_account == nil %>
-        <%= link_to image_tag("twitter.png", size: "40"), '#' %>
-      <% else %>
-      <%= link_to image_tag("twitter.png", size: "40"), 
-                            "https://www.twitter.com/" + 
-                            @user.twitter_account %>
-      <% end %>
-
-      <% if @user.twitch_account == nil %>
-        <%= link_to image_tag("twitch.png", size: "40"), '#' %>
-      <% else %>                      
-      <%= link_to image_tag("twitch.png", size: "40"), 
-                            "http://www.twitch.tv/" + 
-                            @user.twitch_account %>
-      <% end %>
-    </div>
 
     <h2>
       W-L: <%= WL_record(@user, @user.matches) %>
@@ -58,8 +58,6 @@
     <!-- Acheivements -->
     <div class="panel panel-default">
       <div class="panel-heading">Achievements</div>
-      
-      <!-- Table -->
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <tr>
@@ -71,13 +69,12 @@
           </tr>
           
           <tr>
-            <td>League</td>
-            <td>FGL Invite</td>
+            <td>Regular Season</td>
+            <td>FGL Invite: Season 1</td>
             <td>SSF4:AE</td>
             <td>1st</td>
             <td>2014</td>
           </tr>
-
         </table>
       </div>
     </div>

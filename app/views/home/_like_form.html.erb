@@ -1,4 +1,3 @@
-<% like_count_id = "like_count_#{post.id}" %>
 <% if signed_in? %>
   <% like_post_form_id = "like_post_form_#{post.id}" %>
   <div id="<%= like_post_form_id %>">
@@ -8,5 +7,4 @@
       <%= render partial: 'home/like', locals: { post: post } %>
     <% end %>
   </div>
- <% end %>
-<div id="<%= like_count_id %>"><%= pluralize(post.likes.count, "like") %></div>
+<% end %>
