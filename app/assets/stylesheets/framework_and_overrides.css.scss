@@ -33,12 +33,14 @@ img {
  
 // apply styles to HTML elements
 // to make views framework-neutral
+body {
+  background-color: #ededed;
+}
 main {
   @extend .container;
   padding-bottom: 80px;
   width: 100%;
-  margin-top: 51px; // accommodate the navbar
-  background-color: #ededed;
+  margin-top: 60px; // accommodate the navbar
 }
 
 /* Flash messages */
