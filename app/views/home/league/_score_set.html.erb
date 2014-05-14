@@ -1,7 +1,7 @@
 <% if match.winner_id == match.p1_id %>
-  <%= match.p1.alias %> defeated <%= match.p2.alias %>
-  <%= link_to match.p1_score + '-' + match.p2_score, match %>.
+  <%= link_to match.p1.alias, match.p1 %> defeated <%= link_to match.p2.alias, match.p2 %>
+  <%= link_to match.p1_score.to_s + '-' + match.p2_score.to_s, match %>.
 <% else %>
-  <%= match.p2.alias %> defeated <%= match.p2.alias %>
-  <%= link_to match.p1_score + '-' + match.p2_score, match %>.
+  <%= link_to match.p2.alias, match.p2 %> defeated <%= link_to match.p1.alias, match.p1 %>
+  <%= link_to match.p1_score.to_s + '-' + match.p2_score.to_s, match %>.
 <% end %>

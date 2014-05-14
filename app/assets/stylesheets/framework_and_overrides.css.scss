@@ -34,7 +34,7 @@ img {
 // apply styles to HTML elements
 // to make views framework-neutral
 body {
-  background-color: #ededed;
+  //background-color: #ededed;
 }
 main {
   @extend .container;
@@ -132,7 +132,6 @@ section {
 .user-post-content {
   font-size: 20px;
   padding-left: 15px;
-  //display: block;
 }
 .league-post-content {
   padding-left: 15px;
@@ -239,4 +238,52 @@ footer ul li {
 .post-img {
   padding-top: 5px;
   padding-right: 5px;
+}
+
+.matches-btn {
+  @extend .col-md-offset-3;
+  width: 50%;
+}
+
+.pending-match-league-img {
+  display: inline-block;
+}
+
+.pending-match-league-and-date {
+  p {
+    @extend .text-center;
+    font-size: 16px;
+  }
+}
+
+.matches-users-and-score {
+  a {
+    @extend .col-md-offset-3;
+    font-size: 56px;
+  }
+
+  img {
+    display: inline-block; 
+  }
+
+  .pending-match-p1-img {
+    float: left;
+  }
+
+  .pending-match-p2-img {
+    float: right;
+  }
+}
+
+.matches-usernames {
+  padding-bottom: 10px;
+  a {
+    font-size: 16px;
+  }
+  .pending-match-p1-alias {
+    //float: left;
+  }
+  .pending-match-p2-alias {
+    float: right;
+  }
 }
