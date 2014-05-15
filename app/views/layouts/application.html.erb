@@ -39,11 +39,11 @@
             if (data.no_avatar == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
             } else {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
             }
 
             // Update unread notifications count.
@@ -61,11 +61,11 @@
             if (data.no_avatar == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
             } else {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><li><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
             }
 
             // Update unread notifications count.
