@@ -168,6 +168,14 @@ section {
   }
 }
 
+/* Notification drop down */
+#notifications {
+  ul {
+    list-style: none;
+    width: 400px;
+  }
+}
+
 .scrollable-menu {
   height: auto;
   max-height: 200px;
@@ -290,4 +298,11 @@ footer ul li {
   .pending-match-p2-alias {
     float: right;
   }
+}
+
+#nav_search {
+  @extend .navbar-form, .navbar-left;
+  padding-top: 5px;
+  //padding-left: 200px;
+  margin-bottom: 0;
 }

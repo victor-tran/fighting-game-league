@@ -1,0 +1,38 @@
+<!-- Left Navbar -->
+<ul class="nav navbar-nav">
+  <!-- Notification list -->
+  <li class="dropdown notification_icon">
+    <%= link_to '', read_notifications_path,
+        class: "glyphicon glyphicon-exclamation-sign dropdown-toggle", 
+          data: { toggle: "dropdown" },
+          controller: "home",
+          action: "read_notifications",
+          method: :post,
+          remote: true %><span class="badge notification_badge"><% unread_count = current_user.notifications.unread.count %><% unless unread_count == 0 %><%= unread_count %><% end %></span></a>
+    <ul class="dropdown-menu scrollable-menu">
+      <%= render partial: 'home/notification_feed' %>
+    </ul>
+  </li>
+</ul>
+
+<!-- Search Bar -->
+<%= form_tag leagues_path, method: :get, id: 'nav_search' do %>
+  <p>
+    <%= text_field_tag :query, params[:query] %>
+    <%= submit_tag "Search", name: nil %>
+  </p>
+<% end %>
+
+<!-- Right Navbar -->
+<ul class="nav navbar-nav navbar-right">
+  <li><%= link_to "Fighters", users_path %></li>
+  <li><%= link_to "FGL Stats", stats_path %></li>
+  <!-- Settings list -->
+  <li class="dropdown">
+    <a href="#" class="glyphicon glyphicon-cog dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+      <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+    </ul>
+  </li>
+</ul>
