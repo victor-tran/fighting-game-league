@@ -50,6 +50,21 @@ class UsersController < ApplicationController
     end
     redirect_to root_url
   end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @following = @user.followed_leagues + @user.followed_users
+    @users = @following.paginate(page: params[:page], per_page: 10)
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+  end
   
   private
     def create_user_params
