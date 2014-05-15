@@ -39,17 +39,20 @@
             if (data.no_avatar == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
             } else {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
             }
 
             // Update unread notifications count.
             $(".notification_badge").html(data.unread_count);
           });
-          channel.bind('delete_like_notification', function(data) {
+          channel.bind('delete_notification', function(data) {
+            // Remove notification from notification list.
+            $("#notification_item_"+data.notification_id).remove();
+
             // Update unread notifications count.
             if (data.unread_count > 0) {
               $(".notification_badge").html(data.unread_count);
@@ -61,11 +64,11 @@
             if (data.no_avatar == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
             } else {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
             }
 
             // Update unread notifications count.

@@ -35,7 +35,8 @@ class LikesController < ApplicationController
                                                      sender_name: current_user.alias,
                                                      unread_count: op.notifications.unread.count,
                                                      post_content: @post.content,
-                                                     no_avatar: true })
+                                                     no_avatar: true,
+                                                     notification_id: n.id })
       else
         Pusher['private-user-'+op.id.to_s].trigger('new_like_notification',
                                                    { op_id: @post.postable_id,
@@ -47,7 +48,8 @@ class LikesController < ApplicationController
                                                      post_content: @post.content,
                                                      no_avatar: false,
                                                      img_alt: current_user.avatar_file_name.gsub(".jpg", ""),
-                                                     img_src: current_user.avatar.url(:post) })
+                                                     img_src: current_user.avatar.url(:post),
+                                                     notification_id: n.id })
       end
     end
     respond_to do |format|
@@ -79,8 +81,9 @@ class LikesController < ApplicationController
                                    targetable_id: @post.id,
                                    targetable_type: 'Post').destroy
       # Send a push notification via Pusher API to OP.
-      Pusher['private-user-'+op.id.to_s].trigger('delete_like_notification',
-                                                 { unread_count: op.notifications.unread.count })
+      Pusher['private-user-'+op.id.to_s].trigger('delete_notification',
+                                                 { unread_count: op.notifications.unread.count,
+                                                   notification_id: n.id })
     end
     respond_to do |format|
       format.html { redirect_to root_url }
