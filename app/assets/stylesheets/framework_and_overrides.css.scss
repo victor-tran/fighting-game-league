@@ -171,6 +171,7 @@ section {
 /* Notification drop down */
 #notifications {
   ul {
+    padding-left: 10px;
     list-style: none;
     width: 400px;
   }
@@ -305,4 +306,9 @@ footer ul li {
   padding-top: 5px;
   //padding-left: 200px;
   margin-bottom: 0;
+}
+
+.notification {
+  display: inline-block;
+  //padding-bottom: 5px;
 }

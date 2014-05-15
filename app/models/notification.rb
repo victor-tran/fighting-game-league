@@ -9,6 +9,7 @@ class Notification < ActiveRecord::Base
   validates :receiver_id, presence: true
   validates :targetable_id, presence: true
   validates :targetable_type, presence: true
+  validates :action, presence: true
   validates_inclusion_of :read, in: [true, false]
 
   def self.unread

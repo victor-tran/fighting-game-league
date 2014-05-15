@@ -1,5 +1,7 @@
 <li>
-  <!-- image_tag user.avatar.url(:supersmall) -->
-  <%= link_to notification.sendable.alias + " liked your post.",
-              polymorphic_path([notification.receiver, notification.targetable]) %>
+  <div class="notification">
+    <%= image_tag notification.sendable.avatar.url(:post), class: "pull-left" %>
+    <%= link_to notification.sendable.alias + " " + notification.action + " your post: " + '"' + notification.targetable.content + '"',
+                polymorphic_path([notification.receiver, notification.targetable]) %>
+  </div>
 </li>

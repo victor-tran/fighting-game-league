@@ -26,15 +26,32 @@ class CommentsController < ApplicationController
                                    sendable_type: 'User',
                                    targetable_id: @post.id,
                                    targetable_type: 'Post',
+                                   action: "commented on",
                                    read: false)
       # Send a push notification via Pusher API to OP.
-      Pusher['private-user-'+op.id.to_s].trigger('new_comment_notification',
-                                                 { op_id: @post.postable_id,
-                                                   op_type: @post.postable_type.underscore.pluralize,
-                                                   targetable_id: n.targetable_id,
-                                                   targetable_type: n.targetable_type.underscore.pluralize,
-                                                   sender_name: current_user.alias,
-                                                   unread_count: op.notifications.unread.count })
+      if current_user.avatar_file_name == nil
+        Pusher['private-user-'+op.id.to_s].trigger('new_comment_notification',
+                                                   { op_id: @post.postable_id,
+                                                     op_type: @post.postable_type.underscore.pluralize,
+                                                     targetable_id: n.targetable_id,
+                                                     targetable_type: n.targetable_type.underscore.pluralize,
+                                                     sender_name: current_user.alias,
+                                                     unread_count: op.notifications.unread.count,
+                                                     post_content: @post.content,
+                                                     no_avatar: true })
+      else
+        Pusher['private-user-'+op.id.to_s].trigger('new_comment_notification',
+                                                   { op_id: @post.postable_id,
+                                                     op_type: @post.postable_type.underscore.pluralize,
+                                                     targetable_id: n.targetable_id,
+                                                     targetable_type: n.targetable_type.underscore.pluralize,
+                                                     sender_name: current_user.alias,
+                                                     unread_count: op.notifications.unread.count,
+                                                     post_content: @post.content,
+                                                     no_avatar: false,
+                                                     img_alt: current_user.avatar_file_name.gsub(".jpg", ""),
+                                                     img_src: current_user.avatar.url(:post) })
+      end
     end
     
     redirect_to polymorphic_path([@post.postable, @post])

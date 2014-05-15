@@ -54,7 +54,12 @@ class MatchesController < ApplicationController
     if @match.update_attributes(set_date_params)
       @match.league.posts.create!(action: "date_set",
                                   subjectable_id: @match.id,
-                                  subjectable_type: 'Match')
+                                  subjectable_type: 'Match',
+                                  content: "The date for the " +
+                                  @match.p1.alias + " vs. " +
+                                  @match.p2.alias +
+                                  " match has been set for " +
+                                  @match.match_date.to_s + ".")
       flash[:notice] = "Match date/time updated."
       redirect_to matches_path
     else

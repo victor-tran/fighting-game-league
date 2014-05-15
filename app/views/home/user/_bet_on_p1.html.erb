@@ -1,6 +1,6 @@
 <% bet = post.subjectable %>
 <% user = bet.better %>
 <% match = bet.match %>
-<%= link_to user.alias, user %> bet <%= bet.wager_amount.to_s %>
-fight bucks on <%= link_to match.p1.alias, match.p1 %> to win against
-<%= link_to match.p2.alias, match.p1 %>.
+<%= link_to user.alias, user %> bet <%= pluralize(bet.wager_amount, "fight buck") %>
+on <%= link_to match.p1.alias, match.p1 %> to win against
+<%= link_to match.p2.alias, match.p2 %>.

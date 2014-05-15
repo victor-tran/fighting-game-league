@@ -15,11 +15,19 @@ class BetsController < ApplicationController
       if @fav_user == @match.p1
         current_user.posts.create!(action: 'bet_on_p1',
                                    subjectable_id: bet.id,
-                                   subjectable_type: 'Bet')
+                                   subjectable_type: 'Bet',
+                                   content: current_user.alias + " bet " +
+                                            pluralize(wager_amount, "fight buck")
+                                            + " on " + @match.p1.alias +
+                                            " to win against " + @match.p2.alias + ".")
       else
         current_user.posts.create!(action: 'bet_on_p2',
                                    subjectable_id: bet.id,
-                                   subjectable_type: 'Bet')
+                                   subjectable_type: 'Bet',
+                                   content: current_user.alias + " bet " +
+                                            pluralize(wager_amount, "fight buck")
+                                            + " on " + @match.p2.alias +
+                                            " to win against " + @match.p1.alias + ".")
       end
     end
     redirect_to match_path(@match)
