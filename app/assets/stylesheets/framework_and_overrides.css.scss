@@ -318,3 +318,12 @@ footer ul li {
   //padding-left: 200px;
   margin-bottom: 0;
 }
+
+.notification_icon {
+  .dropdown-toggle {
+    position: relative; top: 0; left: 0;
+  }
+  .notification_badge {
+    position: absolute; top: 30px; left: 20px;
+  }
+}

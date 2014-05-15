@@ -8,7 +8,7 @@
           controller: "home",
           action: "read_notifications",
           method: :post,
-          remote: true %><span class="badge notification_badge"><% unread_count = current_user.notifications.unread.count %><% unless unread_count == 0 %><%= unread_count %><% end %></span></a>
+          remote: true %><span class="badge alert-danger notification_badge"><% unread_count = current_user.notifications.unread.count %><% unless unread_count == 0 %><%= unread_count %><% end %></span></a>
     <ul class="dropdown-menu scrollable-menu">
       <%= render partial: 'home/notification_feed' %>
     </ul>
