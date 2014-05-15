@@ -171,9 +171,20 @@ section {
 /* Notification drop down */
 #notifications {
   ul {
-    padding-left: 10px;
+    padding-left: 0px;
     list-style: none;
     width: 400px;
+    li {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 5px;
+      border-bottom-style: solid;
+      border-bottom-width: thin;
+      border-bottom-color: #ddd;
+      img {
+        margin-right: 5px;
+      }
+    }
   }
 }
 
@@ -306,9 +317,4 @@ footer ul li {
   padding-top: 5px;
   //padding-left: 200px;
   margin-bottom: 0;
-}
-
-.notification {
-  display: inline-block;
-  //padding-bottom: 5px;
 }
