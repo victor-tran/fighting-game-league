@@ -1,4 +1,7 @@
 class League < ActiveRecord::Base
+  include PgSearch
+  multisearchable against: [:name, :info]
+
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   has_many :matches
@@ -60,15 +63,6 @@ class League < ActiveRecord::Base
   validates_attachment :banner,
     content_type: { content_type: ["image/jpg", "image/png",
                                    "image/jpeg", "image/gif"] }
-
-  # Search stuff.
-  def self.text_search(query)
-    if query.present?
-      where("name @@ :q", q: query)
-    else
-      all
-    end
-  end
 
   # Returns the total rounds for current league.
   def total_rounds

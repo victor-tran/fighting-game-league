@@ -21,10 +21,6 @@ class LeaguesController < ApplicationController
       format.js
     end
   end
-  
-  def index
-    @leagues = League.text_search(params[:query]).page(params[:page]).per_page(20)
-  end
 
   def new
     @league = League.new

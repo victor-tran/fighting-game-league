@@ -1,0 +1,12 @@
+<% provide(:title, 'FGL Search') %>
+<h1>FGL Search</h1>
+
+<%= will_paginate @results %>
+
+<ul class="users">
+  <% if @results.any? %>
+    <%= render @results %>
+  <% end %>
+</ul>
+
+<%= will_paginate @results %>

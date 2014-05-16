@@ -21,6 +21,7 @@ gem 'aws-sdk'
 gem 'challonge-api'
 gem 'paypal-sdk-rest'
 gem 'pusher'
+gem 'pg_search'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

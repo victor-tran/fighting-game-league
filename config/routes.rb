@@ -61,4 +61,5 @@ FightingGameLeague::Application.routes.draw do
   post 'pusher/auth'
   match '/read', to: 'home#read_notifications', as: 'read_notifications',
                  via: 'post'
+  match "/search", to: 'home#search', via: 'get'
 end

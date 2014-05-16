@@ -16,7 +16,7 @@
 </ul>
 
 <!-- Search Bar -->
-<%= form_tag leagues_path, method: :get, id: 'nav_search' do %>
+<%= form_tag search_path, method: :get, id: 'nav_search' do %>
   <p>
     <%= text_field_tag :query, params[:query] %>
     <%= submit_tag "Search", name: nil %>
@@ -25,7 +25,6 @@
 
 <!-- Right Navbar -->
 <ul class="nav navbar-nav navbar-right">
-  <li><%= link_to "Fighters", users_path %></li>
   <li><%= link_to "FGL Stats", stats_path %></li>
   <!-- Settings list -->
   <li class="dropdown">

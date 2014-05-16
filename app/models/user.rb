@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include PgSearch
+  multisearchable against: [:alias, :first_name, :last_name]
+
   has_many :memberships, dependent: :destroy
   has_many :leagues, through: :memberships
   has_many :p1_matches, class_name: 'Match', foreign_key: 'p1_id'
