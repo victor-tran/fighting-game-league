@@ -2,5 +2,21 @@
   <div class="user-thumb">
     <%= image_tag user.avatar.url(:thumb) %>
   </div>
-  <%= link_to user.alias, user %>
+  <strong class="search-name"><%= link_to user.full_name, user %></strong>
+  <div class="search-stats">
+    <a href="<%= following_user_path(user) %>">
+      <strong id="following" class="stat">
+        <%= user.followed_users.count + user.followed_leagues.count %>
+      </strong>
+      following
+    </a>
+    <a href="<%= followers_user_path(user) %>">
+      <% user_followers_id = "user_followers_#{user.id}" %>
+      <strong id="<%= user_followers_id %>" class="stat">
+        <%= user.followers.count %>
+      </strong>
+      followers
+    </a>
+  </div>
+  <%= render partial: 'users/follow_form', locals: { user: user } if signed_in? %>
 </li>

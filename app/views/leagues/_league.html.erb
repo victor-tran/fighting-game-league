@@ -1,6 +1,18 @@
 <li>
-  <div class="user-thumb">
+  <div class="league-thumb">
     <%= image_tag league.banner.url(:thumb) %>
   </div>
-  <%= link_to league.name, league %>
+  <strong class="search-name"><%= link_to league.name, league %> | <%= league.game.name %></strong>
+  <p>Commissioner: <%= link_to league.commissioner.full_name, league.commissioner %></p>
+  <div class="search-stats">
+    <a href="<%= followers_league_path(league) %>">
+      <% league_followers_id = "league_followers_#{league.id}" %>
+      <strong id="<%= league_followers_id %>" class="stat">
+        <%= league.followers.count %>
+      </strong>
+      followers
+    </a>
+  <%= render partial: 'leagues/follow_form',
+             locals: { user: current_user, league: league } if signed_in? %>
+  </div>
 </li>

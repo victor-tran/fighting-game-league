@@ -8,7 +8,8 @@ FightingGameLeague::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :leagues do
     member do
-      get :statistics, :join_password, :profile, :standings, :fighters
+      get :statistics, :join_password, :profile, :standings, :fighters,
+          :followers
       patch :start, :next_round, :end_season, :start_playoffs,
             :end_playoffs
     end

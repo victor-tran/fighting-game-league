@@ -39,7 +39,7 @@
         <% end %>
       </div>
     </h1>
-    <%= render 'follow_form' if signed_in? %>
+    <%= render partial: 'follow_form', locals: { user: @user } if signed_in? %>
     <%= render 'shared/stats' %>
 
     <h2>

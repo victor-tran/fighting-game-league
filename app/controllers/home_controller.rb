@@ -23,6 +23,5 @@ class HomeController < ApplicationController
 
   def search
     @results = PgSearch.multisearch(params[:query]).page(params[:page]).per_page(10)
-    binding.pry
   end
 end

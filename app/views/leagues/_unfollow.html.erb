@@ -1,5 +1,5 @@
-<%= form_for(current_user.league_relationships.find_by(league_id: @league.id),
+<%= form_for(current_user.league_relationships.find_by(league_id: league.id),
              html: { method: :delete },
              remote: true) do |f| %>
-  <%= f.submit "Unfollow", class: "btn btn-primary" %>
+  <%= f.submit "Unfollow", class: "btn btn-warning" %>
 <% end %>

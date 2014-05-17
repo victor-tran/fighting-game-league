@@ -106,7 +106,7 @@ section {
 }
 
 /* User thumbs */
-.user-thumb {
+.user-thumb, .league-thumb {
   float:left;
   margin-right: 10px;
 }
@@ -315,7 +315,6 @@ footer ul li {
 #nav_search {
   @extend .navbar-form, .navbar-left;
   padding-top: 5px;
-  //padding-left: 200px;
   margin-bottom: 0;
 }
 
@@ -326,4 +325,11 @@ footer ul li {
   .notification_badge {
     position: absolute; top: 30px; left: 20px;
   }
+}
+
+.search-name {
+  font-size: 20px;
+}
+
+.search-stats {
 }

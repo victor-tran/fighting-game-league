@@ -611,6 +611,23 @@ def make_users
                fight_bucks: "50",
                uuid: SecureRandom.uuid,
                confirmed: true)
+
+  46.times do |n|
+      first_name = "John#{n+1}"
+      last_name = "Doe#{n+1}"
+      fake_alias = "Example User #{n+1}"
+      email = "example-#{n+1}@fgl.org"
+      
+      User.create!(first_name: first_name,
+                   last_name: last_name,
+                   alias: fake_alias,
+                   email: email,
+                   password: "foobar",
+                   password_confirmation: "foobar",
+                   fight_bucks: "50",
+                   uuid: SecureRandom.uuid,
+                   confirmed: true)
+    end
 end
 
 def make_leagues

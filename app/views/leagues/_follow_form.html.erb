@@ -1,9 +1,10 @@
-<% unless current_user?(user) %>
-  <div id="follow_league_form">
-  <% if current_user.following_league?(league) %>
-    <%= render 'unfollow' %>
-  <% else %>
-    <%= render 'follow' %>
-  <% end %>
+<% unless current_user.member_of?(league) %>
+  <% follow_league_form_id = "follow_league_form_#{league.id}" %>
+  <div id="<%= follow_league_form_id %>">
+    <% if current_user.following_league?(league) %>
+      <%= render partial: 'leagues/unfollow', locals: { league: league } %>
+    <% else %>
+      <%= render partial: 'leagues/follow', locals: { league: league } %>
+    <% end %>
   </div>
 <% end %>

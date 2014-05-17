@@ -1,2 +1,2 @@
-$("#follow_league_form").html("<%= escape_javascript(render('leagues/follow')) %>")
-$("#followers").html('<%= @league.followers.count %>')
+$("#follow_league_form_"+"<%== escape_javascript(@league.id.to_s) %>").html("<%= escape_javascript(render(partial: 'leagues/follow', locals: { league: @league })) %>")
+$("#league_followers_"+"<%== escape_javascript(@league.id.to_s) %>").html('<%= @league.followers.count %>')
