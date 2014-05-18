@@ -122,6 +122,12 @@ class LeaguesController < ApplicationController
   def fighters
   end
 
+  def followers
+    @title = "Followers"
+    @league = League.find(params[:id])
+    @followers = @league.followers.paginate(page: params[:page])
+  end
+
   private
     def create_league_params
       params.require(:league).permit(:name, :game_id, :commissioner_id, :started,

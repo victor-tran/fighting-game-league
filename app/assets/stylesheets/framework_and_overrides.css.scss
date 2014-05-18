@@ -273,7 +273,7 @@ footer ul li {
   display: inline-block;
 }
 
-.pending-match-league-and-date {
+.pending-match {
   p {
     @extend .text-center;
     font-size: 16px;
@@ -289,14 +289,14 @@ footer ul li {
   img {
     display: inline-block; 
   }
+}
 
-  .pending-match-p1-img {
-    float: left;
-  }
+.match-p1-img {
+  float: left;
+}
 
-  .pending-match-p2-img {
-    float: right;
-  }
+.match-p2-img {
+  float: right;
 }
 
 .matches-usernames {
@@ -304,10 +304,10 @@ footer ul li {
   a {
     font-size: 16px;
   }
-  .pending-match-p1-alias {
+  .match-p1-alias {
     //float: left;
   }
-  .pending-match-p2-alias {
+  .match-p2-alias {
     float: right;
   }
 }
@@ -332,4 +332,12 @@ footer ul li {
 }
 
 .search-stats {
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  img {
+    margin: 1px 1px;
+  }
 }

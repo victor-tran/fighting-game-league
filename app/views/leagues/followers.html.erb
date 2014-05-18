@@ -1,0 +1,31 @@
+<% provide(:title, "Followers") %>
+<div class="row">  
+  
+  <aside class="col-md-4">
+    <section>
+      <%= image_tag @league.banner.url(:large) %>
+      <h1><%= @league.name %></h1>
+      <div><%= link_to "view league", @league %></div>
+      <strong><%= pluralize @league.followers.count, "followers" %></strong>
+    </section>
+    <section>
+      <% if @followers.any? %>
+        <div class="user_avatars">  
+          <% @followers.each do |user| %>
+            <%= link_to image_tag(user.avatar.url(:post)), user %>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  </aside>
+
+  <div class="col-md-8">
+    <h3>Followers</h3>
+    <% if @followers.any? %>
+      <ul class="users">
+        <%= render @followers %>
+      </ul>
+      <%= will_paginate @followers %>
+    <% end %>
+  </div>
+</div>

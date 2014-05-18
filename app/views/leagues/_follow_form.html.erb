@@ -1,6 +1,6 @@
 <% unless current_user.member_of?(league) %>
   <% follow_league_form_id = "follow_league_form_#{league.id}" %>
-  <div id="<%= follow_league_form_id %>">
+  <div id="<%= follow_league_form_id %>", style="display: inline-block;">
     <% if current_user.following_league?(league) %>
       <%= render partial: 'leagues/unfollow', locals: { league: league } %>
     <% else %>

@@ -1,4 +1,4 @@
-<div class="pending-match-league-and-date">
+<div class="pending-match">
   <p>
     <%= image_tag match.league.banner.url(:tiny), class: "pending-match-league-img" %>
     <%= link_to match.league.name, match.league %> |
@@ -10,12 +10,4 @@
     <p>Date: <%= match.match_date %></p>
   <% end %>
 </div>
-<div class="matches-users-and-score">
-  <%= image_tag match.p1.avatar.url(:thumb), class: "pending-match-p1-img" %>
-  <%= link_to match.p1_score.to_s + " : " + match.p2_score.to_s, match %>
-  <%= image_tag match.p2.avatar.url(:thumb), class: "pending-match-p2-img" %>
-</div>
-<div class="matches-usernames">
-  <%= link_to match.p1.alias, match.p1, class: "pending-match-p1-alias" %>
-  <%= link_to match.p2.alias, match.p2, class: "pending-match-p2-alias" %>
-</div>
+<%= render match %>

@@ -11,10 +11,19 @@
         </h1>
       <% else %>
         <h1>
-          <%= @league.name %>
+          <%= @league.name %> 
           <%= render partial: 'follow_form', locals: { user: current_user, league: @league } %>
         </h1>
       <% end %>
+        <h3>
+          <a href="<%= followers_league_path(@league) %>">
+            <% league_followers_id = "league_followers_#{@league.id}" %>
+            Followers:
+            <strong id="<%= league_followers_id %>" class="stat">
+              <%= @league.followers.count %>
+            </strong>
+          </a>
+        </h3>
       <p>Commissioner: <%= link_to @league.commissioner.full_name, @league.commissioner %></p>
       <p>Game: <%= @league.game.name %></p>
       <p>Match Count: First-to-<%= @league.match_count %></p>
@@ -55,8 +64,7 @@
             width="100%" height="500" frameborder="0" scrolling="auto"
             allowtransparency="true"></iframe>
 
-  <% elsif @league.started %>      
-    <h2>Current Matches</h2>
+  <% elsif @league.started %>
     <%= render partial: 'match_table', locals: { league: @league } %>
 
     <% if all_matches_accepted?(

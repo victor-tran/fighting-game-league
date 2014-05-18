@@ -1,9 +1,10 @@
 <li>
   <div class="league-thumb">
-    <%= image_tag league.banner.url(:thumb) %>
+    <img src="http://placehold.it/175x175" alt="">
   </div>
   <strong class="search-name"><%= link_to league.name, league %> | <%= league.game.name %></strong>
-  <p>Commissioner: <%= link_to league.commissioner.full_name, league.commissioner %></p>
+  <div>Commissioner: <%= link_to league.commissioner.full_name, league.commissioner %></div>
+  <div>About: <%= league.info %></div>
   <div class="search-stats">
     <a href="<%= followers_league_path(league) %>">
       <% league_followers_id = "league_followers_#{league.id}" %>
@@ -12,7 +13,7 @@
       </strong>
       followers
     </a>
+  </div>
   <%= render partial: 'leagues/follow_form',
              locals: { user: current_user, league: league } if signed_in? %>
-  </div>
 </li>
