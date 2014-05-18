@@ -33,18 +33,20 @@
       should probably be spent on food/drink, but instead you're spending
       it on sidebets.
     </p>
-    <p>
-      <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"),
-                  orders_path(order: { amount: 5,
-                                       description: "500 Fight Bucks",
-                                       payment_method: "paypal" }),
-                                       method: :post %>
-      <%= link_to "Credit Card",
-                  credit_card_orders_path(order: { amount: 5,
-                                                   description: "500 Fight Bucks",
-                                                   payment_method: "credit_card" }),
-                                                   class: "btn btn-primary" %>
-    </p>
+    <div class="purchase-buttons">
+      <p>
+        <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"),
+                    orders_path(order: { amount: 5,
+                                         description: "500 Fight Bucks",
+                                         payment_method: "paypal" }),
+                                         method: :post %>
+        <%= link_to "Credit Card",
+                    credit_card_orders_path(order: { amount: 5,
+                                                     description: "500 Fight Bucks",
+                                                     payment_method: "credit_card" }),
+                                                     class: "btn btn-primary" %>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -53,10 +55,8 @@
   <div class="caption">
     <h3>2,000 Fight Bucks ($10)</h3>
     <p>
-      Now we're talking. You've come prepared with a few matches in mind
-      that you've planned to throw some big bucks on. You're getting these
-      fight bucks because you love to show people that you know how to win
-      some bets.
+      Now we're talking. You've come prepared to throw down some
+      big bucks on some hype matches. You know how to win some bets.
     </p>
     <p>
       <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"),
@@ -79,8 +79,7 @@
     <h3>10,000 Fight Bucks ($20)</h3>
     <p>
       The big spender. You came to bet on every single match and have as much
-      fun as possible. You aren't afraid to raise the stakes and throw down
-      the big bucks, just for the sole purpose of getting HYPE!
+      fun as possible. You bring the HYPE everywhere you go.
     </p>
     <p>
       <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"),
