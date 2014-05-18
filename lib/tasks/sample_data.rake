@@ -650,7 +650,7 @@ def make_leagues
 end
 
 def make_memberships
-  users = User.all
+  users = User.all[0..3]
   leagues = League.all
 
   leagues.each do |league|

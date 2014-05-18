@@ -8,7 +8,8 @@
           controller: "home",
           action: "read_notifications",
           method: :post,
-          remote: true %><span class="badge alert-danger notification_badge"><% unread_count = current_user.notifications.unread.count %><% unless unread_count == 0 %><%= unread_count %><% end %></span></a>
+          remote: true %>
+    <span class="badge alert-danger notification_badge"><% unread_count = current_user.notifications.unread.count %><% unless unread_count == 0 %><%= unread_count %><% end %></span>
     <ul class="dropdown-menu scrollable-menu">
       <%= render partial: 'home/notification_feed' %>
     </ul>
@@ -25,6 +26,7 @@
 
 <!-- Right Navbar -->
 <ul class="nav navbar-nav navbar-right">
+  <li><%= link_to "Fight Bucks", fight_bucks_path %></li>
   <li><%= link_to "FGL Stats", stats_path %></li>
   <!-- Settings list -->
   <li class="dropdown">

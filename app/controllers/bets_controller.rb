@@ -1,3 +1,4 @@
+include ActionView::Helpers::TextHelper
 class BetsController < ApplicationController
   before_action :signed_in_user
   

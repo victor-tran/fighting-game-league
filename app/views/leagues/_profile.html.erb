@@ -12,7 +12,7 @@
       <% else %>
         <h1>
           <%= @league.name %>
-          <%= render partial: 'follow_form', locals: { user: current_user } %>
+          <%= render partial: 'follow_form', locals: { user: current_user, league: @league } %>
         </h1>
       <% end %>
       <p>Commissioner: <%= link_to @league.commissioner.full_name, @league.commissioner %></p>

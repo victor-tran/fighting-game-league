@@ -1,19 +1,25 @@
-<h1>Number of Fighters: <%= User.count %></h1> 
-<h1>Number of Matches Generated: <%= Match.count %></h1>
-<h1>
-  Number of Matches Played: 
-  <%= Match.where("p1_accepted = ? AND p2_accepted = ?", true, true).count %>
-</h1>
-<h1>Number of Bets: <%= Bet.count %></h1>
+<div class="row">
+  <div class="col-md-6">
+    <p>Number of Fighters: <%= User.count %></p> 
+    <p>Number of Leagues: <%= League.count %></p>
+    <p>Number of Matches Generated: <%= Match.count %></p>
+    <p>Number of Matches Played: <%= Match.where("p1_accepted = ? AND p2_accepted = ?", true, true).count %></p>
+    <p>Number of Bets: <%= Bet.count %></p>
+    <p>Number of Games: <%= Game.count %></p>
+    <p>Number of Posts: <%= Post.count %></p>
+    <p>Number of Likes: <%= Like.count %></p>
+    <p>Number of Comments: <%= Comment.count %></p>
+    <p>Number of Tournaments: <%= Tournament.count %></p>
+  </div>
+</div>
 
-<h1>Number of Leagues: <%= League.count %></h1>
-
-<h1>League With The Most Fighters:</h1>
-
-<% Game.all.each do |game| %>
-  <%= image_tag Game.find(game.id).logo, size: "50" %>:
-  <%= League.where("game_id = ?", game.id).count %>
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-heading">Games by Number of Leagues</div>
+  <div class="panel-body">
+    <div id="morris-donut-chart"></div>
+  </div>
+  <!-- /.panel-body -->
+</div>
 
 <h1>Most Played Characters</h1>
 <% result_hashmap = count_characters %>
@@ -21,6 +27,13 @@
   <%= image_tag Game.find(game.id).logo, size: "50" %>
   <%= result_hashmap[game][0][0].name %>:
   <%= result_hashmap[game][0][1] %>
+<% end %>
+
+<h1>League With The Most Users:</h1>
+
+<% Game.all.each do |game| %>
+  <%= image_tag Game.find(game.id).logo, size: "50" %>:
+  <%= League.where("game_id = ?", game.id).count %>
 <% end %>
 
 <h1>Most Wins (All Games)</h1>
@@ -89,3 +102,16 @@
     <%= link_to user.alias, user %>: <%= link_to wager, Match.find(bet.match_id) %>
   <% end %>
 </h1>
+
+<p>Total Amount of Fight Bucks Wagered: <%= Bet.all.to_a.sum(&:wager_amount) %></p>
+
+<script>
+Morris.Donut({
+  element: 'morris-donut-chart',
+  data: [
+    {label: "Download Sales", value: 12},
+    {label: "In-Store Sales", value: 30},
+    {label: "Mail-Order Sales", value: 20}
+  ]
+});
+</script>
