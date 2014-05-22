@@ -1,4 +1,4 @@
 <%= link_to league.name, league %> Playoffs for Season 
-<%= league.current_season_number %> has ended with
+<%= league.current_season.number %> has ended with
 <%= link_to league.tournaments.last.winner.alias, league.tournaments.last.winner %>
 taking home 1st place!

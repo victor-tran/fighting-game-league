@@ -7,7 +7,7 @@ class CreateMatches < ActiveRecord::Migration
       t.integer :p2_id
       t.integer :p1_score
       t.integer :p2_score
-      t.integer :season_number
+      t.integer :season_id
       t.integer :league_id
 
       t.timestamps

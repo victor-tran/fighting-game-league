@@ -49,7 +49,6 @@ FightingGameLeague::Application.routes.draw do
   get "home/stats"
   get "home/about"
   get "home/fight_bucks"
-  get "users/pending"
 
   match '/register', to: 'users#new', via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'

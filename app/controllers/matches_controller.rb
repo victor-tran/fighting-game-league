@@ -98,9 +98,17 @@ class MatchesController < ApplicationController
   def accept_score
     if @match.update_attributes(p1_accepted: true, p2_accepted: true,
                                 finalized_date: Time.now)
-      @match.league.posts.create!(action: "score_set",
-                                  subjectable_id: @match.id,
-                                  subjectable_type: 'Match')
+      if @match.winner_id == @match.p1_id
+        @match.league.posts.create!(action: "score_set",
+                                    subjectable_id: @match.id,
+                                    subjectable_type: 'Match',
+                                    content: "#{@match.p1.alias} defeated #{@match.p2.alias} #{@match.p1_score}-#{@match.p2_score}.")
+      else
+        @match.league.posts.create!(action: "score_set",
+                                    subjectable_id: @match.id,
+                                    subjectable_type: 'Match',
+                                    content: "#{@match.p2.alias} defeated #{@match.p1.alias} #{@match.p1_score}-#{@match.p2_score}.")
+      end
       @match.pay_winning_betters
       flash[:notice] = "Match score accepted."
     end
@@ -193,6 +201,6 @@ class MatchesController < ApplicationController
     def create_match_params
       params.require(:match).permit(:p1_id, :p2_id, :p1_score, :p2_score, 
         :match_date, :p1_accepted, :p2_accepted, :disputed, :finalized_date,
-        :round_number, :game_id, :season_number, :league_id, :tournament_id)
+        :round_number, :game_id, :season_id, :league_id, :tournament_id)
     end
 end

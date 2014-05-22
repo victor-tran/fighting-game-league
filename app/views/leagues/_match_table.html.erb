@@ -1,7 +1,7 @@
 <!-- Current Match Table -->
 <div class="panel panel-default">
   <div class="panel-heading">
-    Season <%= league.current_season_number %>: Round <%= league.current_round %> of <%= league.total_rounds %>
+    Season <%= league.current_season.number %>: Round <%= league.current_round %> of <%= league.total_rounds %>
   </div>
   
   <!-- Table -->
@@ -12,7 +12,7 @@
         <th>Score</th>
         <th>Player 2</th>
       </tr>
-      <% league.matches_for_current_season.each do |match| %>
+      <% league.current_season.matches.where(tournament_id: nil).each do |match| %>
         <% if match.round_number == league.current_round %>
           <tr>
             <td>

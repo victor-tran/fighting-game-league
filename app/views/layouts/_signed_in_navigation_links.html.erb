@@ -19,7 +19,7 @@
 <!-- Search Bar -->
 <%= form_tag search_path, method: :get, id: 'nav_search' do %>
   <p>
-    <%= text_field_tag :query, params[:query] %>
+    <%= text_field_tag :query, params[:query], placeholder: "Users and leagues..." %>
     <%= submit_tag "Search", name: nil %>
   </p>
 <% end %>

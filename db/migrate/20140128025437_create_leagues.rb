@@ -4,7 +4,6 @@ class CreateLeagues < ActiveRecord::Migration
       t.string :name
       t.integer :commissioner_id
       t.integer :game_id
-      t.integer :current_season_number
       t.integer :current_round
       t.boolean :started
 

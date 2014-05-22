@@ -8,7 +8,7 @@ class LeaguesController < ApplicationController
                                        :profile, :standings, :fighters,
                                        :start_playoffs, :end_playoffs]
 
-  before_action :respond_to_js, only: [:profile, :standings, :statistics,
+  before_action :respond_to_js, only: [:profile, :standings,
                                        :fighters]
 
 
@@ -57,10 +57,31 @@ class LeaguesController < ApplicationController
 
   def start
     if @league.update_attributes(start_league_params)
+      # Generate the list of the fighters for this season.
+      fighters = Array.new
+      @league.users.each do |user|
+        fighters.push(user.id)
+      end
+
+      # Create a new season for this league.
+      if @league.seasons.empty?
+        @league.seasons.create!(number: 1,
+                                current_season: true,
+                                fighters: fighters)
+      else
+        @league.seasons.create!(number: @league.seasons.last.number + 1,
+                                current_season: true,
+                                fighters: fighters)
+      end
+
+      # Generate matches for the season.
       @league.generate_matches
+
+      # Create a post for followers of the league to see that the
+      # season started.
       @league.posts.create!(action: 'started',
                             content: "Season " +
-                                     @league.current_season_number.to_s +
+                                     @league.current_season.number.to_s +
                                      " has begun!" )
       flash[:notice] = "League successfully started!"
     end
@@ -81,7 +102,7 @@ class LeaguesController < ApplicationController
     @league.start_playoffs
     @league.posts.create!(action: 'playoffs_started',
                           content: @league.name + " Playoffs for Season " +
-                                   @league.current_season_number.to_s + " has begun!")
+                                   @league.current_season.number.to_s + " has begun!")
     flash[:notice] = "Playoffs started!"
     redirect_to @league
   end
@@ -90,7 +111,7 @@ class LeaguesController < ApplicationController
     @league.end_playoffs
     @league.posts.create!(action: 'playoffs_ended',
                           content: @league.name + " Playoffs for Season " +
-                                   @league.current_season_number.to_s + " has ended with " +
+                                   @league.current_season.number.to_s + " has ended with " +
                                    @league.tournaments.last.winner.alias + " taking home 1st place!")
     flash[:notice] = "Playoffs complete!"
     redirect_to @league
@@ -98,11 +119,14 @@ class LeaguesController < ApplicationController
 
   def end_season
     if @league.update_attributes(end_season_params)
+
+      # Create post for followers to see that the season ended.
       @league.posts.create!(action: 'season_ended',
-                            content: @league.name + " Season " +
-                                     @league.current_season_number.to_s + " has concluded.")
-      flash[:notice] = "Season " + @league.current_season_number.to_s +
-                       " complete!"
+                            content: "#{@league.name} Season #{@league.current_season.number} has concluded.")
+      
+      flash[:notice] = "Season #{@league.current_season.number} complete!"
+      # Make current season, not the current season anymore.
+      @league.current_season.update_attribute(:current_season, false)
     end
     redirect_to @league
   end
@@ -117,6 +141,14 @@ class LeaguesController < ApplicationController
   end
 
   def statistics
+    if params[:season] == nil
+      @selected_season = @league.current_season
+    else
+      @selected_season = params[:season]
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 
   def fighters
@@ -130,10 +162,10 @@ class LeaguesController < ApplicationController
 
   private
     def create_league_params
-      params.require(:league).permit(:name, :game_id, :commissioner_id, :started,
-        :current_season_number, :current_round, :match_count, :info,
-        :password_protected, :password, :password_confirmation,
-        :playoffs_started)
+      params.require(:league).permit(:name, :game_id, :commissioner_id,
+                                     :started, :current_round, :match_count,
+                                     :info, :password_protected, :password,
+                                     :password_confirmation, :playoffs_started)
     end
 
     def update_league_params
@@ -141,8 +173,7 @@ class LeaguesController < ApplicationController
     end
 
     def start_league_params
-      params.require(:league).permit(:started, :current_season_number,
-                                     :current_round)
+      params.require(:league).permit(:started, :current_round)
     end
 
     def end_season_params

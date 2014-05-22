@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140516145346) do
+ActiveRecord::Schema.define(version: 20140519155039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 20140516145346) do
     t.string   "name"
     t.integer  "commissioner_id"
     t.integer  "game_id"
-    t.integer  "current_season_number"
     t.integer  "current_round"
     t.boolean  "started"
     t.datetime "created_at"
@@ -100,7 +99,7 @@ ActiveRecord::Schema.define(version: 20140516145346) do
     t.integer  "p2_id"
     t.integer  "p1_score"
     t.integer  "p2_score"
-    t.integer  "season_number"
+    t.integer  "season_id"
     t.integer  "league_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -187,10 +186,19 @@ ActiveRecord::Schema.define(version: 20140516145346) do
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
+  create_table "seasons", force: true do |t|
+    t.integer  "league_id"
+    t.integer  "number"
+    t.boolean  "current_season"
+    t.integer  "fighters",       default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tournaments", force: true do |t|
     t.string   "name"
     t.integer  "league_id"
-    t.integer  "season_number"
+    t.integer  "season_id"
     t.string   "participants",       array: true
     t.integer  "winner_id"
     t.datetime "created_at"

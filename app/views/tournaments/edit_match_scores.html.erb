@@ -10,7 +10,7 @@
       <%= f.hidden_field :p2_id, value: match.player2.misc.to_i %>
       <%= f.input :p1_score, label: match.player1.name + "'s score" %>
       <%= f.input :p2_score, label: match.player2.name + "'s score" %>
-      <%= f.hidden_field :season_number, value: @tournament.season_number %>
+      <%= f.hidden_field :season_id, value: @tournament.season_id %>
       <%= f.hidden_field :league_id, value: @tournament.league_id %>
       <%= f.hidden_field :p1_accepted, value: true %>
       <%= f.hidden_field :p2_accepted, value: true %>

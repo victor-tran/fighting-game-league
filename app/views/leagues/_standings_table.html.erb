@@ -1,10 +1,10 @@
-<% standings = @league.generate_user_standings(@league.matches_for_current_season) %>
+<% standings = @league.generate_user_standings(@league.current_season.matches.where(tournament_id: nil)) %>
 
 <div class="tab-pane active">
   <!-- Panel -->
   <div class="panel panel-default">
     <div class="panel-heading">
-      Season <%= @league.current_season_number %> Standings
+      Season <%= @league.current_season.number %> Standings
     </div>
     
     <!-- Table -->
@@ -38,9 +38,9 @@
             </td>
             <!-- Current Streak for this Season -->
             <td>
-              <%= user.current_streak(@league.matches.where(
-                    "season_number = ? AND (p1_id = ? OR p2_id = ?)",
-                     @league.current_season_number, user.id, user.id)) %>
+              <%= user.current_streak(@league.current_season.matches.where(
+                    "season_id = ? AND (p1_id = ? OR p2_id = ?) AND tournament_id IS NULL",
+                    @league.current_season.id, user.id, user.id)) %>
             </td>
           </tr>
         <% end %>

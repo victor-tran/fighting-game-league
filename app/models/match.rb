@@ -2,6 +2,7 @@ class Match < ActiveRecord::Base
 
   # Associations
   belongs_to :league
+  belongs_to :season
   belongs_to :p1, class_name: "User"
   belongs_to :p2, class_name: "User"
   belongs_to :game
@@ -11,7 +12,7 @@ class Match < ActiveRecord::Base
   validates :round_number, presence: true
   validates :p1_id, presence: true
   validates :p2_id, presence: true
-  validates :season_number, presence: true
+  validates :season_id, presence: true
   validates :league_id, presence: true
   validates_numericality_of :p1_score, only_integer: true
   validates_numericality_of :p2_score, only_integer: true

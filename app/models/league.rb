@@ -4,6 +4,7 @@ class League < ActiveRecord::Base
 
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
+  has_many :seasons
   has_many :matches
   has_many :tournaments
   belongs_to :game
@@ -13,6 +14,7 @@ class League < ActiveRecord::Base
                            dependent: :destroy
   has_many :followers, through: :relationships
   has_many :posts, as: :postable, dependent: :destroy
+
   # Accessors
   attr_accessor :password_confirmation
 
@@ -27,7 +29,6 @@ class League < ActiveRecord::Base
   validates :game_id, presence: true
   validates :commissioner_id, presence: true
   validates_inclusion_of :started, in: [true, false]
-  validates :current_season_number, presence: true
   validates :current_round, presence: true
   validates :match_count, presence: true
   validates :info, presence: true
@@ -64,6 +65,17 @@ class League < ActiveRecord::Base
     content_type: { content_type: ["image/jpg", "image/png",
                                    "image/jpeg", "image/gif"] }
 
+  # Returns the league's current season.
+  def current_season
+    curr_season = seasons.where("current_season = ?", true).first
+
+    if curr_season == nil
+      curr_season = seasons.last
+    end
+
+    curr_season
+  end
+
   # Returns the total rounds for current league.
   def total_rounds
     matches_per_round = users.count / 2
@@ -77,22 +89,6 @@ class League < ActiveRecord::Base
   def has_more_rounds_left_in_season?
     next_round = current_round + 1
     next_round <= total_rounds
-  end
-
-  # Returns matches for this league's current season.
-  def matches_for_current_season
-
-    current_matches = Set.new
-
-    matches.each do |match|
-      unless match.tournament_id != nil
-        if match.season_number == current_season_number
-          current_matches.add(match)
-        end
-      end
-    end
-
-    current_matches
   end
 
   # Returns the number of total matches played for the league for the
@@ -152,7 +148,7 @@ class League < ActiveRecord::Base
                         p2_id: match[1].id, 
                         p1_score: 0,
                         p2_score: 0,
-                        season_number: current_season_number,
+                        season_id: current_season.id,
                         league_id: id,
                         p1_accepted: false,
                         p2_accepted: false,
@@ -196,9 +192,6 @@ class League < ActiveRecord::Base
           user_hashmap[match.p1][1] += 1
           user_hashmap[match.p1][2] += 1
         end
-
-        # Remove the match from match_set
-        match_set.delete(match)
       end
     end
     
@@ -209,8 +202,8 @@ class League < ActiveRecord::Base
   def start_playoffs
     # Create Challonge double elimination tournament through the Ruby API.
     t = Challonge::Tournament.new
-    t.name = self.name + " Season " + self.current_season_number.to_s + " Playoffs"
-    t.url = self.name.downcase.tr(' ', '_') + "_season_" + self.current_season_number.to_s + "_playoffs"
+    t.name = self.name + " Season " + self.current_season.number.to_s + " Playoffs"
+    t.url = self.name.downcase.tr(' ', '_') + "_season_" + self.current_season.number.to_s + "_playoffs"
     t.tournament_type = 'double elimination'
     t.show_rounds = true
     
@@ -218,7 +211,7 @@ class League < ActiveRecord::Base
 
       # Add the participants to the tournament based on seeding during
       # regular season.
-      seeded_users = self.generate_user_standings(self.matches_for_current_season)
+      seeded_users = self.generate_user_standings(self.current_season.matches)
       for i in 0..seeded_users.count - 1
         user = User.find(seeded_users[i][0])
         Challonge::Participant.create(name: user.alias,
@@ -239,9 +232,9 @@ class League < ActiveRecord::Base
 
       # After successfully creating a tournament on Challonge,
       # create a new tournament for FGL.
-      tournaments.create!(name: name + " Season " + current_season_number.to_s + " Playoffs",
+      tournaments.create!(name: name + " Season " + current_season.number.to_s + " Playoffs",
                           league_id: id,
-                          season_number: current_season_number,
+                          season_id: current_season.id,
                           participants: id_array,
                           live_image_url: t.live_image_url,
                           full_challonge_url: t.full_challonge_url,
