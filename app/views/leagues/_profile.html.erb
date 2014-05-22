@@ -65,7 +65,8 @@
             allowtransparency="true"></iframe>
 
   <% elsif @league.started %>
-    <h3>Current Matches</h3>
+    <h3 style="display: inline-block; padding-right: 5px;">Current Matches</h3>
+    <%= link_to 'view all', league_season_path(@league, @league.current_season) %>
     <%= render partial: 'match_table', locals: { league: @league } %>
 
     <% if all_matches_accepted?(
