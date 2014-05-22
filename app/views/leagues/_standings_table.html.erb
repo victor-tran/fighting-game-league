@@ -1,50 +1,53 @@
-<% standings = @league.generate_user_standings(@league.current_season.matches.where(tournament_id: nil)) %>
-
-<div class="tab-pane active">
-  <!-- Panel -->
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Season <%= @league.current_season.number %> Standings
-    </div>
-    
-    <!-- Table -->
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover">
-        <tr>
-          <th>Fighter</th>
-          <th>MP</th>
-          <th>W</th>
-          <th>L</th>
-          <th>Streak</th>
-        </tr>
-        <% for i in 0..standings.count - 1 %>
+<% if @league.seasons.empty? %>
+  No seasons for this league yet.
+<% else %>
+  <% standings = @league.generate_user_standings(@league.current_season.matches.where(tournament_id: nil)) %>
+  <div class="tab-pane active">
+    <!-- Panel -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Season <%= @league.current_season.number %> Standings
+      </div>
+      
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
           <tr>
-            <% user = User.find(standings[i][0]) %>
-            <!-- Fighter -->
-            <td>
-              <%= link_to user.alias, user %>
-            </td>
-            <!-- MP -->
-            <td>
-              <%= standings[i][1][2] %>
-            </td>
-            <!-- Wins -->
-            <td>
-              <%= standings[i][1][0] %>
-            </td>
-            <!-- Losses -->
-            <td>
-              <%= standings[i][1][1] %>
-            </td>
-            <!-- Current Streak for this Season -->
-            <td>
-              <%= user.current_streak(@league.current_season.matches.where(
-                    "season_id = ? AND (p1_id = ? OR p2_id = ?) AND tournament_id IS NULL",
-                    @league.current_season.id, user.id, user.id)) %>
-            </td>
+            <th>Fighter</th>
+            <th>MP</th>
+            <th>W</th>
+            <th>L</th>
+            <th>Streak</th>
           </tr>
-        <% end %>
-      </table>
+          <% for i in 0..standings.count - 1 %>
+            <tr>
+              <% user = User.find(standings[i][0]) %>
+              <!-- Fighter -->
+              <td>
+                <%= link_to user.alias, user %>
+              </td>
+              <!-- MP -->
+              <td>
+                <%= standings[i][1][2] %>
+              </td>
+              <!-- Wins -->
+              <td>
+                <%= standings[i][1][0] %>
+              </td>
+              <!-- Losses -->
+              <td>
+                <%= standings[i][1][1] %>
+              </td>
+              <!-- Current Streak for this Season -->
+              <td>
+                <%= user.current_streak(@league.current_season.matches.where(
+                      "season_id = ? AND (p1_id = ? OR p2_id = ?) AND tournament_id IS NULL",
+                      @league.current_season.id, user.id, user.id)) %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     </div>
   </div>
-</div> 
+<% end %>

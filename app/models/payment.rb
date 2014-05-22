@@ -29,7 +29,6 @@ class Payment < PayPal::SDK::REST::Payment
   end
 
   def order=(order)
-    binding.pry
     self.intent = "sale"
     add_payment_method(order)
     self.transactions = {

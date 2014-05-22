@@ -1,8 +1,4 @@
 class OrdersController < ApplicationController
-  def index
-    @orders = current_user.orders.all( :limit => 10, :order => "id DESC" )
-  end
-
   # For payments via credit card.
   def credit_card
     @order = current_user.orders.build

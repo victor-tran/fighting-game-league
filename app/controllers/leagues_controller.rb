@@ -80,9 +80,7 @@ class LeaguesController < ApplicationController
       # Create a post for followers of the league to see that the
       # season started.
       @league.posts.create!(action: 'started',
-                            content: "Season " +
-                                     @league.current_season.number.to_s +
-                                     " has begun!" )
+                            content: "Season #{@league.current_season.number} has begun!" )
       flash[:notice] = "League successfully started!"
     end
     redirect_to @league
@@ -91,9 +89,8 @@ class LeaguesController < ApplicationController
   def next_round
     @league.update_attribute(:current_round, @league.current_round + 1)
     @league.posts.create!(action: 'next_round',
-                          content: @league.name + " Round " +
-                                   @league.current_round.to_s + " has begun!")
-    flash[:notice] = "Round " + @league.current_round.to_s + " started."
+                          content: "#{@league.name} round #{@league.current_round} has begun!")
+    flash[:notice] = "Round #{@league.current_round} started."
     redirect_to @league
   end
 
@@ -101,8 +98,7 @@ class LeaguesController < ApplicationController
     @league.update_attribute(:playoffs_started, true)
     @league.start_playoffs
     @league.posts.create!(action: 'playoffs_started',
-                          content: @league.name + " Playoffs for Season " +
-                                   @league.current_season.number.to_s + " has begun!")
+                          content: "#{@league.name} season #{@league.current_season.number} playoffs has begun!")
     flash[:notice] = "Playoffs started!"
     redirect_to @league
   end
@@ -110,21 +106,16 @@ class LeaguesController < ApplicationController
   def end_playoffs
     @league.end_playoffs
     @league.posts.create!(action: 'playoffs_ended',
-                          content: @league.name + " Playoffs for Season " +
-                                   @league.current_season.number.to_s + " has ended with " +
-                                   @league.tournaments.last.winner.alias + " taking home 1st place!")
+                          content: "#{@league.name} season #{@league.current_season.number} has ended with " +
+                                   "#{@league.tournaments.last.winner.alias} taking home 1st place!")
     flash[:notice] = "Playoffs complete!"
     redirect_to @league
   end
 
   def end_season
     if @league.update_attributes(end_season_params)
-
-      # Create post for followers to see that the season ended.
-      @league.posts.create!(action: 'season_ended',
-                            content: "#{@league.name} Season #{@league.current_season.number} has concluded.")
-      
       flash[:notice] = "Season #{@league.current_season.number} complete!"
+
       # Make current season, not the current season anymore.
       @league.current_season.update_attribute(:current_season, false)
     end
