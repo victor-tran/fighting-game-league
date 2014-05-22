@@ -341,3 +341,19 @@ footer ul li {
     margin: 1px 1px;
   }
 }
+
+.current-matches-heading {
+  text-align: center;
+}
+.current-matches {
+  th, td {
+    img {
+      margin: 0 auto;
+    }
+    text-align: center;
+  }
+  .current-match-score {
+    vertical-align: middle; 
+    font-size: 300%;
+  }
+}

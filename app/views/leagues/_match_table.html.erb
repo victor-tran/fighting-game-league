@@ -1,11 +1,11 @@
 <!-- Current Match Table -->
 <div class="panel panel-default">
-  <div class="panel-heading">
+  <div class="panel-heading current-matches-heading">
     Season <%= league.current_season.number %>: Round <%= league.current_round %> of <%= league.total_rounds %>
   </div>
   
   <!-- Table -->
-  <div class="table-responsive">
+  <div class="table-responsive current-matches">
     <table class="table table-striped table-bordered table-hover">
       <tr>
         <th>Player 1</th>
@@ -19,7 +19,7 @@
               <%= image_tag User.find(match.p1_id).avatar.url(:thumb) %>
               <%= link_to User.find(match.p1_id).alias, user_path(match.p1_id) %>
             </td>
-            <td><%= link_to match.p1_score.to_s + ":" + match.p2_score.to_s, match %></td>
+            <td class="current-match-score"><%= link_to "#{match.p1_score} - #{match.p2_score}", match %></td>
             <td>
               <%= image_tag User.find(match.p2_id).avatar.url(:thumb) %>
               <%= link_to User.find(match.p2_id).alias, user_path(match.p2_id) %>
