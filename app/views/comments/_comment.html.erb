@@ -1,0 +1,10 @@
+<% unless comment.user == nil %>
+  <div class="comment">
+    <%= image_tag comment.user.avatar.url(:thumb) %>
+    <%= link_to comment.user.alias, comment.user %>
+    <small class="timestamp">
+      <%= time_ago_in_words(comment.created_at) %> ago.
+    </small>
+    <%= comment.content %>
+  </div>
+<% end %>

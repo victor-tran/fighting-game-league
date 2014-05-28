@@ -7,6 +7,7 @@ class HomeController < ApplicationController
       @posts = Post.where("postable_id in (?) AND postable_type = ?", user_ids, 'User') +
                Post.where("postable_id in (?) AND postable_type = ?", league_ids, 'League')
       @posts.sort! { |x,y| y.created_at <=> x.created_at }
+      @posts = @posts.paginate(page: params[:page], per_page: 10)
     end
   end
 

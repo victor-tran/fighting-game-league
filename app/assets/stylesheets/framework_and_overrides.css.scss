@@ -1,6 +1,8 @@
 // import the CSS framework
 @import "bootstrap";
 
+$grayLighter: #eaeaea;
+
 // make all images responsive by default
 img {
   @extend .img-responsive;
@@ -181,6 +183,7 @@ section {
       border-bottom-style: solid;
       border-bottom-width: thin;
       border-bottom-color: #ddd;
+      overflow: auto;
       img {
         margin-right: 5px;
       }
@@ -231,6 +234,7 @@ footer ul li {
 
 /* User's league list */
 .user-leagues-list {
+  list-style: none;
   height: auto;
   max-height: 400px;
   overflow-x: hidden;
@@ -239,6 +243,7 @@ footer ul li {
   li {
     img {
       float: left;
+      margin-right: 5px;
     }
     padding-bottom: 5px;
   }
@@ -355,5 +360,18 @@ footer ul li {
   .current-match-score {
     vertical-align: middle; 
     font-size: 300%;
+  }
+}
+.comment {
+  overflow: auto;
+  padding: 10px 0;
+  border-top: 1px solid $grayLighter;
+  &:last-child {
+    border-bottom: 1px solid $grayLighter;
+  }
+
+  img {
+    float: left;
+    margin-right: 5px;
   }
 }

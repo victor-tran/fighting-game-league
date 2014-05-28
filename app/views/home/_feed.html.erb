@@ -2,3 +2,5 @@
   <%= render partial: "home/#{post.postable_type.underscore}/#{post.postable_type.underscore}_post",
              locals: { post: post, post_show_page: false } %>
 <% end %>
+
+<%= will_paginate @posts %>
