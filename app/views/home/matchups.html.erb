@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Character Matchups</h1>
+    <p>
+      We all know those feels when you read a tweet from someone saying that
+      they insist that the Guile/Bison matchup at most is 6-4. Or that the Gief/Sagat
+      matchup isn't free? Well now with the FGL matchup page, the statistics 
+      will prove just how accurate those claims are!
+    </p>
+    <p>
+      I built this site knowing that with the help of everyone, we could truly
+      create a rich database of fighting game data. We can see who thrives in
+      league play vs. tournament play, what advantages characters have against
+      others, and most importantly we can see just how big and passionate the
+      FGC really is.
+    </p>
+    <h1>How It's Caculated</h1>
+    <p>
+      <p>
+      Let's say that player one selects character A and player two selects
+      character B for their match in a given league. Each "match" between
+      A vs. B is determined by each player score's. So if their league says
+      that each match is a first-to-7 and player one defeats player two 7-3,
+      then character A will have 7 wins against character B and character B
+      will have 3 wins against character A.
+      </p>
+
+      <p>
+      After 10 matches have been played between any two characters, the
+      match up stats will be visible on the character's matchup page.
+      </p>
+
+      <p>
+        Matchups numbers will be displayed in only two forms:<br>
+          N (straightforward)<br>
+          N.5 (slight advantage/disadvantage)
+      </p>
+
+      <p>
+        So if the Chun-Li/Bison matchup displays 5.5 - 4.5, we say that the
+        matchup is pretty much even, but Chun-Li has the the tools to give her
+        the slight advantage in certain situations.
+      </p>
+
+      <p>
+        How are the win percentages rounded? First, I round the decimal to the
+        nearest number. So 53.2% = 53% and 78.5% = 79%. Next, if the one's place
+        is 1 or 2 or 8 to 9, then that number is rounded to the nearest tenth.
+      </p>
+
+      <p>
+        Rounding down: 51% --> 50% || 52% --> 50%<br>
+        Rounding up: 58% --> 60% || 59% --> 60%
+      </p>
+
+      <p>
+        Similarly, if the one's place is 3 or 4 or 6 or 7, then that number is
+        rounded to the nearest fifth(?).
+      </p>
+
+      <p>
+        Rounding down: 56% --> 55% || 57% --> 55%<br>
+        Rounding up: 53% --> 55% || 54% --> 55%
+      </p>
+
+      <p>Example: Let's say that 100 matches have been played between Chun-Li and Bison.</p>
+
+      <strong>Scenario 1: Straightforward</strong>
+      <p>
+        Chun-Li - 60 wins / 100 matches = 60% win rate<br>
+        M. Bison - 40 wins / 100 matches = 40% win rate
+      </p>
+
+      <p>The matchup will display as: 6-4, Chun-Li</p>
+
+      <strong>Scenario 2: Rounding to whole numbers</strong>
+      <p>
+        Chun-Li - 52 wins / 100 matches = 52% win rate<br>
+        M. Bison - 48 wins / 100 matches = 48% win rate
+      </p>
+
+      <p>
+        Chun-Li's win percentage will be rounded down: 52% --> 50%<br>
+        M. Bison's win percentage will be rounded up: 48% --> 50%
+      </p>
+      <p>The matchup will display as: 5-5, Even</p>
+
+      <strong>Scenario 3: Rounding to nearest fifths</strong>
+      <p>
+        Chun-Li - 57 wins / 100 matches = 57% win rate<br>
+        M. Bison - 43 wins / 100 matches = 43% win rate
+      </p>
+
+      <p>
+        Chun-Li's win percentage will be rounded down: 57% --> 55%<br>
+        M. Bison's win percentage will be rounded up: 43% --> 45%
+      </p>
+
+      <p>The matchup will display as: 5.5-4.5, Chun-Li (Slight Advantage)</p>
+    </p>
+
+    <h1>How You Can Help</h1>
+    <p>
+      Just participate! By creating leagues and fighting in as many matches as
+      you can, you help determine the matchups and build and epic fighting game
+      database.
+    </p>
+
+    <h4>Food for thought</h4>
+    <p>How do you think we would calculate the Ryu vs. Ryu matchup? #Kappa</p>
+  </div>
+</div>

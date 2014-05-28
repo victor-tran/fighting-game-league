@@ -50,6 +50,7 @@ FightingGameLeague::Application.routes.draw do
   get "home/stats"
   get "home/about"
   get "home/fight_bucks"
+  get "home/matchups"
 
   match '/register', to: 'users#new', via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
@@ -57,6 +58,7 @@ FightingGameLeague::Application.routes.draw do
   match "/stats", to: 'home#stats', via: 'get'
   match "/about", to: 'home#about', via: 'get'
   match "/fight_bucks", to: 'home#fight_bucks', via: 'get'
+  match "/matchups", to: 'home#matchups', via: 'get'
   match '/users/:uuid/confirmation' => 'users#confirmation', via: 'get',
                                         as: 'confirmation'
   post 'pusher/auth'
