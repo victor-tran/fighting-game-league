@@ -89,7 +89,9 @@ class User < ActiveRecord::Base
                     content: self.alias + " joined the " +
                              league.name + " league.")
     end
-    follow_league!(league)
+    unless following_league?(league)
+      follow_league!(league)
+    end
   end
   
   # Removes league from current user's list of leagues.

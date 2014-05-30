@@ -1,1 +1,2 @@
 $("#join_form").html("<%= escape_javascript(render(partial: 'leagues/leave', locals: { league: @league })) %>")
+$("#follow_league_form_"+"<%== escape_javascript(@league.id.to_s) %>").html('')
