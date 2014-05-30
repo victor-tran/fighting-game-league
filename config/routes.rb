@@ -49,6 +49,7 @@ FightingGameLeague::Application.routes.draw do
 
   get "home/stats"
   get "home/about"
+  get "home/contact"
   get "home/fight_bucks"
   get "home/matchups"
 
@@ -56,6 +57,7 @@ FightingGameLeague::Application.routes.draw do
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
   match "/stats", to: 'home#stats', via: 'get'
+  match "/contact", to: 'home#contact', via: 'get'
   match "/about", to: 'home#about', via: 'get'
   match "/fight_bucks", to: 'home#fight_bucks', via: 'get'
   match "/matchups", to: 'home#matchups', via: 'get'

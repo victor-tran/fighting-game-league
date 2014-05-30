@@ -28,7 +28,7 @@
 <div class="row">
 
   <!-- Player 1 -->
-  <div class="col-md-4 col-xs-4">
+  <div class="col-md-4 col-xs-4 player-info">
     <p><%= link_to @match.p1.alias, @match.p1 %></p>
     <p>W-L: <%= WL_record(@match.p1, 
                   @match.p1.p1_matches.where("league_id = ?", @match.league_id) + 
@@ -45,19 +45,19 @@
   </div>
 
   <!-- Match Info -->
-  <div class="col-md-4 col-xs-4">
-    <p><%= @league.name %> - Round <%= @match.round_number %></p>
+  <div class="col-md-4 col-xs-4 match-info">
+    <p><%= link_to "#{@league.name} - Round #{@match.round_number}", @league %></p>
     <% if @match.match_date == nil %>
       <p>Match Time: TBD</p>
     <% else %>
       <p><%= @match.match_date %></p>
     <% end %>
     
-    <%= @match.p1_score %> : <%= @match.p2_score %></p>
+    <div class="match-score"><%= @match.p1_score %> : <%= @match.p2_score %></div>
   </div>
 
   <!-- Player 2 -->
-  <div class="col-md-4 col-xs-4">
+  <div class="col-md-4 col-xs-4 player-info">
     <p><%= link_to @match.p2.alias, @match.p2 %></p>
     <p>W-L: <%= WL_record(@match.p2, 
                   @match.p2.p1_matches.where("league_id = ?", @match.league_id) + 
@@ -81,7 +81,7 @@
 <div class="row">
   
   <!-- Player 1 Bet -->
-  <div class="col-md-4 col-xs-4">
+  <div class="col-md-4 col-xs-4 match-info">
     <% if @match.match_date == nil %>
       <% if current_user.fight_bucks > 0 %>
         <% if !current_user.fighting_in?(@match) %>
@@ -114,12 +114,12 @@
   </div>
 
   <!-- Bet Info -->
-  <div class="col-md-4 col-xs-4">
+  <div class="col-md-4 col-xs-4 match-info">
     <p><%= match_bet_info(@match) %></p>
   </div>
 
   <!-- Player 2 Bet -->
-  <div class="col-md-4 col-xs-4">
+  <div class="col-md-4 col-xs-4 match-info">
     <% if @match.match_date == nil %>
       <% if current_user.fight_bucks > 0 %>
         <% if !current_user.fighting_in?(@match) %>
