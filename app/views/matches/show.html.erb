@@ -30,18 +30,18 @@
   <!-- Player 1 -->
   <div class="col-md-4 col-xs-4 player-info">
     <p><%= link_to @match.p1.alias, @match.p1 %></p>
-    <p>W-L: <%= WL_record(@match.p1, 
-                  @match.p1.p1_matches.where("league_id = ?", @match.league_id) + 
-                  @match.p1.p2_matches.where("league_id = ?", @match.league_id)) %></p>
+    <% wl_record = WL_record(@match.p1, @match.league.current_season.matches.where(
+                                                "p1_id = ? OR p2_id = ?",
+                                                @match.p1.id,
+                                                @match.p1.id)) %>
+    <p>W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %></p>
     <p>League Rank: </p>
-    <% unless @match.p1_characters.empty? %>
-      <p>
-        Character: 
-        <% @match.p1_characters.each do |character| %>
-          <%= Character.find(character).name %>
-        <% end %>
-      </p>
-    <% end %>
+    <p>
+      Character: 
+      <% @match.p1_characters.each do |character| %>
+        <%= Character.find(character).name %>
+      <% end %>
+    </p>
   </div>
 
   <!-- Match Info -->
@@ -59,18 +59,18 @@
   <!-- Player 2 -->
   <div class="col-md-4 col-xs-4 player-info">
     <p><%= link_to @match.p2.alias, @match.p2 %></p>
-    <p>W-L: <%= WL_record(@match.p2, 
-                  @match.p2.p1_matches.where("league_id = ?", @match.league_id) + 
-                  @match.p2.p2_matches.where("league_id = ?", @match.league_id)) %></p>
+    <% wl_record = WL_record(@match.p2, @match.league.current_season.matches.where(
+                                                "p1_id = ? OR p2_id = ?",
+                                                @match.p2.id,
+                                                @match.p2.id)) %>
+    <p>W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %></p>
     <p>League Rank: </p>
-    <% unless @match.p2_characters.empty? %>
-      <p>
-        Character: 
-        <% @match.p2_characters.each do |character| %>
-          <%= Character.find(character).name %>
-        <% end %>
-      </p>
-    <% end %>
+    <p>
+      Character: 
+      <% @match.p2_characters.each do |character| %>
+        <%= Character.find(character).name %>
+      <% end %>
+    </p>
   </div>
   
 </div>

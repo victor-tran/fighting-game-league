@@ -30,20 +30,21 @@ module ApplicationHelper
 
   # Returns W-L record for given set of matches.
   def WL_record(user, matches)
-    wins = 0
-    losses = 0
+    wl_record_map = {}
+    wl_record_map[:wins] = 0
+    wl_record_map[:losses] = 0
 
     matches.each do |match|
-      if match.p1_accepted == true && match.p2_accepted == true
+      if match.finalized_date
         if match.winner_id == user.id
-          wins += 1
+          wl_record_map[:wins] += 1
         else
-          losses += 1
+          wl_record_map[:losses] += 1
         end
       end
     end
 
-    wins.to_s + "-" + losses.to_s
+    wl_record_map
   end
 
   # Returns a hashmap of games, with each game containing the count for each
