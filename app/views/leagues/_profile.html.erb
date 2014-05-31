@@ -29,7 +29,7 @@
       <p>Match Count: First-to-<%= @league.match_count %></p>
       <p>About: <%= @league.info %></p>
 
-      <% if !@league.started %>
+      <% unless @league.started %>
         <% if current_user == @league.commissioner %>
           <% if @league.users.count % 2 == 0 %>
             <h1>Have everyone ready for the season?</h1>
