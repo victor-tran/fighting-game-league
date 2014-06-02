@@ -6,8 +6,10 @@
   </p>
   <% if match.match_date == nil %>
     <p>Date: TBD</p>
+    <p>Time: TBD</p>
   <% else %>
-    <p>Date: <%= match.match_date %></p>
+    <p><%= match.match_date.in_time_zone(match.league.time_zone).strftime("Date: %B %d %Y") %></p>
+    <p><%= match.match_date.in_time_zone(match.league.time_zone).strftime("Time: %I:%M %p %Z") %></p>
   <% end %>
 </div>
 <%= render match %>

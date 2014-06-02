@@ -156,11 +156,13 @@ class LeaguesController < ApplicationController
       params.require(:league).permit(:name, :game_id, :commissioner_id,
                                      :started, :current_round, :match_count,
                                      :info, :password_protected, :password,
-                                     :password_confirmation, :playoffs_started)
+                                     :password_confirmation, :playoffs_started,
+                                     :time_zone)
     end
 
     def update_league_params
-      params.require(:league).permit(:name, :match_count, :info, :banner)
+      params.require(:league).permit(:name, :match_count, :info, :banner,
+                                     :time_zone)
     end
 
     def start_league_params

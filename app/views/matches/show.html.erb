@@ -48,9 +48,11 @@
   <div class="col-md-4 col-xs-4 match-info">
     <p><%= link_to "#{@league.name} - Round #{@match.round_number}", @league %></p>
     <% if @match.match_date == nil %>
-      <p>Match Time: TBD</p>
+      <p>Date: TBD</p>
+      <p>Time: TBD</p>
     <% else %>
-      <p><%= @match.match_date %></p>
+      <p><%= @match.match_date.strftime("Date: %B %d %Y") %></p>
+      <p><%= @match.match_date.strftime("Time: %I:%M %p %Z") %></p>
     <% end %>
     
     <div class="match-score"><%= @match.p1_score %> : <%= @match.p2_score %></div>

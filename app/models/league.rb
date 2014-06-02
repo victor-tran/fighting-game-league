@@ -33,6 +33,7 @@ class League < ActiveRecord::Base
   validates :match_count, presence: true
   validates :info, presence: true
   validates_inclusion_of :playoffs_started, in: [true, false]
+  validates_inclusion_of :time_zone, in: ActiveSupport::TimeZone.zones_map(&:name)
   has_secure_password validations: false
   validates :password, length: { minimum: MIN_LENGTH_PASSWORD },
                        allow_blank: true

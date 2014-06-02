@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519155039) do
+ActiveRecord::Schema.define(version: 20140531202223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20140519155039) do
     t.string   "password_digest"
     t.boolean  "password_protected"
     t.boolean  "playoffs_started"
+    t.string   "time_zone"
   end
 
   add_index "leagues", ["commissioner_id"], name: "index_leagues_on_commissioner_id", using: :btree

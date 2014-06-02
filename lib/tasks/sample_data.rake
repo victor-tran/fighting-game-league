@@ -643,7 +643,8 @@ def make_leagues
                  commissioner_id: 1,
                  started: false,
                  current_round: 0,
-                 playoffs_started: false)
+                 playoffs_started: false,
+                 time_zone: "Pacific Time (US & Canada)")
     g_id += 1
   end
 end

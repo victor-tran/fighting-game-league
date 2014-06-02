@@ -48,18 +48,27 @@ class MatchesController < ApplicationController
   end
 
   def edit_date
+    # Set the timezone to the league's time zone so that the rails application
+    # will not display UTC converted time.
+    Time.zone = @match.league.time_zone
 	end
 
 	def set_date
-    if @match.update_attributes(set_date_params)
+    # Set the timezone to the league's time zone so that the rails application
+    # won't save match_date in UTC, but rather in the league's time zone.
+    Time.zone = @match.league.time_zone
+    real_date = Time.zone.local(params[:match]["match_date(1i)"].to_i,
+                                params[:match]["match_date(2i)"].to_i,
+                                params[:match]["match_date(3i)"].to_i,
+                                params[:match]["match_date(4i)"].to_i,
+                                params[:match]["match_date(5i)"].to_i)
+    if @match.update_attribute(:match_date, real_date)
       @match.league.posts.create!(action: "date_set",
                                   subjectable_id: @match.id,
                                   subjectable_type: 'Match',
-                                  content: "The date for the " +
-                                  @match.p1.alias + " vs. " +
-                                  @match.p2.alias +
-                                  " match has been set for " +
-                                  @match.match_date.to_s + ".")
+                                  content: "The #{@match.p1.alias} vs. #{@match.p2.alias} "+
+                                           "match has been set for " +
+                                           "#{@match.match_date.in_time_zone(@match.league.time_zone).strftime("%I:%M %p %Z on %B %d")}.")
       flash[:notice] = "Match date/time updated."
       redirect_to matches_path
     else
