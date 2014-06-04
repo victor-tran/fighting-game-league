@@ -43,7 +43,8 @@
     <%= render 'shared/stats' %>
 
     <h2>
-      W-L: <%= WL_record(@user, @user.matches) %>
+      <% wl_record = WL_record(@user, @user.matches) %>
+      W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %>
     </h2>
     
     <hr>
