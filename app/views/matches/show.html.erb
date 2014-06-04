@@ -46,7 +46,7 @@
 
   <!-- Match Info -->
   <div class="col-md-4 col-xs-4 match-info">
-    <p><%= link_to "#{@league.name} - Round #{@match.round_number}", @league %></p>
+    <p>League: <%= link_to "#{@league.name} - Round #{@match.round_number}", @league %></p>
     <% if @match.match_date == nil %>
       <p>Date: TBD</p>
       <p>Time: TBD</p>
@@ -55,7 +55,7 @@
       <p><%= @match.match_date.strftime("Time: %I:%M %p %Z") %></p>
     <% end %>
     
-    <div class="match-score"><%= @match.p1_score %> : <%= @match.p2_score %></div>
+    <div class="match-score"><%= "#{@match.p1_score} - #{@match.p2_score}" %></div>
   </div>
 
   <!-- Player 2 -->
@@ -81,75 +81,42 @@
 
 <!-- Bet Buttons & Match Score -->
 <div class="row">
-  
+
   <!-- Player 1 Bet -->
   <div class="col-md-4 col-xs-4 match-info">
-    <% if @match.match_date == nil %>
-      <% if current_user.fight_bucks > 0 %>
-        <% if !current_user.fighting_in?(@match) %>
-          <% unless current_user.betting_on?(@match) %>
-            <%= render 'p2_bet' %>
-          <% end %>
-        <% else %>
-          <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                   disabled: true %>
-        <% end %>
-      <% end %>
+    <% if current_user.fight_bucks > 0 && !current_user.fighting_in?(@match) && !current_user.betting_on?(@match) %>
+        <%= render 'p1_bet' %>
     <% else %>
-      <% if @match.match_date.to_date > Date.today || 
-            @match.match_date > Time.now %>
-        <% if current_user.fight_bucks > 0 %>
-          <% if !current_user.fighting_in?(@match) %>
-            <% unless current_user.betting_on?(@match) %>
-              <%= render 'p1_bet' %>
-            <% end %>
-          <% else %>
-            <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                     disabled: true %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+      <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
                                  disabled: true %>
-      <% end %>
     <% end %>
   </div>
 
   <!-- Bet Info -->
   <div class="col-md-4 col-xs-4 match-info">
-    <p><%= match_bet_info(@match) %></p>
+    <% bet_info = match_bet_info(@match) %>
+    <h3 style="margin-top: 0;">Bet Info</h3>
+    <div><%= "#{@match.p1.alias}: #{pluralize(bet_info[:p1_bet_count], "user")} ($#{bet_info[:p1_fight_bucks]})" %></div>
+    <div><%= "#{@match.p2.alias}: #{pluralize(bet_info[:p2_bet_count], "user")} ($#{bet_info[:p2_fight_bucks]})" %></div>
+
+    <div class="progress">
+      <div class="progress-bar progress-bar-info" style="width:<%= bet_info[:p1_percent] %>%">
+        <%= "#{bet_info[:p1_percent]}% (#{bet_info[:p1_bet_count]})" %>
+      </div>
+      <div class="progress-bar progress-bar-danger" style="width:<%= bet_info[:p2_percent] %>%; display: block; float: right;">
+        <%= "#{bet_info[:p2_percent]}% (#{bet_info[:p2_bet_count]})" %>
+      </div>
+    </div>          
+
   </div>
 
   <!-- Player 2 Bet -->
   <div class="col-md-4 col-xs-4 match-info">
-    <% if @match.match_date == nil %>
-      <% if current_user.fight_bucks > 0 %>
-        <% if !current_user.fighting_in?(@match) %>
-          <% unless current_user.betting_on?(@match) %>
-            <%= render 'p2_bet' %>
-          <% end %>
-        <% else %>
-          <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                   disabled: true %>
-        <% end %>
-      <% end %>
+    <% if current_user.fight_bucks > 0 && !current_user.fighting_in?(@match) && current_user.betting_on?(@match) %>
+      <%= render 'p2_bet' %>
     <% else %>
-      <% if @match.match_date.to_date > Date.today || 
-            @match.match_date > Time.now %>
-        <% if current_user.fight_bucks > 0 %>
-          <% if !current_user.fighting_in?(@match) %>
-            <% unless current_user.betting_on?(@match) %>
-              <%= render 'p2_bet' %>
-            <% end %>
-          <% else %>
-            <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                     disabled: true %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
-                                 disabled: true %>
-      <% end %>
+      <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
+                               disabled: true %>
     <% end %>
   </div>
 
