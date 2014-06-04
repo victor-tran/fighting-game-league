@@ -19,7 +19,6 @@
         $(function() {
 
           var pusher = new Pusher('4f019a37610d0978c340');
-          //var channel = pusher.subscribe('test-channel2');
           var channel = pusher.subscribe('private-user-<%== escape_javascript(@current_user.id.to_s) %>');
 
           // Some useful debug msgs
@@ -39,7 +38,6 @@
             alert(data.message);
           });
           channel.bind('new_like_notification', function(data) {
-
             if (data.no_avatar == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
@@ -73,6 +71,20 @@
               // Add notification to notification list.
               $("#notifications ul").prepend(
                 "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
+            }
+
+            // Update unread notifications count.
+            $(".notification_badge").html(data.unread_count);
+          });
+          channel.bind('new_follower_notification', function(data) {
+            if (data.no_avatar == true) {
+              // Add notification to notification list.
+              $("#notifications ul").prepend(
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/users/"+data.follower_id+"'>"+data.notification_content+"</a></li>");
+            } else {
+              // Add notification to notification list.
+              $("#notifications ul").prepend(
+                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/users/"+data.follower_id+"'>"+data.notification_content+"</a></li>");
             }
 
             // Update unread notifications count.
