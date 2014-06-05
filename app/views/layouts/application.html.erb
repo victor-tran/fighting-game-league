@@ -37,15 +37,15 @@
           channel.bind('my_event', function(data) {
             alert(data.message);
           });
-          channel.bind('new_like_notification', function(data) {
+          channel.bind('like_comment_notification', function(data) {
             if (data.no_avatar == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.notification_content+"</a></li>");
             } else {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" liked your post: "+'"'+data.post_content+'"'+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.notification_content+"</a></li>");
             }
 
             // Update unread notifications count.
@@ -62,21 +62,7 @@
               $(".notification_badge").html('');
             }
           });
-          channel.bind('new_comment_notification', function(data) {
-            if (data.no_avatar == true) {
-              // Add notification to notification list.
-              $("#notifications ul").prepend(
-                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
-            } else {
-              // Add notification to notification list.
-              $("#notifications ul").prepend(
-                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/"+data.op_type+"/"+data.op_id+"/"+data.targetable_type+"/"+data.targetable_id+"'>"+data.sender_name+" commented on your post: "+'"'+data.post_content+'"'+"</a></li>");
-            }
-
-            // Update unread notifications count.
-            $(".notification_badge").html(data.unread_count);
-          });
-          channel.bind('new_follower_notification', function(data) {
+          channel.bind('user_notification', function(data) {
             if (data.no_avatar == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
@@ -85,6 +71,20 @@
               // Add notification to notification list.
               $("#notifications ul").prepend(
                 "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/users/"+data.follower_id+"'>"+data.notification_content+"</a></li>");
+            }
+
+            // Update unread notifications count.
+            $(".notification_badge").html(data.unread_count);
+          });
+          channel.bind('league_notification', function(data) {
+            if (data.no_banner == true) {
+              // Add notification to notification list.
+              $("#notifications ul").prepend(
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/leagues/"+data.league_id+"'>"+data.notification_content+"</a></li>");
+            } else {
+              // Add notification to notification list.
+              $("#notifications ul").prepend(
+                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/leagues/"+data.league_id+"'>"+data.notification_content+"</a></li>");
             }
 
             // Update unread notifications count.

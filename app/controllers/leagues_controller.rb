@@ -77,10 +77,43 @@ class LeaguesController < ApplicationController
       # Generate matches for the season.
       @league.generate_matches
 
+      # Send a push notification to each follower letting them know that the
+      # season has begun.
+      @league.followers.each do |follower|
+        unless follower == @league.commissioner
+          
+          # Create a notification on the backend.
+          n = follower.notifications.create!(sendable_id: @league.id,
+                                             sendable_type: 'League',
+                                             targetable_id: @league.id,
+                                             targetable_type: 'League',
+                                             content: Notification.season_started(@league),
+                                             read: false)
+          # Send a push notification via Pusher API to follower.
+          if @league.banner_file_name == nil
+            Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                             { league_id: @league.id,
+                                                               unread_count: follower.notifications.unread.count,
+                                                               notification_content: Notification.season_started(@league),
+                                                               no_banner: true,
+                                                               notification_id: n.id })
+          else
+            Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                             { league_id: @league.id,
+                                                               unread_count: follower.notifications.unread.count,
+                                                               notification_content: Notification.season_started(@league),
+                                                               no_banner: false,
+                                                               img_alt: @league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                               img_src: @league.banner.url(:post),
+                                                               notification_id: n.id })
+          end
+        end
+      end
+
       # Create a post for followers of the league to see that the
       # season started.
       @league.posts.create!(action: 'started',
-                            content: "Season #{@league.current_season.number} has begun!" )
+                            content: Notification.season_started(@league))
       flash[:notice] = "League successfully started!"
     end
     redirect_to @league
@@ -88,8 +121,42 @@ class LeaguesController < ApplicationController
 
   def next_round
     @league.update_attribute(:current_round, @league.current_round + 1)
+
+    # Send a push notification to each follower letting them know that the
+    # next round of the season has begun.
+    @league.followers.each do |follower|
+      unless follower == @league.commissioner
+        
+        # Create a notification on the backend.
+        n = follower.notifications.create!(sendable_id: @league.id,
+                                           sendable_type: 'League',
+                                           targetable_id: @league.id,
+                                           targetable_type: 'League',
+                                           content: Notification.new_round_started(@league),
+                                           read: false)
+        # Send a push notification via Pusher API to follower.
+        if @league.banner_file_name == nil
+          Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                           { league_id: @league.id,
+                                                             unread_count: follower.notifications.unread.count,
+                                                             notification_content: Notification.new_round_started(@league),
+                                                             no_banner: true,
+                                                             notification_id: n.id })
+        else
+          Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                           { league_id: @league.id,
+                                                             unread_count: follower.notifications.unread.count,
+                                                             notification_content: Notification.new_round_started(@league),
+                                                             no_banner: false,
+                                                             img_alt: @league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                             img_src: @league.banner.url(:post),
+                                                             notification_id: n.id })
+        end
+      end
+    end
+
     @league.posts.create!(action: 'next_round',
-                          content: "#{@league.name} round #{@league.current_round} has begun!")
+                          content: Notification.new_round_started(@league))
     flash[:notice] = "Round #{@league.current_round} started."
     redirect_to @league
   end
@@ -97,17 +164,80 @@ class LeaguesController < ApplicationController
   def start_playoffs
     @league.update_attribute(:playoffs_started, true)
     @league.start_playoffs
+    # Send a push notification to each follower letting them know that the
+    # next round of the season has begun.
+    @league.followers.each do |follower|
+      unless follower == @league.commissioner
+        
+        # Create a notification on the backend.
+        n = follower.notifications.create!(sendable_id: @league.id,
+                                           sendable_type: 'League',
+                                           targetable_id: @league.id,
+                                           targetable_type: 'League',
+                                           content: Notification.playoffs_started(@league),
+                                           read: false)
+        # Send a push notification via Pusher API to follower.
+        if @league.banner_file_name == nil
+          Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                           { league_id: @league.id,
+                                                             unread_count: follower.notifications.unread.count,
+                                                             notification_content: Notification.playoffs_started(@league),
+                                                             no_banner: true,
+                                                             notification_id: n.id })
+        else
+          Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                           { league_id: @league.id,
+                                                             unread_count: follower.notifications.unread.count,
+                                                             notification_content: Notification.playoffs_started(@league),
+                                                             no_banner: false,
+                                                             img_alt: @league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                             img_src: @league.banner.url(:post),
+                                                             notification_id: n.id })
+        end
+      end
+    end
     @league.posts.create!(action: 'playoffs_started',
-                          content: "#{@league.name} season #{@league.current_season.number} playoffs has begun!")
+                          content: Notification.playoffs_started(@league))
     flash[:notice] = "Playoffs started!"
     redirect_to @league
   end
 
   def end_playoffs
     @league.end_playoffs
+    # Send a push notification to each follower letting them know that the
+    # next round of the season has begun.
+    @league.followers.each do |follower|
+      unless follower == @league.commissioner
+        
+        # Create a notification on the backend.
+        n = follower.notifications.create!(sendable_id: @league.id,
+                                           sendable_type: 'League',
+                                           targetable_id: @league.id,
+                                           targetable_type: 'League',
+                                           content: Notification.playoffs_ended(@league),
+                                           read: false)
+        # Send a push notification via Pusher API to follower.
+        if @league.banner_file_name == nil
+          Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                           { league_id: @league.id,
+                                                             unread_count: follower.notifications.unread.count,
+                                                             notification_content: Notification.playoffs_ended(@league),
+                                                             no_banner: true,
+                                                             notification_id: n.id })
+        else
+          Pusher['private-user-'+follower.id.to_s].trigger('league_notification',
+                                                           { league_id: @league.id,
+                                                             unread_count: follower.notifications.unread.count,
+                                                             notification_content: Notification.playoffs_ended(@league),
+                                                             no_banner: false,
+                                                             img_alt: @league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                             img_src: @league.banner.url(:post),
+                                                             notification_id: n.id })
+        end
+      end
+    end
     @league.posts.create!(action: 'playoffs_ended',
-                          content: "#{@league.name} season #{@league.current_season.number} has ended with " +
-                                   "#{@league.tournaments.last.winner.alias} taking home 1st place!")
+                          content: Notification.playoffs_ended(@league))
     flash[:notice] = "Playoffs complete!"
     redirect_to @league
   end

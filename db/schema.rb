@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 20140531202223) do
     t.integer  "receiver_id"
     t.integer  "targetable_id"
     t.string   "targetable_type"
-    t.string   "action"
+    t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "read"

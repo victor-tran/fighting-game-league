@@ -23,31 +23,29 @@ class LikesController < ApplicationController
                                    sendable_type: 'User',
                                    targetable_id: @post.id,
                                    targetable_type: 'Post',
-                                   action: "liked",
+                                   content: Notification.liked_post(current_user, @post),
                                    read: false)
       # Send a push notification via Pusher API to OP.
       if current_user.avatar_file_name == nil
-        Pusher['private-user-'+op.id.to_s].trigger('new_like_notification',
+        Pusher['private-user-'+op.id.to_s].trigger('like_comment_notification',
                                                    { op_id: @post.postable_id,
                                                      op_type: @post.postable_type.underscore.pluralize,
                                                      targetable_id: n.targetable_id,
                                                      targetable_type: n.targetable_type.underscore.pluralize,
-                                                     sender_name: current_user.alias,
+                                                     notification_content: Notification.liked_post(current_user, @post),
                                                      unread_count: op.notifications.unread.count,
-                                                     post_content: @post.content,
                                                      no_avatar: true,
                                                      notification_id: n.id })
       else
-        Pusher['private-user-'+op.id.to_s].trigger('new_like_notification',
+        Pusher['private-user-'+op.id.to_s].trigger('like_comment_notification',
                                                    { op_id: @post.postable_id,
                                                      op_type: @post.postable_type.underscore.pluralize,
                                                      targetable_id: n.targetable_id,
                                                      targetable_type: n.targetable_type.underscore.pluralize,
-                                                     sender_name: current_user.alias,
+                                                     notification_content: Notification.liked_post(current_user, @post),
                                                      unread_count: op.notifications.unread.count,
-                                                     post_content: @post.content,
                                                      no_avatar: false,
-                                                     img_alt: current_user.avatar_file_name.gsub(".jpg", ""),
+                                                     img_alt: current_user.avatar_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
                                                      img_src: current_user.avatar.url(:post),
                                                      notification_id: n.id })
       end
@@ -79,7 +77,8 @@ class LikesController < ApplicationController
       n = op.notifications.find_by(sendable_id: current_user.id,
                                    sendable_type: 'User',
                                    targetable_id: @post.id,
-                                   targetable_type: 'Post').destroy
+                                   targetable_type: 'Post',
+                                   content: Notification.liked_post(current_user, @post)).destroy
       # Send a push notification via Pusher API to OP.
       Pusher['private-user-'+op.id.to_s].trigger('delete_notification',
                                                  { unread_count: op.notifications.unread.count,
