@@ -85,8 +85,8 @@ class LeaguesController < ApplicationController
           # Create a notification on the backend.
           n = follower.notifications.create!(sendable_id: @league.id,
                                              sendable_type: 'League',
-                                             targetable_id: @league.id,
-                                             targetable_type: 'League',
+                                             targetable_id: follower.id,
+                                             targetable_type: 'User',
                                              content: Notification.season_started(@league),
                                              read: false)
           # Send a push notification via Pusher API to follower.
@@ -130,8 +130,8 @@ class LeaguesController < ApplicationController
         # Create a notification on the backend.
         n = follower.notifications.create!(sendable_id: @league.id,
                                            sendable_type: 'League',
-                                           targetable_id: @league.id,
-                                           targetable_type: 'League',
+                                           targetable_id: follower.id,
+                                           targetable_type: 'User',
                                            content: Notification.new_round_started(@league),
                                            read: false)
         # Send a push notification via Pusher API to follower.
@@ -172,8 +172,8 @@ class LeaguesController < ApplicationController
         # Create a notification on the backend.
         n = follower.notifications.create!(sendable_id: @league.id,
                                            sendable_type: 'League',
-                                           targetable_id: @league.id,
-                                           targetable_type: 'League',
+                                           targetable_id: follower.id,
+                                           targetable_type: 'User',
                                            content: Notification.playoffs_started(@league),
                                            read: false)
         # Send a push notification via Pusher API to follower.
@@ -212,8 +212,8 @@ class LeaguesController < ApplicationController
         # Create a notification on the backend.
         n = follower.notifications.create!(sendable_id: @league.id,
                                            sendable_type: 'League',
-                                           targetable_id: @league.id,
-                                           targetable_type: 'League',
+                                           targetable_id: follower.id,
+                                           targetable_type: 'User',
                                            content: Notification.playoffs_ended(@league),
                                            read: false)
         # Send a push notification via Pusher API to follower.
