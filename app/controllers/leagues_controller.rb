@@ -6,7 +6,8 @@ class LeaguesController < ApplicationController
   before_action :get_league,    only: [:edit, :update, :show, :start, :next_round,
                                        :end_season, :statistics, :join_password,
                                        :profile, :standings, :fighters,
-                                       :start_playoffs, :end_playoffs]
+                                       :start_playoffs, :end_playoffs,
+                                       :edit_fighter_list, :set_fighter_list]
 
   before_action :respond_to_js, only: [:profile, :standings,
                                        :fighters]
@@ -281,6 +282,14 @@ class LeaguesController < ApplicationController
     @followers = @league.followers.paginate(page: params[:page])
   end
 
+  def edit_fighter_list
+  end
+
+  def set_fighter_list
+    Membership.where("league_id = ? AND user_id IN (?)", @league.id ,params[:user_ids]).destroy_all
+    redirect_to edit_fighter_list_league_path(@league)
+  end
+
   private
     def create_league_params
       params.require(:league).permit(:name, :game_id, :commissioner_id,
@@ -303,6 +312,8 @@ class LeaguesController < ApplicationController
       params.require(:league).permit(:started, :current_round,
                                      :playoffs_started)
     end
+
+    def 
 
     # Authorization methods
     def signed_in_user

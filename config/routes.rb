@@ -10,9 +10,9 @@ FightingGameLeague::Application.routes.draw do
     resources :seasons, only: [:show]
     member do
       get :statistics, :join_password, :profile, :standings, :fighters,
-          :followers
+          :followers, :edit_fighter_list
       patch :start, :next_round, :end_season, :start_playoffs,
-            :end_playoffs
+            :end_playoffs, :set_fighter_list
     end
     resources :posts, only: [:show]
   end

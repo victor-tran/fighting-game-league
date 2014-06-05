@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-8 col-mf-offset-2">
+    <h1>Edit Fighter List</h1>
+    <ul class="list-unstyled users">
+      <%= form_for @league, html: { method: :patch }, url: set_fighter_list_league_path(@league) do |f| %>
+        <% @league.users.each do |user| %>
+          <% unless user == @league.commissioner %>
+            <%= check_box_tag "user_ids[]", user.id %>
+            <li>
+              <div class="user-thumb"><%= image_tag user.avatar.url(:post) %></div>
+              <strong><%= link_to user.full_name, user %></strong>
+            </li>
+          <% end %>
+        <% end %>
+
+        <%= submit_tag "Kick Checked Users", class: "btn btn-lg btn-primary" %>
+      <% end %>
+    </ul>
+  </div>
+</div>
