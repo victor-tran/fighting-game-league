@@ -6,12 +6,14 @@
     <h2>Total Matches Played: <%= @league.total_matches_played %></h2>
     <h3>All Seasons & Tournament Matches</h3>
 
-    <%= label_tag 'Season:' %>
-    <%= collection_select(:season, :season_id, @league.seasons, :id, :number,
+    <%= form_for @league, html: { method: :get }, url: statistics_league_path(@league) do |f| %>
+      <%= label_tag 'Season:' %>
+      <%= collection_select(:season, :season_id, @league.seasons, :id, :number,
                           { selected: @league.current_season.id } ) %>
-    <%= submit_tag "Go" %>
+      <%= submit_tag "Go" %>
+    <% end %>
 
-    <!-- Table -->
+    <!-- Season Table -->
     <div class="table-responsive season-table">
       <table class="table table-bordered table-hover">
         <% regular_season_standings = @league.generate_user_standings(

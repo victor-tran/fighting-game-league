@@ -58,7 +58,7 @@ class Notification < ActiveRecord::Base
   end
 
   def self.playoffs_ended(league)
-    "#{@league.name} season #{@league.current_season.number} has ended with " +
-    "#{@league.tournaments.last.winner.alias} taking home 1st place!"
+    "#{league.name} season #{league.current_season.number} has ended with " +
+    "#{league.tournaments.last.winner.alias} taking home 1st place!"
   end
 end

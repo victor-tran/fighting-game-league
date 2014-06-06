@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update]
   before_action :correct_user,   only: [:edit, :update]
-  before_action :get_user,       only: [:edit, :update, :show]
+  before_action :get_user,       only: [:edit, :update, :show, :fight_history,
+                                        :followers, :following]
 
   def get_user
     @user = User.find(params[:id])
@@ -53,7 +54,6 @@ class UsersController < ApplicationController
 
   def following
     @title = "Following"
-    @user = User.find(params[:id])
     @following = @user.followed_leagues + @user.followed_users
     @users = @following.paginate(page: params[:page], per_page: 10)
     render 'show_follow'
@@ -61,9 +61,12 @@ class UsersController < ApplicationController
 
   def followers
     @title = "Followers"
-    @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
+  end
+
+  def fight_history
+
   end
   
   private

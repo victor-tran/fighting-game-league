@@ -65,23 +65,25 @@
             allowtransparency="true"></iframe>
 
   <% elsif @league.started %>
+    <% if all_matches_accepted?(@league.matches.where("round_number = ?", @league.current_round)) &&
+                                current_user == @league.commissioner %>
+      <% if @league.has_more_rounds_left_in_season? %>
+        <div>
+          <%= link_to "Go to Round " + (@league.current_round + 1).to_s, 
+                    next_round_league_path(@league), method: :patch,
+                    class: "btn btn-success" %>
+        </div>
+      <% else %>
+        <div>
+        <%= link_to "Start Playoffs", 
+                    start_playoffs_league_path(@league), method: :patch,
+                    class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    <% end %>
     <h3 style="display: inline-block; padding-right: 5px;">Current Matches</h3>
     <%= link_to 'view all', league_season_path(@league, @league.current_season) %>
     <%= render partial: 'match_table', locals: { league: @league } %>
-
-    <% if all_matches_accepted?(
-      @league.matches.where("round_number = ?", @league.current_round)) &&
-                            current_user == @league.commissioner %>
-      <% if @league.has_more_rounds_left_in_season? %>
-        <%= link_to "Go to Round " + (@league.current_round + 1).to_s, 
-                    next_round_league_path(@league), method: :patch,
-                    class: "btn btn-large btn-success" %>
-      <% else %>
-        <%= link_to "Start Playoffs", 
-                    start_playoffs_league_path(@league), method: :patch,
-                    class: "btn btn-large btn-primary" %>
-      <% end %>
-    <% end %>
   <% end %>
   </div>
 

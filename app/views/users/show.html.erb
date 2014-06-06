@@ -45,6 +45,7 @@
     <h2>
       <% wl_record = WL_record(@user, @user.matches) %>
       W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %>
+      <small><%= link_to "view fight history", fight_history_user_path(@user) %></small>
     </h2>
     
     <hr>

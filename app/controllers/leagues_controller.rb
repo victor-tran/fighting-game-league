@@ -266,7 +266,7 @@ class LeaguesController < ApplicationController
     if params[:season] == nil
       @selected_season = @league.current_season
     else
-      @selected_season = params[:season]
+      @selected_season = params[:season][:season_id]
     end
     respond_to do |format|
       format.js
