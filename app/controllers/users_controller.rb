@@ -66,7 +66,8 @@ class UsersController < ApplicationController
   end
 
   def fight_history
-
+    @decided_matches = @user.matches.reject { |match| match.finalized_date == nil }.sort { |x,y| y.finalized_date <=> x.finalized_date }
+    @decided_matches = @decided_matches.paginate(page: params[:page], per_page: 10)
   end
   
   private

@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <h1><%= @user.alias %> - FGL Fight History</h1>
-    <% decided_matches = @user.matches.reject { |match| match.finalized_date == nil }.sort { |x,y| y.finalized_date <=> x.finalized_date } %>
-    <% if decided_matches.empty? %>
+
+    <% if @decided_matches.empty? %>
       No matches fought yet.
     <% else %>
-
+      <%= will_paginate @decided_matches %>
       <div class="tab-pane active">
         <!-- Panel -->
         <div class="panel panel-default">
@@ -18,7 +18,7 @@
                 <th>Event</th>
                 <th>Date</th>
               </tr>
-              <% decided_matches.each do |match| %>
+              <% @decided_matches.each do |match| %>
                 <tr>
                   <!-- Result -->
                   <% if match.winner_id == @user.id %>
@@ -57,6 +57,7 @@
           </div>
         </div>
       </div>
+      <%= will_paginate @decided_matches %>
     <% end %>  
   </div>
 </div>
