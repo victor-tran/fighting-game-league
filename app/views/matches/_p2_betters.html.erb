@@ -6,7 +6,7 @@
   </div>
   <div class="modal-body">
     <ul class="users">
-      <% @match.bets.where("favorite_id = ?", @match.p2_id).each do |bet| %>
+      <% @match.bets.where("favorite_id = ?", @match.p2_id).order("wager_amount DESC").each do |bet| %>
         <li>
           <div class="user-thumb"><%= image_tag bet.better.avatar.url(:post) %></div>
           <%= link_to bet.better.alias, bet.better %> - $<%= bet.wager_amount %>

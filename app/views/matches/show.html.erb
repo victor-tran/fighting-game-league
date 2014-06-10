@@ -108,12 +108,12 @@
 
   <!-- Bet Info -->
   <div class="col-md-4 col-xs-4 match-info">
-    <div class="progress">
+    <div class="progress bet-bars">
       <div class="progress-bar progress-bar-info" style="width:<%= bet_info[:p1_percent] %>%">
-        <%= "#{bet_info[:p1_percent]}% (#{bet_info[:p1_bet_count]})" %>
+        <%= "#{(bet_info[:p1_percent] * 10).floor / 10.0}% (#{bet_info[:p1_bet_count]})" %>
       </div>
       <div class="progress-bar progress-bar-danger" style="width:<%= bet_info[:p2_percent] %>%; display: block; float: right;">
-        <%= "#{bet_info[:p2_percent]}% (#{bet_info[:p2_bet_count]})" %>
+        <%= "#{(bet_info[:p2_percent] * 10).floor / 10.0}% (#{bet_info[:p2_bet_count]})" %>
       </div>
     </div>          
 
