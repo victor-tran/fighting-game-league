@@ -5,7 +5,8 @@ class MatchesController < ApplicationController
                                    :p1_edit_character, :p1_set_character,
                                    :p2_edit_character, :p2_set_character,
                                    :dispute, :edit_dispute, :resolve,
-                                   :add_video, :delete_video]
+                                   :add_video, :delete_video, :p1_betters,
+                                   :p2_betters]
 
   def get_match
     @match = Match.find(params[:id])
@@ -194,6 +195,20 @@ class MatchesController < ApplicationController
     Match.find(params[:id]).update_attribute(:videos, @match.videos)
     flash[:notice] = "Match footage deleted."
     redirect_to @match
+  end
+
+  def p1_betters
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def p2_betters
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private

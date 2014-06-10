@@ -43,7 +43,13 @@
         <%= Character.find(character).name %>
       <% end %>
     </p>
-    <div><%= "Bet Info: #{pluralize(bet_info[:p1_bet_count], "user")} ($#{bet_info[:p1_fight_bucks]})" %></div>
+    <div>
+      Bet Info: <%= link_to "#{pluralize(bet_info[:p1_bet_count], "user")} ($#{bet_info[:p1_fight_bucks]})",
+                  p1_betters_match_path(@match), 
+                  {:remote => true, 
+                   'data-toggle' =>  "modal",
+                   'data-target' => '#modal-window'}  %>
+    </div>
   </div>
 
   <!-- Match Info -->
@@ -77,7 +83,11 @@
       <% end %>
     </p>
     <div>
-      <%= "Bet Info: #{pluralize(bet_info[:p2_bet_count], "user")} ($#{bet_info[:p2_fight_bucks]})" %>
+      Bet Info: <%= link_to "#{pluralize(bet_info[:p2_bet_count], "user")} ($#{bet_info[:p2_fight_bucks]})",
+                            p2_betters_match_path(@match), 
+                            {:remote => true, 
+                             'data-toggle' =>  "modal",
+                             'data-target' => '#modal-window'}  %>
     </div>
   </div>
   
@@ -118,6 +128,9 @@
                                disabled: true %>
     <% end %>
   </div>
+
+  <div id="modal-window" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+
 </div>
 
 <hr>
@@ -136,7 +149,7 @@
   <% end %>
 
   <% if @match.videos.empty? %>
-    <p>No matches yet.</p>
+    <p>No match footage yet.</p>
   <% else %>
     <% @match.videos.each do |video| %>
       <div class="embed-container">

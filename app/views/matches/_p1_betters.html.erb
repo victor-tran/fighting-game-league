@@ -1,0 +1,20 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel"><%= @match.p1.alias %>'s betters</h3>
+    <small>Count: <%= @match.bets.where("favorite_id = ?", @match.p1_id).count %></small>
+  </div>
+  <div class="modal-body">
+    <ul class="users">
+      <% @match.bets.where("favorite_id = ?", @match.p1_id).each do |bet| %>
+        <li>
+          <div class="user-thumb"><%= image_tag bet.better.avatar.url(:post) %></div>
+          <%= link_to bet.better.alias, bet.better %> - $<%= bet.wager_amount %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div> 

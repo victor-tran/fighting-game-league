@@ -20,7 +20,7 @@ FightingGameLeague::Application.routes.draw do
   resources :matches do
     member do
       get :p1_edit_score, :p2_edit_score, :p1_edit_character, :p2_edit_character,
-          :edit_dispute, :edit_date
+          :edit_dispute, :edit_date, :p1_betters, :p2_betters
       patch :p1_set_score, :p2_set_score, :accept_score, :decline_score,
             :p1_set_character, :p2_set_character, :dispute, :resolve, :set_date,
             :add_video
