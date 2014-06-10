@@ -46,9 +46,9 @@
     <div>
       Bet Info: <%= link_to "#{pluralize(bet_info[:p1_bet_count], "user")} ($#{bet_info[:p1_fight_bucks]})",
                   p1_betters_match_path(@match), 
-                  {:remote => true, 
+                  {remote: true, 
                    'data-toggle' =>  "modal",
-                   'data-target' => '#modal-window'}  %>
+                   'data-target' => '#modal-window'} %>
     </div>
   </div>
 
@@ -85,9 +85,9 @@
     <div>
       Bet Info: <%= link_to "#{pluralize(bet_info[:p2_bet_count], "user")} ($#{bet_info[:p2_fight_bucks]})",
                             p2_betters_match_path(@match), 
-                            {:remote => true, 
+                            {remote: true, 
                              'data-toggle' =>  "modal",
-                             'data-target' => '#modal-window'}  %>
+                             'data-target' => '#modal-window'} %>
     </div>
   </div>
   

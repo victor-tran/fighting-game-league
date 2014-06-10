@@ -2,5 +2,4 @@
 <% user = bet.better %>
 <% match = bet.match %>
 <%= link_to user.alias, user %> bet <%= pluralize(bet.wager_amount, "fight buck") %>
-on <%= link_to match.p1.alias, match.p1 %> to win against
-<%= link_to match.p2.alias, match.p2 %>.
+on <%= link_to "#{match.p1.alias} to win against #{match.p2.alias}.", match %>

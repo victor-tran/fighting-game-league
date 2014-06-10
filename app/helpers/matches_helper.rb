@@ -20,8 +20,6 @@ module MatchesHelper
     player_bet_info[:p2_percent] = p2_percent
     player_bet_info[:p1_fight_bucks] = match.bets.sum(:wager_amount, conditions: {favorite_id: [match.p1_id]})
     player_bet_info[:p2_fight_bucks] = match.bets.sum(:wager_amount, conditions: {favorite_id: [match.p2_id]})
-    #player_bet_info[:p1_percent] = number_to_percentage(p1_percent, precision: 0)
-    #player_bet_info[:p2_percent] = number_to_percentage(p2_percent, precision: 0)
 
     player_bet_info
   end
