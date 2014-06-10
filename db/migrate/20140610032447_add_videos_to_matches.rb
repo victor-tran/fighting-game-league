@@ -1,0 +1,5 @@
+class AddVideosToMatches < ActiveRecord::Migration
+  def change
+    add_column :matches, :videos, :string, array: true
+  end
+end

@@ -4,7 +4,8 @@ class MatchesController < ApplicationController
                                    :accept_score, :decline_score,
                                    :p1_edit_character, :p1_set_character,
                                    :p2_edit_character, :p2_set_character,
-                                   :dispute, :edit_dispute, :resolve]
+                                   :dispute, :edit_dispute, :resolve,
+                                   :add_video, :delete_video]
 
   def get_match
     @match = Match.find(params[:id])
@@ -178,6 +179,21 @@ class MatchesController < ApplicationController
       flash[:notice] = "Dispute resolved."
       redirect_to matches_path
     end
+  end
+
+  def add_video
+    # For some reason can't use @match.update_attribute...
+    Match.find(params[:id]).update_attribute(:videos, @match.videos.push(params[:video_url]))
+    flash[:notice] = "Match footage added."
+    redirect_to @match
+  end
+
+  def delete_video
+    @match.videos.delete(params[:video_url])
+    # For some reason can't use @match.update_attribute...
+    Match.find(params[:id]).update_attribute(:videos, @match.videos)
+    flash[:notice] = "Match footage deleted."
+    redirect_to @match
   end
 
   private

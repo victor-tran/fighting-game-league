@@ -26,15 +26,16 @@
 
 <!-- Player & Match Info -->
 <div class="row">
+  <% bet_info = match_bet_info(@match) %>
 
   <!-- Player 1 -->
   <div class="col-md-4 col-xs-4 player-info">
-    <p><%= link_to @match.p1.alias, @match.p1 %></p>
+    <h2 class="no-margin-top"><%= link_to @match.p1.alias, @match.p1 %></h2>
     <% wl_record = WL_record(@match.p1, @match.league.current_season.matches.where(
                                                 "p1_id = ? OR p2_id = ?",
                                                 @match.p1.id,
                                                 @match.p1.id)) %>
-    <p>W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %></p>
+    <h4>W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %></h4>
     <p>League Rank: </p>
     <p>
       Character: 
@@ -42,11 +43,13 @@
         <%= Character.find(character).name %>
       <% end %>
     </p>
+    <div><%= "Bet Info: #{pluralize(bet_info[:p1_bet_count], "user")} ($#{bet_info[:p1_fight_bucks]})" %></div>
   </div>
 
   <!-- Match Info -->
   <div class="col-md-4 col-xs-4 match-info">
-    <p>League: <%= link_to "#{@league.name} - Round #{@match.round_number}", @league %></p>
+    <p>League: <%= link_to @league.name, @league %></p>
+    <p>Round: <%= @match.round_number %></p>
     <% if @match.match_date == nil %>
       <p>Date: TBD</p>
       <p>Time: TBD</p>
@@ -60,12 +63,12 @@
 
   <!-- Player 2 -->
   <div class="col-md-4 col-xs-4 player-info">
-    <p><%= link_to @match.p2.alias, @match.p2 %></p>
+    <h2 class="no-margin-top"><%= link_to @match.p2.alias, @match.p2 %></h2>
     <% wl_record = WL_record(@match.p2, @match.league.current_season.matches.where(
                                                 "p1_id = ? OR p2_id = ?",
                                                 @match.p2.id,
                                                 @match.p2.id)) %>
-    <p>W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %></p>
+    <h4>W-L: <%= "#{wl_record[:wins]}-#{wl_record[:losses]}" %></h4>
     <p>League Rank: </p>
     <p>
       Character: 
@@ -73,11 +76,12 @@
         <%= Character.find(character).name %>
       <% end %>
     </p>
+    <div>
+      <%= "Bet Info: #{pluralize(bet_info[:p2_bet_count], "user")} ($#{bet_info[:p2_fight_bucks]})" %>
+    </div>
   </div>
   
 </div>
-
-<hr>
 
 <!-- Bet Buttons & Match Score -->
 <div class="row">
@@ -94,11 +98,6 @@
 
   <!-- Bet Info -->
   <div class="col-md-4 col-xs-4 match-info">
-    <% bet_info = match_bet_info(@match) %>
-    <h3 style="margin-top: 0;">Bet Info</h3>
-    <div><%= "#{@match.p1.alias}: #{pluralize(bet_info[:p1_bet_count], "user")} ($#{bet_info[:p1_fight_bucks]})" %></div>
-    <div><%= "#{@match.p2.alias}: #{pluralize(bet_info[:p2_bet_count], "user")} ($#{bet_info[:p2_fight_bucks]})" %></div>
-
     <div class="progress">
       <div class="progress-bar progress-bar-info" style="width:<%= bet_info[:p1_percent] %>%">
         <%= "#{bet_info[:p1_percent]}% (#{bet_info[:p1_bet_count]})" %>
@@ -112,12 +111,45 @@
 
   <!-- Player 2 Bet -->
   <div class="col-md-4 col-xs-4 match-info">
-    <% if current_user.fight_bucks > 0 && !current_user.fighting_in?(@match) && current_user.betting_on?(@match) %>
+    <% if current_user.fight_bucks > 0 && !current_user.fighting_in?(@match) && !current_user.betting_on?(@match) %>
       <%= render 'p2_bet' %>
     <% else %>
       <%= link_to "Bet!", '#', class: "btn btn-lg btn-primary", 
                                disabled: true %>
     <% end %>
   </div>
+</div>
 
+<hr>
+
+<div class="row">
+  <h2>Match Footage</h2>
+  <% if current_user.member_of?(@match.league) %>
+    <%= form_for @match, html: { method: :patch },
+                         url: add_video_match_path(@match) do |f| %>
+      <div>
+        <strong>YouTube URL:</strong>
+        <%= text_field_tag :video_url %>
+        <%= f.submit "Add Video", class: "btn btn-primary btn-sm" %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @match.videos.empty? %>
+    <p>No matches yet.</p>
+  <% else %>
+    <% @match.videos.each do |video| %>
+      <div class="embed-container">
+        <%= embed(video) %>
+        <% if current_user.member_of?(@match.league) %>
+          <%= form_for @match, html: { method: :delete },
+                               data: { confirm: "You sure?" }, 
+                               url: delete_video_match_path(@match) do |f| %>
+            <%= hidden_field_tag :video_url, video %>
+            <%= f.submit "Delete", class: "btn btn-danger btn-sm" %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 </div>
