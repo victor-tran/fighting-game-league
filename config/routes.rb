@@ -42,6 +42,11 @@ FightingGameLeague::Application.routes.draw do
       patch :pay_with_credit_card
     end
   end
+  resources :posts do
+    member do
+      get :likers
+    end
+  end
   resources :relationships, only: [:create, :destroy]
   resources :league_relationships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]

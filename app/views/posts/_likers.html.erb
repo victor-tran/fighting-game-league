@@ -1,0 +1,19 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Users Who Like This</h3>
+  </div>
+  <div class="modal-body">
+    <ul class="users">
+      <% @post.likes.each do |like| %>
+        <li>
+          <div class="user-thumb"><%= image_tag like.user.avatar.url(:post) %></div>
+          <%= link_to like.user.alias, like.user %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div> 
