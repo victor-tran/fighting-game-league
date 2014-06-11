@@ -86,12 +86,18 @@ class Match < ActiveRecord::Base
         user = User.find(bet.better_id)
         user.update_attribute(:fight_bucks, bet.wager_amount * 2)
 
+        # Notify the user that they won the bet.
+        bet.create_bet_won_notification(bet.wager_amount * 2)
+
 =begin
         # Post to user feed based on user's current betting streak.
         if user.current_betting_streak == 5
           user.posts.create!(action: "3_bet_streak")
         end
-=end
+=end  
+      else
+        # Notify the user that they lost the bet.
+        bet.create_bet_lost_notification(bet.wager_amount)
       end
     end
     

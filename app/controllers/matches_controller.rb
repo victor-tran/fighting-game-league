@@ -398,7 +398,7 @@ class MatchesController < ApplicationController
         Pusher['private-user-'+loser.id.to_s].trigger('match_notification',
                                                       { match_id: match.id,
                                                         unread_count: loser.notifications.unread.count,
-                                                        notification_content: Notification.match_finalized('won', match, winner, score),
+                                                        notification_content: Notification.match_finalized('lost', match, winner, score),
                                                         no_banner: true,
                                                         notification_id: n.id })
       else

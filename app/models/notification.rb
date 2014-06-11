@@ -66,7 +66,7 @@ class Notification < ActiveRecord::Base
   ##### Match Notifications ######
   ################################
   def self.date_set(match)
-    "The #{match.p1.alias} vs. #{match.p2.alias} match has been set for " +
+    "The '#{match.p1.alias} vs. #{match.p2.alias}' match has been set for " +
     "#{match.match_date.in_time_zone(match.league.time_zone).strftime("%I:%M %p %Z on %B %d")}."
   end
 
@@ -79,6 +79,10 @@ class Notification < ActiveRecord::Base
   end
 
   def self.bet_on_user(bet, opponent)
-    "#{bet.better.alias} bet #{pluralize(bet.wager_amount, "fight buck")} on you to win against #{opponent.alias}"
+    "#{bet.better.alias} bet #{pluralize(bet.wager_amount, "fight buck")} on you to win against #{opponent.alias}."
+  end
+
+  def self.bet_decided(action, bet, amount_won)
+    "You #{action} #{pluralize(amount_won, "fight buck")} from your bet on the '#{bet.match.p1.alias} vs. #{bet.match.p2.alias}' match."
   end
 end
