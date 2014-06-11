@@ -69,4 +69,8 @@ class Notification < ActiveRecord::Base
     "The #{match.p1.alias} vs. #{match.p2.alias} match has been set for " +
     "#{match.match_date.in_time_zone(match.league.time_zone).strftime("%I:%M %p %Z on %B %d")}."
   end
+
+  def self.score_set(setter, league)
+    "#{setter.alias} set the score for match between you two in the '#{league.name}' league."
+  end
 end

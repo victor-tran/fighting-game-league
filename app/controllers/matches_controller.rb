@@ -114,6 +114,30 @@ class MatchesController < ApplicationController
     if params[:match][:p1_score] == "0" && params[:match][:p2_score] == "0"
       render 'p1_edit_score'
     elsif @match.update_attributes(p1_set_score_params)
+
+      # Create a notification on the backend.
+      n = @match.p2.notifications.create!(sendable_id: current_user.id,
+                                          sendable_type: 'User',
+                                          targetable_id: @match.id,
+                                          targetable_type: 'Match',
+                                          content: Notification.score_set(@match.p1, @match.league),
+                                          read: false)
+      # Send a push notification via Pusher API to follower.
+      if @match.p2.avatar_file_name == nil
+        Pusher['private-user-'+@match.p2.id.to_s].trigger('pending_match_notification',
+                                                         { unread_count: @match.p2.notifications.unread.count,
+                                                           notification_content: Notification.score_set(@match.p1, @match.league),
+                                                           no_banner: true,
+                                                           notification_id: n.id })
+      else
+        Pusher['private-user-'+@match.p2.id.to_s].trigger('pending_match_notification',
+                                                         { unread_count: @match.p2.notifications.unread.count,
+                                                           notification_content: Notification.score_set(@match.p1, @match.league),
+                                                           no_banner: false,
+                                                           img_alt: @match.p2.avatar_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                           img_src: @match.p2.avatar.url(:post),
+                                                           notification_id: n.id })
+      end
       flash[:notice] = "Match score set."
       redirect_to matches_path
     else
@@ -128,6 +152,30 @@ class MatchesController < ApplicationController
     if params[:match][:p1_score] == "0" && params[:match][:p2_score] == "0"
       render 'p2_edit_score'
     elsif @match.update_attributes(p2_set_score_params)
+
+      # Create a notification on the backend.
+      n = @match.p1.notifications.create!(sendable_id: current_user.id,
+                                          sendable_type: 'User',
+                                          targetable_id: @match.id,
+                                          targetable_type: 'Match',
+                                          content: Notification.score_set(@match.p2, @match.league),
+                                          read: false)
+      # Send a push notification via Pusher API to follower.
+      if @match.p1.avatar_file_name == nil
+        Pusher['private-user-'+@match.p1.id.to_s].trigger('pending_match_notification',
+                                                         { unread_count: @match.p1.notifications.unread.count,
+                                                           notification_content: Notification.score_set(@match.p2, @match.league),
+                                                           no_banner: true,
+                                                           notification_id: n.id })
+      else
+        Pusher['private-user-'+@match.p1.id.to_s].trigger('pending_match_notification',
+                                                         { unread_count: @match.p1.notifications.unread.count,
+                                                           notification_content: Notification.score_set(@match.p2, @match.league),
+                                                           no_banner: false,
+                                                           img_alt: @match.p1.avatar_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                           img_src: @match.p1.avatar.url(:post),
+                                                           notification_id: n.id })
+      end
       flash[:notice] = "Match score set."
       redirect_to matches_path
     else

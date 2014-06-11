@@ -8,7 +8,9 @@
 
   <% if notification.targetable_type == 'Post' %>
     <%= link_to "#{notification.content}", polymorphic_path([notification.receiver, notification.targetable]) %>
-  <% elsif notification.targetable_type == 'Match' && notification.content == Notification.date_set(notification.targetable) %>
+  <% elsif notification.targetable_type == 'Match' &&
+           (notification.content == Notification.date_set(notification.targetable) ||
+            notification.content == Notification.score_set(notification.sendable, notification.targetable.league)) %>
     <%= link_to "#{notification.content}", matches_path %>
   <% else %>
     <%= link_to "#{notification.content}", notification.sendable %>
