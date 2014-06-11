@@ -8,6 +8,8 @@
     <% end %>
   <% elsif notification.sendable_type == 'League' %>
     <%= image_tag notification.sendable.banner.url(:post), class: "pull-left" %>
+  <% elsif notification.targetable_type == 'Bet' %>
+    <%= image_tag notification.sendable.league.banner.url(:post), class: "pull-left" %>
   <% end %>
 
   <% if notification.targetable_type == 'Post' %>
