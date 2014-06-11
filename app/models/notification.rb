@@ -73,4 +73,8 @@ class Notification < ActiveRecord::Base
   def self.score_set(setter, league)
     "#{setter.alias} set the score for match between you two in the '#{league.name}' league."
   end
+
+  def self.match_finalized(action, match, opponent, score)
+    "You #{action} your match against #{opponent.alias}, #{score}."
+  end
 end

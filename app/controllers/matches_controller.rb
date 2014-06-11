@@ -91,8 +91,8 @@ class MatchesController < ApplicationController
                                                          { unread_count: subject.notifications.unread.count,
                                                            notification_content: Notification.date_set(@match),
                                                            no_banner: false,
-                                                           img_alt: subject.avatar_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
-                                                           img_src: subject.avatar.url(:post),
+                                                           img_alt: @match.league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                           img_src: @match.league.banner.url(:post),
                                                            notification_id: n.id })
       end
 
@@ -134,8 +134,8 @@ class MatchesController < ApplicationController
                                                          { unread_count: @match.p2.notifications.unread.count,
                                                            notification_content: Notification.score_set(@match.p1, @match.league),
                                                            no_banner: false,
-                                                           img_alt: @match.p2.avatar_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
-                                                           img_src: @match.p2.avatar.url(:post),
+                                                           img_alt: @match.league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                           img_src: @match.league.banner.url(:post),
                                                            notification_id: n.id })
       end
       flash[:notice] = "Match score set."
@@ -172,8 +172,8 @@ class MatchesController < ApplicationController
                                                          { unread_count: @match.p1.notifications.unread.count,
                                                            notification_content: Notification.score_set(@match.p2, @match.league),
                                                            no_banner: false,
-                                                           img_alt: @match.p1.avatar_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
-                                                           img_src: @match.p1.avatar.url(:post),
+                                                           img_alt: @match.league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                           img_src: @match.league.banner.url(:post),
                                                            notification_id: n.id })
       end
       flash[:notice] = "Match score set."
@@ -186,12 +186,25 @@ class MatchesController < ApplicationController
   def accept_score
     if @match.update_attributes(p1_accepted: true, p2_accepted: true,
                                 finalized_date: Time.now)
+
       if @match.winner_id == @match.p1_id
+        score = "#{@match.p1_score}-#{@match.p2_score}"
+
+        # Create notifications for both the winner and loser of the match.
+        create_won_match_notification(@match.p1, @match.p2, @match, score)
+        create_lost_match_notification(@match.p1, @match.p2, @match, score)
+
         @match.league.posts.create!(action: "score_set",
                                     subjectable_id: @match.id,
                                     subjectable_type: 'Match',
                                     content: "#{@match.p1.alias} defeated #{@match.p2.alias} #{@match.p1_score}-#{@match.p2_score}.")
       else
+        score = "#{@match.p2_score}-#{@match.p1_score}"
+
+        # Create notifications for both the winner and loser of the match.
+        create_won_match_notification(@match.p2, @match.p1, @match, score)
+        create_lost_match_notification(@match.p2, @match.p1, @match, score)
+
         @match.league.posts.create!(action: "score_set",
                                     subjectable_id: @match.id,
                                     subjectable_type: 'Match',
@@ -319,5 +332,62 @@ class MatchesController < ApplicationController
       params.require(:match).permit(:p1_id, :p2_id, :p1_score, :p2_score, 
         :match_date, :p1_accepted, :p2_accepted, :disputed, :finalized_date,
         :round_number, :game_id, :season_id, :league_id, :tournament_id)
+    end
+
+    # Match Notification Helpers #
+    def create_won_match_notification(winner, loser, match, score)
+      # Create a notification on the backend.
+      n = winner.notifications.create!(sendable_id: current_user.id,
+                                       sendable_type: 'User',
+                                       targetable_id: match.id,
+                                       targetable_type: 'Match',
+                                       content: Notification.match_finalized('won', match, loser, score),
+                                       read: false)
+      # Send a push notification via Pusher API to follower.
+      if winner.avatar_file_name == nil
+        Pusher['private-user-'+winner.id.to_s].trigger('match_notification',
+                                                      { match_id: match.id,
+                                                        unread_count: winner.notifications.unread.count,
+                                                        notification_content: Notification.match_finalized('won', match, loser, score),
+                                                        no_banner: true,
+                                                        notification_id: n.id })
+      else
+        Pusher['private-user-'+winner.id.to_s].trigger('match_notification',
+                                                      { match_id: match.id,
+                                                        unread_count: winner.notifications.unread.count,
+                                                        notification_content: Notification.match_finalized('won', match, loser, score),
+                                                        no_banner: false,
+                                                        img_alt: match.league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                        img_src: match.league.banner.url(:post),
+                                                        notification_id: n.id })
+      end
+    end
+
+    def create_lost_match_notification(winner, loser, match, score)
+      # Create a notification on the backend.
+      n = loser.notifications.create!(sendable_id: current_user.id,
+                                      sendable_type: 'User',
+                                      targetable_id: match.id,
+                                      targetable_type: 'Match',
+                                      content: Notification.match_finalized('lost', match, winner, score),
+                                      read: false)
+      # Send a push notification via Pusher API to follower.
+      if loser.avatar_file_name == nil
+        Pusher['private-user-'+loser.id.to_s].trigger('match_notification',
+                                                      { match_id: match.id,
+                                                        unread_count: loser.notifications.unread.count,
+                                                        notification_content: Notification.match_finalized('won', match, winner, score),
+                                                        no_banner: true,
+                                                        notification_id: n.id })
+      else
+        Pusher['private-user-'+loser.id.to_s].trigger('match_notification',
+                                                      { match_id: match.id,
+                                                        unread_count: loser.notifications.unread.count,
+                                                        notification_content: Notification.match_finalized('lost', match, winner, score),
+                                                        no_banner: false,
+                                                        img_alt: match.league.banner_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                        img_src: match.league.banner.url(:post),
+                                                        notification_id: n.id })
+      end
     end
 end

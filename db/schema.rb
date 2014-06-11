@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20140610032447) do
     t.string   "p1_characters",  default: [], array: true
     t.string   "p2_characters",  default: [], array: true
     t.integer  "tournament_id"
-    t.string   "videos",                      array: true
+    t.string   "videos",         default: [], array: true
   end
 
   create_table "memberships", force: true do |t|

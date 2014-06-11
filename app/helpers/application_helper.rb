@@ -196,5 +196,4 @@ module ApplicationHelper
 
     user_hash
   end
-
 end

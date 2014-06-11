@@ -1,17 +1,24 @@
 <% notification_item_id = "notification_item_#{notification.id}" %>
 <li id="<%= notification_item_id %>">
   <% if notification.sendable_type == 'User' %>
-    <%= image_tag notification.sendable.avatar.url(:post), class: "pull-left" %>
+    <% if notification.targetable_type == 'Match' %>
+      <%= image_tag notification.targetable.league.banner.url(:post), class: "pull-left" %>
+    <% else %>
+      <%= image_tag notification.sendable.avatar.url(:post), class: "pull-left" %>
+    <% end %>
   <% elsif notification.sendable_type == 'League' %>
     <%= image_tag notification.sendable.banner.url(:post), class: "pull-left" %>
   <% end %>
 
   <% if notification.targetable_type == 'Post' %>
     <%= link_to "#{notification.content}", polymorphic_path([notification.receiver, notification.targetable]) %>
-  <% elsif notification.targetable_type == 'Match' &&
-           (notification.content == Notification.date_set(notification.targetable) ||
-            notification.content == Notification.score_set(notification.sendable, notification.targetable.league)) %>
-    <%= link_to "#{notification.content}", matches_path %>
+  <% elsif notification.targetable_type == 'Match' %>
+    <% if notification.content == Notification.date_set(notification.targetable) ||
+          notification.content == Notification.score_set(notification.sendable, notification.targetable.league) %>
+      <%= link_to "#{notification.content}", matches_path %>
+    <% else %>
+      <%= link_to "#{notification.content}", notification.targetable %>
+    <% end %>
   <% else %>
     <%= link_to "#{notification.content}", notification.sendable %>
   <% end %>

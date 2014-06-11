@@ -80,7 +80,7 @@
             if (data.no_banner == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/leagues/"+data.league_id+"'>"+data.notification_content+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/league/banner/post/missing.png'><a href='/leagues/"+data.league_id+"'>"+data.notification_content+"</a></li>");
             } else {
               // Add notification to notification list.
               $("#notifications ul").prepend(
@@ -90,16 +90,29 @@
             // Update unread notifications count.
             $(".notification_badge").html(data.unread_count);
           });
-
           channel.bind('pending_match_notification', function(data) {
             if (data.no_banner == true) {
               // Add notification to notification list.
               $("#notifications ul").prepend(
-                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/user/avatar/post/missing.png'><a href='/matches/'>"+data.notification_content+"</a></li>");
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/league/banner/post/missing.png'><a href='/matches/'>"+data.notification_content+"</a></li>");
             } else {
               // Add notification to notification list.
               $("#notifications ul").prepend(
                 "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/matches/'>"+data.notification_content+"</a></li>");
+            }
+
+            // Update unread notifications count.
+            $(".notification_badge").html(data.unread_count);
+          });
+          channel.bind('match_notification', function(data) {
+            if (data.no_banner == true) {
+              // Add notification to notification list.
+              $("#notifications ul").prepend(
+                "<li id='notification_item_"+data.notification_id+"'><img alt='Missing' class='pull-left' src='/assets/league/banner/post/missing.png'><a href='/matches/"+data.match_id+"'>"+data.notification_content+"</a></li>");
+            } else {
+              // Add notification to notification list.
+              $("#notifications ul").prepend(
+                "<li id='notification_item_"+data.notification_id+"'><img alt="+data.img_alt+" class='pull-left' src="+data.img_src+"><a href='/leagues/"+data.league_id+"'>"+data.notification_content+"</a></li>");
             }
 
             // Update unread notifications count.
