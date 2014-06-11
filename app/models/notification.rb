@@ -77,4 +77,8 @@ class Notification < ActiveRecord::Base
   def self.match_finalized(action, match, opponent, score)
     "You #{action} your match against #{opponent.alias}, #{score}."
   end
+
+  def self.bet_on_user(bet, opponent)
+    "#{bet.better.alias} bet #{pluralize(bet.wager_amount, "fight buck")} on you to win against #{opponent.alias}"
+  end
 end

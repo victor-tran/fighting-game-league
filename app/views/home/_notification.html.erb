@@ -19,6 +19,8 @@
     <% else %>
       <%= link_to "#{notification.content}", notification.targetable %>
     <% end %>
+  <% elsif notification.targetable_type == 'Bet' %>
+    <%= link_to "#{notification.content}", notification.targetable.match %>
   <% else %>
     <%= link_to "#{notification.content}", notification.sendable %>
   <% end %>

@@ -80,7 +80,7 @@ class MatchesController < ApplicationController
                                         content: Notification.date_set(@match),
                                         read: false)
       # Send a push notification via Pusher API to follower.
-      if subject.avatar_file_name == nil
+      if @match.league.banner_file_name == nil
         Pusher['private-user-'+subject.id.to_s].trigger('pending_match_notification',
                                                          { unread_count: subject.notifications.unread.count,
                                                            notification_content: Notification.date_set(@match),
@@ -123,7 +123,7 @@ class MatchesController < ApplicationController
                                           content: Notification.score_set(@match.p1, @match.league),
                                           read: false)
       # Send a push notification via Pusher API to follower.
-      if @match.p2.avatar_file_name == nil
+      if @match.league.banner_file_name == nil
         Pusher['private-user-'+@match.p2.id.to_s].trigger('pending_match_notification',
                                                          { unread_count: @match.p2.notifications.unread.count,
                                                            notification_content: Notification.score_set(@match.p1, @match.league),
@@ -161,7 +161,7 @@ class MatchesController < ApplicationController
                                           content: Notification.score_set(@match.p2, @match.league),
                                           read: false)
       # Send a push notification via Pusher API to follower.
-      if @match.p1.avatar_file_name == nil
+      if @match.league.banner_file_name == nil
         Pusher['private-user-'+@match.p1.id.to_s].trigger('pending_match_notification',
                                                          { unread_count: @match.p1.notifications.unread.count,
                                                            notification_content: Notification.score_set(@match.p2, @match.league),
@@ -366,7 +366,7 @@ class MatchesController < ApplicationController
                                        content: Notification.match_finalized('won', match, loser, score),
                                        read: false)
       # Send a push notification via Pusher API to follower.
-      if winner.avatar_file_name == nil
+      if match.league.banner_file_name == nil
         Pusher['private-user-'+winner.id.to_s].trigger('match_notification',
                                                       { match_id: match.id,
                                                         unread_count: winner.notifications.unread.count,
@@ -394,7 +394,7 @@ class MatchesController < ApplicationController
                                       content: Notification.match_finalized('lost', match, winner, score),
                                       read: false)
       # Send a push notification via Pusher API to follower.
-      if loser.avatar_file_name == nil
+      if match.league.banner_file_name == nil
         Pusher['private-user-'+loser.id.to_s].trigger('match_notification',
                                                       { match_id: match.id,
                                                         unread_count: loser.notifications.unread.count,
