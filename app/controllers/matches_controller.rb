@@ -264,11 +264,33 @@ class MatchesController < ApplicationController
 
   def resolve
     if @match.update_attributes(resolve_params)
-      @match.league.posts.create!(action: "score_set",
-                                  subjectable_id: @match.id,
-                                  subjectable_type: 'Match')
+      if @match.winner_id == @match.p1_id
+        score = "#{@match.p1_score}-#{@match.p2_score}"
+
+        # Create notifications for both the winner and loser of the match.
+        create_won_match_notification(@match.p1, @match.p2, @match, score)
+        create_lost_match_notification(@match.p1, @match.p2, @match, score)
+
+        @match.league.posts.create!(action: "score_set",
+                                    subjectable_id: @match.id,
+                                    subjectable_type: 'Match',
+                                    content: "#{@match.p1.alias} defeated #{@match.p2.alias} #{@match.p1_score}-#{@match.p2_score}.")
+      else
+        score = "#{@match.p2_score}-#{@match.p1_score}"
+
+        # Create notifications for both the winner and loser of the match.
+        create_won_match_notification(@match.p2, @match.p1, @match, score)
+        create_lost_match_notification(@match.p2, @match.p1, @match, score)
+
+        @match.league.posts.create!(action: "score_set",
+                                    subjectable_id: @match.id,
+                                    subjectable_type: 'Match',
+                                    content: "#{@match.p2.alias} defeated #{@match.p1.alias} #{@match.p1_score}-#{@match.p2_score}.")
+      end
       flash[:notice] = "Dispute resolved."
       redirect_to matches_path
+    else
+      redirect_to 'edit_dispute'
     end
   end
 

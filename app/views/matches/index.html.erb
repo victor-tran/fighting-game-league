@@ -39,7 +39,7 @@
                 <% else %>
                   <p>
                     <%= link_to "Character Set", p1_edit_character_match_path(match), 
-                                                  class: "btn btn-success matches-btn" %>
+                                                  class: "btn btn-success matches-btn" unless match.disputed %>
                   <p>
                 <% end %>
               <% else %>
@@ -51,7 +51,7 @@
                 <% else %>
                   <p>
                     <%= link_to "Character Set", p2_edit_character_match_path(match), 
-                                                  class: "btn btn-success matches-btn" %>
+                                                  class: "btn btn-success matches-btn" unless match.disputed %>
                   <p>
                 <% end %>
               <% end %>
@@ -65,7 +65,7 @@
               <% else %>
                 <p>
                   <%= link_to "Date Set", edit_date_match_path(match), 
-                                           class: "btn btn-success matches-btn" %>
+                                           class: "btn btn-success matches-btn"  unless match.disputed %>
                 </p>
               <% end %>
 

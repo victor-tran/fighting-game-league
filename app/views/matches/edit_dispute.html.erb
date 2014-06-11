@@ -6,7 +6,15 @@
   <%= f.input :p2_characters, label: "Player 2 Character",
                               collection: @characters,
                               as: :check_boxes %>
-  <%= f.input :match_date, label: "Match Date and Time" %>
+  <div>
+    <%= f.label "Date" %>
+    <%= f.date_select :match_date %>
+  </div>
+  <div>
+    <%= f.label "Time" %>
+    <%= f.time_select :match_date, ignore_date: true, ampm: true %>
+    <%= @match.league.time_zone %>
+  </div>
   <%= f.input :p1_score, label: @match.p1.alias + " score" %>
   <%= f.input :p2_score, label: @match.p2.alias + " score" %>
   <%= f.hidden_field :p1_accepted, value: true %>
