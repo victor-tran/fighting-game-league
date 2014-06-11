@@ -61,4 +61,12 @@ class Notification < ActiveRecord::Base
     "#{league.name} season #{league.current_season.number} has ended with " +
     "#{league.tournaments.last.winner.alias} taking home 1st place!"
   end
+
+  ################################
+  ##### Match Notifications ######
+  ################################
+  def self.date_set(match)
+    "The #{match.p1.alias} vs. #{match.p2.alias} match has been set for " +
+    "#{match.match_date.in_time_zone(match.league.time_zone).strftime("%I:%M %p %Z on %B %d")}."
+  end
 end

@@ -65,12 +65,41 @@ class MatchesController < ApplicationController
                                 params[:match]["match_date(4i)"].to_i,
                                 params[:match]["match_date(5i)"].to_i)
     if @match.update_attribute(:match_date, real_date)
+
+      if current_user == @match.p1
+        subject = @match.p2
+      else
+        subject = @match.p1
+      end
+
+      # Create a notification on the backend.
+      n = subject.notifications.create!(sendable_id: current_user.id,
+                                        sendable_type: 'User',
+                                        targetable_id: @match.id,
+                                        targetable_type: 'Match',
+                                        content: Notification.date_set(@match),
+                                        read: false)
+      # Send a push notification via Pusher API to follower.
+      if subject.avatar_file_name == nil
+        Pusher['private-user-'+subject.id.to_s].trigger('pending_match_notification',
+                                                         { unread_count: subject.notifications.unread.count,
+                                                           notification_content: Notification.date_set(@match),
+                                                           no_banner: true,
+                                                           notification_id: n.id })
+      else
+        Pusher['private-user-'+subject.id.to_s].trigger('pending_match_notification',
+                                                         { unread_count: subject.notifications.unread.count,
+                                                           notification_content: Notification.date_set(@match),
+                                                           no_banner: false,
+                                                           img_alt: subject.avatar_file_name.gsub(/.(jpg|jpeg|gif|png)/,""),
+                                                           img_src: subject.avatar.url(:post),
+                                                           notification_id: n.id })
+      end
+
       @match.league.posts.create!(action: "date_set",
                                   subjectable_id: @match.id,
                                   subjectable_type: 'Match',
-                                  content: "The #{@match.p1.alias} vs. #{@match.p2.alias} "+
-                                           "match has been set for " +
-                                           "#{@match.match_date.in_time_zone(@match.league.time_zone).strftime("%I:%M %p %Z on %B %d")}.")
+                                  content: Notification.date_set(@match))
       flash[:notice] = "Match date/time updated."
       redirect_to matches_path
     else
