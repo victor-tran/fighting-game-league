@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  
   # For payments via credit card.
   def credit_card
     @order = current_user.orders.build
@@ -80,11 +81,10 @@ class OrdersController < ApplicationController
 
   def execute
     @order = current_user.orders.find(params[:order_id])
+    @payment = Payment.find(@order.payment_id)
 
-    binding.pry
-
-    if @order.execute(params["PayerID"])
-      if @order.state == 'approved'
+    if @payment.execute(payer_id: params["PayerID"])
+      if @payment.state == 'approved'
         if @order.amount == '5'
           current_user.update_attribute(:fight_bucks, current_user.fight_bucks + 500)
         elsif @order.amount == '10'
@@ -92,12 +92,12 @@ class OrdersController < ApplicationController
         elsif @order.amount == '20'
           current_user.update_attribute(:fight_bucks, current_user.fight_bucks + 10000)
         end
-        redirect_to root_url, :notice => "Order was placed successfully"
+        redirect_to root_url, notice: "Order was placed successfully"
       else
-        redirect_to root_url, :alert => "Order was not approved."
+        redirect_to root_url, alert: "Order was not approved."
       end
     else
-      redirect_to root_url, :alert => @order.payment.error.inspect
+      redirect_to root_url, alert: @order.payment.error.inspect
     end
   end
 
