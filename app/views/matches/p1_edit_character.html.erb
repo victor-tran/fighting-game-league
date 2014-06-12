@@ -4,15 +4,19 @@
                             url: p1_set_character_match_path(@match) do |f| %>
 
   <h1>Select P1 Character</h1>
+
+  <%= hidden_field_tag("max_char_count", 3, {id: "max_char_count"}) %>
+
   <%= f.input :p1_characters, label: "Player 1 Character",
                               collection: @characters,
-                              as: :check_boxes %>
+                              as: :check_boxes,
+                              wrapper: :vertical_radio_and_checkboxes %>
   <%= f.button :submit, "Select Character", class: "btn-lg btn-primary" %>
 <% end %>
 
 <script>
 $('input[type=checkbox]').change(function(e){
-   if ($('input[type=checkbox]:checked').length > 3) {
+   if ($('input[type=checkbox]:checked').length > $('#max_char_count').val()) {
         $(this).prop('checked', false)
    }
 })
