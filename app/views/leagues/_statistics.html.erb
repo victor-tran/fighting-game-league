@@ -4,8 +4,8 @@
   <div class="tab-pane active">
     <h1><%= @league.name %> Statistics</h1>
     <h2>Total Matches Played: <%= @league.total_matches_played %></h2>
-    <h3>All Seasons & Tournament Matches</h3>
 
+    <!-- Season Select Form -->
     <%= form_for @league, html: { method: :get }, url: statistics_league_path(@league), remote: true do |f| %>
       <%= label_tag 'Season:' %>
       <%= collection_select(:season, :season_id, @league.seasons, :id, :number,
@@ -13,7 +13,8 @@
       <%= submit_tag "Go" %>
     <% end %>
 
-    <!-- Season Table -->
+    <!-- Regular Season Table -->
+    <h3>Season <%= @selected_season.number %></h3>
     <div class="table-responsive season-table">
       <table class="table table-bordered table-hover">
         <% regular_season_standings = @league.generate_user_standings(
@@ -42,5 +43,46 @@
         <% end %>
       </table>
     </div>
+
+    <% if @selected_season.tournaments.last != nil %>
+    <% playoffs_standings = @league.generate_user_standings(
+                                        @league.matches.where("season_id = ? AND tournament_id IS NOT NULL", @selected_season.id)) %>
+
+      <!-- Playoffs Table -->
+      <h3>Season <%= @selected_season.number %> Playoffs</h3>
+      <div class="table-responsive season-table">
+        <table class="table table-bordered table-hover">
+          <tr>
+            <th>Fighter</th>
+            <th>MP</th>
+            <th>W</th>
+            <th>L</th>
+          </tr>
+          <% for i in 0..playoffs_standings.count - 1 %>
+            <tr>
+              <td>
+                <%= link_to User.find(playoffs_standings[i][0]).alias, user_path(User.find(playoffs_standings[i][0])) %>
+              </td>
+              <td>
+                <%= playoffs_standings[i][1][2] %>
+              </td>
+              <td>
+                <%= playoffs_standings[i][1][0] %>
+              </td>
+              <td>
+                <%= playoffs_standings[i][1][1] %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+
+      <!-- Challonge Tournament Bracket -->
+      <h3>Playoff Tournament Bracket</h3>
+      <iframe src="<%= @selected_season.tournaments.last.full_challonge_url %>/module?show_final_results=1"
+            width="100%" height="500" frameborder="0" scrolling="auto"
+            allowtransparency="true"></iframe>
+    <% end %>
+
   </div>
 <% end %>

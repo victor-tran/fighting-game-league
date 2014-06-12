@@ -60,7 +60,7 @@
                                       class: "btn btn-large btn-primary" %>
     <% end %>
 
-    <iframe src="<%= @league.tournaments.last.full_challonge_url %>/module?show_final_results=1"
+    <iframe src="<%= @league.current_season.tournaments.last.full_challonge_url %>/module?show_final_results=1"
             width="100%" height="500" frameborder="0" scrolling="auto"
             allowtransparency="true"></iframe>
 
