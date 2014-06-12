@@ -6,10 +6,10 @@
     <h2>Total Matches Played: <%= @league.total_matches_played %></h2>
     <h3>All Seasons & Tournament Matches</h3>
 
-    <%= form_for @league, html: { method: :get }, url: statistics_league_path(@league) do |f| %>
+    <%= form_for @league, html: { method: :get }, url: statistics_league_path(@league), remote: true do |f| %>
       <%= label_tag 'Season:' %>
       <%= collection_select(:season, :season_id, @league.seasons, :id, :number,
-                          { selected: @league.current_season.id } ) %>
+                          { selected: @selected_season.id } ) %>
       <%= submit_tag "Go" %>
     <% end %>
 
