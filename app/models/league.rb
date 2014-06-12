@@ -169,10 +169,13 @@ class League < ActiveRecord::Base
   # Returns an array sorted by Wins that contains each user's W-L-MP.
   def generate_user_standings(match_set)
 
+    # Get the fighters for the season that the matches in match_set take place in.
+    fighters = match_set.first.season.fighters
+
     # Set all user's W-L values to 0-0 and set matches played to 0.
     user_hashmap = {}
-    users.each do |user|
-      user_hashmap[user] = [0,0,0]
+    fighters.each do |user_id|
+      user_hashmap[User.find(user_id)] = [0,0,0]
     end
 
     # Calculate each user's W-L-MP
