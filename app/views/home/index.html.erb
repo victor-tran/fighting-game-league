@@ -52,7 +52,11 @@
           <button class="btn btn-default glyphicon glyphicon-cloud"></button>
         </div>
       </div>
-      <%= render 'feed' %>
+      <% if @posts.empty? %>
+        <h3 style="text-align: center;">Begin by creating/following some leagues!</h3>
+      <% else %>
+        <%= render 'feed' %>
+      <% end %>
     </div> 
 
     <!-- Right Sidebar -->
