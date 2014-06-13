@@ -19,13 +19,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
     if @user.save
-
+      redirect_to root_url
 =begin Take out user sign up for beta testing.
       UserMailer.signup_confirmation(@user).deliver
       render 'pending'
     else
-=end      
       render 'new'
+=end
     end
   end
   
