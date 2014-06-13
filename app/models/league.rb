@@ -130,13 +130,15 @@ class League < ActiveRecord::Base
                       p2_accepted: false,
                       game_id: game_id)
 
+      # Following code will break if there are only 2 users in the league.
       if users.count > 2
         # Set the index variables for inner loop.
         i = 0
         j = arr.count - 2
         while j >= (arr.count / 2)
 
-          # Schedule the match with the
+          # Schedule the match with the first and outermost element as the two
+          # players in the match and work your way in.
           matches.create!(round_number: current_round, 
                           p1_id: arr[i].id, 
                           p2_id: arr[j].id, 
