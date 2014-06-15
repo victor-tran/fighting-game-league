@@ -7,6 +7,11 @@ namespace :db do
     make_leagues
     make_memberships
   end
+
+  task populate_prod: :environment do
+    make_games
+    make_characters
+  end
 end
 
 def make_games
