@@ -59,10 +59,7 @@ class LeaguesController < ApplicationController
   def start
     if @league.update_attributes(start_league_params)
       # Generate the list of the fighters for this season.
-      fighters = Array.new
-      @league.users.each do |user|
-        fighters.push(user.id)
-      end
+      fighters = @league.fighters
 
       # Create a new season for this league.
       if @league.seasons.empty?

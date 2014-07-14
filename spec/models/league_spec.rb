@@ -7,11 +7,11 @@ describe League do
               game_id: 1,
               commissioner_id: 1,
               started: false,
-              current_season_number: 0,
               current_round: 0,
               info: "Example info",
               match_count: 5,
-              playoffs_started: false)
+              playoffs_started: false,
+              time_zone: 'Eastern Time (US & Canada)')
   end
 
   subject { @league }
@@ -21,7 +21,6 @@ describe League do
   it { should respond_to(:game_id) }
   it { should respond_to(:commissioner_id) }
   it { should respond_to(:started) }
-  it { should respond_to(:current_season_number) }
   it { should respond_to(:current_round) }
   it { should respond_to(:info) }
   it { should respond_to(:match_count) }
@@ -37,25 +36,21 @@ describe League do
   it { should respond_to(:relationships) }
   it { should respond_to(:followers) }
   it { should respond_to(:posts) }
+  it { should respond_to(:time_zone) }
+  it { should respond_to(:current_season) }
 
   # League method checks.
   it { should respond_to(:authenticate) }
   it { should respond_to(:total_rounds) }
   it { should respond_to(:has_more_rounds_left_in_season?) }
-  it { should respond_to(:matches_for_current_season) }
   it { should respond_to(:total_matches_played) }
   it { should respond_to(:generate_matches) }
-  it { should respond_to(:swap_interleaved) }
-  it { should respond_to(:swap) }
-  it { should respond_to(:generate_single_elimination_tournament_matchups) }
-  it 'should respond to :text_search' do
-    League.should respond_to(:text_search)
-  end
   it { should respond_to(:start_playoffs) }
   it { should respond_to(:playoffs_complete?) }
   it { should respond_to(:playoffs_underway?) }
   it { should respond_to(:awaiting_review?) }
   it { should respond_to(:end_playoffs) }
+  it { should respond_to(:fighters) }
 
   # Check to see that subject league is valid.
   it { should be_valid }
@@ -80,8 +75,8 @@ describe League do
     it { should_not be_valid }
   end
 
-  describe "when current_season_number is not present" do
-    before { @league.current_season_number = " " }
+  describe "when time_zone is not present" do
+    before { @league.time_zone = nil }
     it { should_not be_valid }
   end
 
@@ -121,6 +116,9 @@ describe League do
         user = FactoryGirl.create(:user)
         user.join!(@league)
       end
+      @league.seasons.create!(number: 1,
+                              current_season: true,
+                              fighters: @league.fighters)
     end
 
     describe "total_rounds" do
@@ -135,7 +133,6 @@ describe League do
       # Since the test league is a 4 person league, 
       # the total rounds for the season is 3.
       describe "with more rounds left in season" do
-        before { @league.current_round = 1 }
         it "should return true" do
           expect(@league.has_more_rounds_left_in_season?).to eq(true)
         end
@@ -153,19 +150,18 @@ describe League do
 
       describe "with no matches generated" do
         it "should return an empty match array" do
-          expect(@league.matches_for_current_season).to be_empty
+          expect(@league.current_season.matches).to be_empty
         end
       end
 
       describe "with matches generated" do
         before do
           @league.current_round = 1
-          @league.current_season_number = 1
           @league.generate_matches
         end
 
         describe "for one season" do
-          before { @matches = @league.matches_for_current_season }
+          before { @matches = @league.current_season.matches }
 
           it "should return an array of matches for the first season" do
             expect(@matches).to_not be_empty
@@ -173,16 +169,19 @@ describe League do
 
             # Check that each match is only for the first season.
             @matches.each do |match|
-              expect(match.season_number).to eq(1)
+              expect(match.season.number).to eq(1)
             end
           end
         end
 
         describe "for multiple seasons" do
           before do
-            @league.current_season_number = 2
+            @league.current_season.update_attribute(:current_season, false)
+            @league.seasons.create!(number: 2,
+                                    current_season: true,
+                                    fighters: @league.fighters)
             @league.generate_matches
-            @matches = @league.matches_for_current_season
+            @matches = @league.current_season.matches
           end
 
           it "should return an array of matches for the second season" do
@@ -191,7 +190,7 @@ describe League do
 
             # Check that each match is only for the second season.
             @matches.each do |match|
-              expect(match.season_number).to eq(2)
+              expect(match.season.number).to eq(2)
             end
           end
         end
@@ -209,7 +208,6 @@ describe League do
       describe "with matches generated" do
         before do
           @league.current_round = 1
-          @league.current_season_number = 1
           @league.generate_matches
         end
 
@@ -236,7 +234,7 @@ describe League do
     describe "generate_matches" do
       before do
         @league.generate_matches
-        @matches = @league.matches
+        @matches = @league.current_season.matches
       end
 
       it "should generate matches that are associated with the league" do
@@ -319,26 +317,6 @@ describe League do
   end
 
   describe "post associations" do
-
-    before { @league.save }
-    let!(:older_post) do
-      FactoryGirl.create(:post, league: @league, created_at: 1.day.ago)
-    end
-    let!(:newer_post) do
-      FactoryGirl.create(:post, league: @league, created_at: 1.hour.ago)
-    end
-
-    it "should have the right posts in the right order" do
-      expect(@league.posts.to_a).to eq [newer_post, older_post]
-    end
-
-    it "should destroy associated microposts" do
-      posts = @league.posts.to_a
-      @league.destroy
-      expect(posts).not_to be_empty
-      posts.each do |post|
-        expect(Post.where(id: post.id)).to be_empty
-      end
-    end
+    it "is a pending example"
   end
 end

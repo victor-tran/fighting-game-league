@@ -37,6 +37,7 @@ group :development, :test do
   gem 'guard-spork'
   gem 'childprocess'
   gem 'pry-debugger'
+  gem 'rspec-its'
 end
 group :test do
   gem 'capybara'

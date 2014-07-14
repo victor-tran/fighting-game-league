@@ -23,9 +23,9 @@ FactoryGirl.define do
     info                  "Example text"
     commissioner_id       1
     started               false
-    current_season_number 0
     current_round         0
     playoffs_started      false
+    time_zone             'Eastern Time (US & Canada)'
   end
 
   factory :match do

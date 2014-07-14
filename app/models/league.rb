@@ -196,6 +196,14 @@ class League < ActiveRecord::Base
     user_hashmap.to_a.sort_by{ |user| [ -user[1][0], -user[1][2] ] }
   end
 
+  def fighters
+    fighters = Array.new
+    self.users.each do |user|
+      fighters.push(user.id)
+    end
+    fighters
+  end
+
   def start_playoffs
     # Create Challonge double elimination tournament through the Ruby API.
     t = Challonge::Tournament.new
